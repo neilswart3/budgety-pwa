@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import pluralize from "pluralize";
 import Case from "case";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { MenuDrawer } from ".";
