@@ -9,7 +9,7 @@ import {
 import pluralize from "pluralize";
 import Case from "case";
 import { useCallback, useMemo } from "react";
-import { IoChevronBackSharp, IoMenuSharp } from "react-icons/io5";
+import { IoChevronBackSharp } from "react-icons/io5";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { MenuDrawer } from ".";
 
@@ -64,12 +64,6 @@ export const Header: React.FC = () => {
 
   const isDashboard = useMemo(() => title === "Dashboard", [title]);
 
-  const handleClick = useCallback(() => {
-    if (!isDashboard) navigate(-1);
-
-    console.log("open menu");
-  }, [isDashboard, navigate]);
-
   const handleBack = () => {
     navigate(-1);
   };
@@ -80,15 +74,14 @@ export const Header: React.FC = () => {
         <Grid gridTemplateColumns="1fr auto 1fr" py={3}>
           <GridItem>
             {!isDashboard && (
-
-            <IconButton
-              aria-label="Back"
-              variant="ghost"
-              rounded="full"
-              onClick={handleBack}
-            >
-              <IoChevronBackSharp />
-            </IconButton>
+              <IconButton
+                aria-label="Back"
+                variant="ghost"
+                rounded="full"
+                onClick={handleBack}
+              >
+                <IoChevronBackSharp />
+              </IconButton>
             )}
           </GridItem>
 

@@ -1,5 +1,3 @@
-interface Props {}
-
-export const AccountCard: React.FC<Props> = props => {
+export const AccountCard: React.FC = () => {
   return <div>AccountCard Component</div>;
 };
