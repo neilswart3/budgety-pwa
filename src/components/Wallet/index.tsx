@@ -1,4 +1,5 @@
-import { Tabs } from "../ui";
+import { Tabs } from "@/components/ui";
+import { Savings, Accounts } from "@/components";
 
 export const Wallet: React.FC = () => (
   <Tabs
@@ -6,12 +7,12 @@ export const Wallet: React.FC = () => (
       {
         id: "savings",
         label: "Savings",
-        content: <div>Savings</div>,
+        content: <Savings />,
       },
       {
         id: "accounts",
         label: "Accounts",
-        content: <div>Accounts</div>,
+        content: <Accounts />,
       },
     ]}
   />

@@ -30,16 +30,14 @@ function App() {
 
         <Route path="wallet">
           <Route index element={<Wallet />} />
+
           <Route path="create" element={<div>Create Wallet Item</div>} />
           <Route path=":wallet" element={<div>Wallet Item</div>} />
-          <Route
-            path=":wallet/edit"
-            element={<div>Edit Wallet Item</div>}
-          />
+          <Route path=":wallet/edit" element={<div>Edit Wallet Item</div>} />
         </Route>
 
-        <Route path="account">
-          <Route index element={<div>Account</div>} />
+        <Route path="profile">
+          <Route index element={<div>Profile</div>} />
         </Route>
 
         <Route path="*" element={<div>404</div>} />

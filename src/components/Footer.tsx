@@ -60,7 +60,7 @@ const ButtonGroupItem: React.FC<PropsWithChildren & StackProps> = ({
 
 export const Footer: React.FC = () => {
   return (
-    <Container pos="relative">
+    <Container pos="relative" px={{ base: 0, sm: 2, md: 4 }}>
       <Box pos="absolute" left={0} top={0} h="full" w="full">
         <HStack
           pos="relative"
@@ -114,7 +114,7 @@ export const Footer: React.FC = () => {
           <FooterButton to="/wallet" label="Wallet" icon={IoWalletSharp} />
         </ButtonGroupItem>
         <ButtonGroupItem>
-          <FooterButton to="/account" label="Account" icon={IoPersonSharp} />
+          <FooterButton to="/profile" label="Profile" icon={IoPersonSharp} />
         </ButtonGroupItem>
       </ButtonGroup>
     </Container>
