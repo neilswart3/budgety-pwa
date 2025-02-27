@@ -10,7 +10,7 @@ import {
   Stack,
   StackProps,
 } from "@chakra-ui/react";
-import { ElementType, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { IconType } from "react-icons";
 import {
   IoAddSharp,
