@@ -60,6 +60,23 @@ export default defineConfig({
             purpose: "maskable",
           },
         ],
+
+        screenshots: [
+          {
+            src: "screenshot.png",
+            sizes: "382x757",
+            type: "image/png",
+            form_factor: "wide",
+            label: "Budgety",
+          },
+          {
+            src: "screenshot.png",
+            sizes: "382x757",
+            type: "image/png",
+            form_factor: "narrow",
+            label: "Budgety",
+          },
+        ],
       },
 
       injectManifest: {

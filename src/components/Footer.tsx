@@ -8,7 +8,9 @@ import {
   Icon,
   IconButton,
   Stack,
+  StackProps,
 } from "@chakra-ui/react";
+import { ElementType, PropsWithChildren } from "react";
 import { IconType } from "react-icons";
 import {
   IoAddSharp,
@@ -46,6 +48,16 @@ const FooterButton: React.FC<Props> = ({ to, label, icon: PassedIcon }) => {
   );
 };
 
+const ButtonGroupItem: React.FC<PropsWithChildren & StackProps> = ({
+  children,
+  as = HStack,
+  ...props
+}) => (
+  <GridItem as={as} alignItems="center" justifyContent="center" {...props}>
+    {children}
+  </GridItem>
+);
+
 export const Footer: React.FC = () => {
   return (
     <Container pos="relative">
@@ -73,23 +85,17 @@ export const Footer: React.FC = () => {
       </Box>
 
       <ButtonGroup as={Grid} gridTemplateColumns="1fr 1fr 1fr 1fr 1fr" gap={0}>
-        <GridItem>
+        <ButtonGroupItem>
           <FooterButton to="/" label="Home" icon={IoHomeSharp} />
-        </GridItem>
-        <GridItem>
+        </ButtonGroupItem>
+        <ButtonGroupItem>
           <FooterButton
             to="/transactions"
             label="Transactions"
             icon={IoReceiptSharp}
           />
-        </GridItem>
-        <GridItem
-          as={HStack}
-          alignItems="center"
-          justifyContent="center"
-          pos="relative"
-          h="full"
-        >
+        </ButtonGroupItem>
+        <ButtonGroupItem as={HStack} pos="relative" h="full">
           <Stack pos="absolute" bottom="50%" p={2} zIndex={10}>
             <IconButton
               {...{ to: "/transactions/create" }}
@@ -103,13 +109,13 @@ export const Footer: React.FC = () => {
               </Icon>
             </IconButton>
           </Stack>
-        </GridItem>
-        <GridItem>
+        </ButtonGroupItem>
+        <ButtonGroupItem>
           <FooterButton to="/wallet" label="Wallet" icon={IoWalletSharp} />
-        </GridItem>
-        <GridItem>
+        </ButtonGroupItem>
+        <ButtonGroupItem>
           <FooterButton to="/account" label="Account" icon={IoPersonSharp} />
-        </GridItem>
+        </ButtonGroupItem>
       </ButtonGroup>
     </Container>
   );
