@@ -27,7 +27,15 @@ interface Props {
 
 const FooterButton: React.FC<Props> = ({ to, label, icon: PassedIcon }) => {
   return (
-    <IconButton {...(to ? { to, as: NavLink } : {})} w="full" h="unset" p={2}>
+    <IconButton
+      {...(to ? { to, as: NavLink } : {})}
+      w={16}
+      h="unset"
+      p={2}
+      fontSize="xs"
+      variant="plain"
+      color="bg"
+    >
       <Stack alignItems="center">
         <Icon>
           <PassedIcon />
@@ -40,7 +48,7 @@ const FooterButton: React.FC<Props> = ({ to, label, icon: PassedIcon }) => {
 
 export const Footer: React.FC = () => {
   return (
-    <Container pos="relative" minW="530px">
+    <Container pos="relative">
       <Box pos="absolute" left={0} top={0} h="full" w="full">
         <HStack
           pos="relative"
@@ -52,11 +60,11 @@ export const Footer: React.FC = () => {
         >
           <Box
             pos="absolute"
-            top={-20}
-            bg={{ base: "gray.900", _dark: "white" }}
+            bottom={0}
+            bg="fg"
             w="full"
-            h="200%"
-            mask="radial-gradient(circle, green 3rem, rgba(0, 0, 0, 0) 2rem), linear-gradient(#000 0 0) no-repeat"
+            h="220%"
+            mask="radial-gradient(circle, green 2.5rem, rgba(0, 0, 0, 0) 2rem), linear-gradient(#000 0 0) no-repeat"
             maskPosition="right"
             WebkitMaskPosition="left"
             maskComposite="exclude"
@@ -64,7 +72,7 @@ export const Footer: React.FC = () => {
         </HStack>
       </Box>
 
-      <ButtonGroup as={Grid} gridTemplateColumns="1fr 1fr auto 1fr 1fr">
+      <ButtonGroup as={Grid} gridTemplateColumns="1fr 1fr 1fr 1fr 1fr" gap={0}>
         <GridItem>
           <FooterButton to="/" label="Home" icon={IoHomeSharp} />
         </GridItem>
@@ -82,7 +90,7 @@ export const Footer: React.FC = () => {
           pos="relative"
           h="full"
         >
-          <Stack pos="relative" bottom="50%" p={2}>
+          <Stack pos="absolute" bottom="50%" p={2} zIndex={10}>
             <IconButton
               {...{ to: "/transactions/create" }}
               as={NavLink}
@@ -97,11 +105,7 @@ export const Footer: React.FC = () => {
           </Stack>
         </GridItem>
         <GridItem>
-          <FooterButton
-            to="/wallet"
-            label="Wallet"
-            icon={IoWalletSharp}
-          />
+          <FooterButton to="/wallet" label="Wallet" icon={IoWalletSharp} />
         </GridItem>
         <GridItem>
           <FooterButton to="/account" label="Account" icon={IoPersonSharp} />
