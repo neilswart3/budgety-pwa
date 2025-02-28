@@ -33,9 +33,6 @@ export const CreateTransaction: React.FC = () => {
         as="form"
         gridTemplateColumns="repeat(auto-fit, minmax(20rem, 1fr))"
         gap={8}
-        onChange={
-          handleChange as unknown as ChangeEventHandler<HTMLInputElement>
-        }
       >
         <GridItem as={Stack} gap={4}>
           <Fieldset.Legend>Basic info</Fieldset.Legend>
@@ -45,6 +42,9 @@ export const CreateTransaction: React.FC = () => {
                 <Input
                   name={name}
                   value={values[name as ValuesKey] as string}
+                  onChange={
+                    handleChange as unknown as ChangeEventHandler<HTMLInputElement>
+                  }
                 />
               </Field>
             ))}
