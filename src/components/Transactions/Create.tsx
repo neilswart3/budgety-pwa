@@ -1,7 +1,17 @@
-import { Fieldset, Grid, GridItem, Input, Stack } from "@chakra-ui/react";
+import {
+  Fieldset,
+  Grid,
+  GridItem,
+  HStack,
+  Icon,
+  IconButton,
+  Input,
+  Stack,
+} from "@chakra-ui/react";
 import { ChangeEventHandler, useState } from "react";
 import { Field, Datepicker } from "@/components/ui";
 import Case from "case";
+import { IoReload } from "react-icons/io5";
 
 const initValues = {
   name: "",
@@ -25,6 +35,10 @@ export const CreateTransaction: React.FC = () => {
     target: { name: string; value: string | null | undefined | Date };
   }) => {
     setValues(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleResetDate = (name: "date" | "salaryMonth") => {
+    setValues(prev => ({ ...prev, [name]: new Date() }));
   };
 
   return (
@@ -52,15 +66,45 @@ export const CreateTransaction: React.FC = () => {
         </GridItem>
         <GridItem as={Stack} gap={4}>
           <Fieldset.Legend>Transaction Date</Fieldset.Legend>
-          <Fieldset.Content>
-            <Field label="Date">
+          <Fieldset.Content alignItems="start">
+            <Field
+              label={
+                <HStack justify="space-between" w="full">
+                  Date
+                  <IconButton
+                    variant="subtle"
+                    bg="bg.subtle"
+                    onClick={() => handleResetDate("date")}
+                  >
+                    <Icon>
+                      <IoReload />
+                    </Icon>
+                  </IconButton>
+                </HStack>
+              }
+            >
               <Datepicker
                 name="date"
                 value={values.date}
                 onChange={handleChange}
               />
             </Field>
-            <Field label="Salary Month">
+            <Field
+              label={
+                <HStack justify="space-between" w="full">
+                  Salary Month
+                  <IconButton
+                    variant="subtle"
+                    bg="bg.subtle"
+                    onClick={() => handleResetDate("salaryMonth")}
+                  >
+                    <Icon>
+                      <IoReload />
+                    </Icon>
+                  </IconButton>
+                </HStack>
+              }
+            >
               <Datepicker
                 name="salaryMonth"
                 value={values.salaryMonth}
