@@ -4,3 +4,4 @@ export * from "./MenuDrawer";
 export * from "./Wallet";
 export * from "./Accounts";
 export * from "./Savings";
+export * from "./Transactions";

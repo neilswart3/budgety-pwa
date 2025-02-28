@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 import { AppLayout } from "./layouts";
-import { Wallet } from "./components";
+import { Wallet, Transactions } from "@/components";
 
 function App() {
   return (
@@ -9,13 +9,10 @@ function App() {
         <Route index element={<div>Home bla</div>} />
 
         <Route path="transactions">
-          <Route index element={<div>List Transactions</div>} />
-          <Route path="create" element={<div>Create Single Transaction</div>} />
-          <Route path=":transaction" element={<div>Single Transaction</div>} />
-          <Route
-            path=":transaction/edit"
-            element={<div>Edit Single Transaction</div>}
-          />
+          <Route index element={<Transactions.List />} />
+          <Route path="create" element={<Transactions.Create />} />
+          <Route path=":transaction" element={<Transactions.Single />} />
+          <Route path=":transaction/edit" element={<Transactions.Edit />} />
         </Route>
 
         <Route path="categories">

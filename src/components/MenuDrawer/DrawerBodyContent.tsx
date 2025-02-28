@@ -1,4 +1,5 @@
 import { Button } from "@chakra-ui/react";
+import Case from "case";
 import { useCallback, useMemo } from "react";
 import {
   IoPersonSharp,
@@ -33,15 +34,15 @@ export const DrawerBodyContent: React.FC<Props> = ({ onClose }) => {
 
   return (
     <>
-      {[
-        { id: "dashboard", label: "Dashboard", Icon: MdDashboard },
-        { id: "transactions", label: "Transactions", Icon: IoReceiptSharp },
-        { id: "wallet", label: "Wallet", Icon: IoWalletSharp },
-        { id: "categories", label: "Categories", Icon: IoShapesSharp },
-        { id: "account", label: "Account", Icon: IoPersonSharp },
-      ].map(({ id, label, Icon }) => (
+      {Object.entries({
+        dashboard: MdDashboard,
+        transactions: IoReceiptSharp,
+        wallet: IoWalletSharp,
+        categories: IoShapesSharp,
+        profile: IoPersonSharp,
+      }).map(([id, Icon]) => (
         <Button
-          key={id}
+          key={Case.title(id)}
           w="full"
           variant={active === id ? "subtle" : "ghost"}
           rounded={0}
@@ -52,7 +53,7 @@ export const DrawerBodyContent: React.FC<Props> = ({ onClose }) => {
           onClick={() => handleClick(id)}
         >
           <Icon />
-          {label}
+          {Case.title(id)}
         </Button>
       ))}
     </>
