@@ -1,6 +1,6 @@
-import { Route, Routes } from "react-router";
-import { AppLayout } from "./layouts";
-import { Wallet, Transactions } from "@/components";
+import { Route, Routes } from 'react-router';
+import { AppLayout } from './layouts';
+import { Wallet, Transactions } from '@/components';
 
 function App() {
   return (
