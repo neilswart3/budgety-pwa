@@ -30,7 +30,13 @@ export const RadioCardItem = React.forwardRef<
   const ContentWrapper = indicator ? RadioCard.ItemContent : HStack;
 
   return (
-    <RadioCard.Item {...rest}>
+    <RadioCard.Item
+      {...rest}
+      //   bg={{ _checked: 'blue.600', _dark: { _checked: 'blue.400' } }}
+      //   borderColor={{ _checked: 'blue.600', _dark: { _checked: 'blue.400' } }}
+      //   boxShadow="none"
+      //   color={{ _checked: 'bg' }}
+    >
       <RadioCard.ItemHiddenInput ref={ref} {...inputProps} />
       <RadioCard.ItemControl>
         {indicatorPlacement === 'start' && indicator}

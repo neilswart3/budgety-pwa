@@ -16,7 +16,7 @@ import {
   Input,
   Textarea,
 } from '@chakra-ui/react';
-import { IoAdd, IoRemove } from 'react-icons/io5';
+import { IoAddCircleSharp, IoRemoveCircleSharp } from 'react-icons/io5';
 
 interface Props {
   name: string;
@@ -42,6 +42,9 @@ export const FormInput: React.FC<Props> = ({
     return (
       <Field label={label}>
         <RadioCardRoot
+          borderRadius="md"
+          p={1}
+          bg="bg.muted"
           defaultValue={value as string}
           w="full"
           onValueChange={({ value }) => onChange({ target: { name, value } })}
@@ -49,6 +52,9 @@ export const FormInput: React.FC<Props> = ({
           <HStack>
             {options.map(({ id, value }) => (
               <RadioCardItem
+                border="none"
+                borderRadius="sm"
+                _checked={{ bg: 'bg', boxShadow: 'xs' }}
                 key={`${name}-${Case.kebab(id)}`}
                 label={value}
                 value={id}
@@ -56,9 +62,9 @@ export const FormInput: React.FC<Props> = ({
                 icon={
                   <Icon size="lg">
                     {value.toLowerCase() === 'expense' ? (
-                      <IoRemove />
+                      <IoRemoveCircleSharp />
                     ) : (
-                      <IoAdd />
+                      <IoAddCircleSharp />
                     )}
                   </Icon>
                 }

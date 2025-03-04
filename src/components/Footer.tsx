@@ -9,17 +9,17 @@ import {
   IconButton,
   Stack,
   StackProps,
-} from "@chakra-ui/react";
-import { PropsWithChildren } from "react";
-import { IconType } from "react-icons";
+} from '@chakra-ui/react';
+import { PropsWithChildren } from 'react';
+import { IconType } from 'react-icons';
 import {
   IoAddSharp,
   IoHomeSharp,
   IoPersonSharp,
   IoReceiptSharp,
   IoWalletSharp,
-} from "react-icons/io5";
-import { NavLink } from "react-router";
+} from 'react-icons/io5';
+import { NavLink, useLocation } from 'react-router';
 
 interface Props {
   to?: string;
@@ -59,6 +59,10 @@ const ButtonGroupItem: React.FC<PropsWithChildren & StackProps> = ({
 );
 
 export const Footer: React.FC = () => {
+  const { pathname } = useLocation();
+
+  console.log('pathname:', pathname);
+
   return (
     <Container pos="relative" px={{ base: 0, sm: 2, md: 4 }} zIndex={10}>
       <Box pos="absolute" left={0} top={0} h="full" w="full">
@@ -98,11 +102,17 @@ export const Footer: React.FC = () => {
         <ButtonGroupItem as={HStack} pos="relative" h="full">
           <Stack pos="absolute" bottom="50%" p={2} zIndex={10}>
             <IconButton
-              {...{ to: "/transactions/create" }}
+              {...{ to: '/transactions/create' }}
               as={NavLink}
               rounded="full"
               size="2xl"
-              bg={{ base: "blue.600", _dark: "blue.400" }}
+              bg={{
+                base: 'blue.600',
+                _dark: 'blue.400',
+                _disabled: 'blue.200',
+              }}
+              disabled={pathname === '/transactions/create'}
+              opacity={1}
             >
               <Icon>
                 <IoAddSharp />
