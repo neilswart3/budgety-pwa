@@ -72,8 +72,6 @@ export const InstallMessage: React.FC = () => {
 
   if (!show) return null;
 
-  console.log('show:', show);
-
   return (
     <Card.Root bg="fg" color="bg">
       <Card.Header as={HStack} justifyContent="center">

@@ -1,6 +1,6 @@
-import { Footer, Header } from "@/components";
-import { Box, Container, Grid, GridItem, Stack } from "@chakra-ui/react";
-import { Outlet } from "react-router";
+import { Footer, Header } from '@/components';
+import { Box, Container, Grid, GridItem, Stack } from '@chakra-ui/react';
+import { Outlet } from 'react-router';
 
 export const AppLayout: React.FC = () => (
   <Grid h="100vh" gridTemplateRows="auto 1fr">
@@ -8,7 +8,7 @@ export const AppLayout: React.FC = () => (
       <Header />
     </GridItem>
     <GridItem as="main" overflowY="auto">
-      <Stack h="full" gap={12}>
+      <Stack h="full" gap={12} pt={2}>
         <Container flexGrow={1}>
           <Outlet />
         </Container>
