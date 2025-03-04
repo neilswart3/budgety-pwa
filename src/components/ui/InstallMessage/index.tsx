@@ -88,7 +88,12 @@ export const InstallMessage: React.FC = () => {
           <IoArrowDownSharp />
           Install
         </Button>
-        <Button variant="outline" color="bg" onClick={handleClose}>
+        <Button
+          variant="outline"
+          color="bg"
+          bg={{ _hover: 'fg.subtle' }}
+          onClick={handleClose}
+        >
           <IoCloseSharp />
           Dismiss
         </Button>
