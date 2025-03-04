@@ -75,7 +75,7 @@ export const FormInput: React.FC<Props> = ({
       </Field>
     );
 
-  if (['category', 'source'].includes(name) && options?.length) {
+  if (['category', 'source', 'user'].includes(name) && options?.length) {
     const collection = createListCollection({ items: options });
 
     return (
@@ -83,14 +83,12 @@ export const FormInput: React.FC<Props> = ({
         <SelectRoot
           collection={collection}
           name={name}
-          value={value as unknown as string[]}
-          onValueChange={({ value }) => {
-            console.log('value:', value);
-
-            return onChange({
+          value={[value] as unknown as string[]}
+          onValueChange={({ value }) =>
+            onChange({
               target: { value: value[0], name },
-            });
-          }}
+            })
+          }
         >
           <SelectTrigger>
             <SelectValueText placeholder={`Select ${label}`} />

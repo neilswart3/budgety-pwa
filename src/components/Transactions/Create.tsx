@@ -24,6 +24,7 @@ const initValues = {
   category: 'food',
   location: '',
   source: 'maaltijd cheques',
+  user: 'me',
   type: 'expense',
 };
 
@@ -83,6 +84,7 @@ export const CreateTransaction: React.FC = () => {
               {[
                 'type',
                 'name',
+                'user',
                 'category',
                 'source',
                 'amount',
@@ -92,7 +94,7 @@ export const CreateTransaction: React.FC = () => {
                 <GridItem
                   key={name}
                   gridColumn={{
-                    md: ['type', 'location', 'description'].includes(name)
+                    md: ['type', 'description'].includes(name)
                       ? '1 / 3'
                       : 'auto',
                   }}
@@ -144,7 +146,25 @@ export const CreateTransaction: React.FC = () => {
                             {
                               id: 'spending money',
                               value: 'spending money',
-                              label: 'Sspending Money',
+                              label: 'Spending Money',
+                            },
+                          ]
+                        : name === 'user'
+                        ? [
+                            {
+                              id: 'me',
+                              value: 'me',
+                              label: 'Me',
+                            },
+                            {
+                              id: 'marisa',
+                              value: 'marisa',
+                              label: 'Marisa',
+                            },
+                            {
+                              id: 'neil',
+                              value: 'neil',
+                              label: 'Neil',
                             },
                           ]
                         : undefined

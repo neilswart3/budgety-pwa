@@ -61,8 +61,6 @@ const ButtonGroupItem: React.FC<PropsWithChildren & StackProps> = ({
 export const Footer: React.FC = () => {
   const { pathname } = useLocation();
 
-  console.log('pathname:', pathname);
-
   return (
     <Container pos="relative" px={{ base: 0, sm: 2, md: 4 }} zIndex={10}>
       <Box pos="absolute" left={0} top={0} h="full" w="full">
