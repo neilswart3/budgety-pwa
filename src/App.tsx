@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router';
 import { AppLayout } from './layouts';
-import { Wallet, Transactions } from '@/components';
+import { Wallet, Transactions, Dashboard } from '@/components';
 
 function App() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route index element={<div>Home bla</div>} />
+        <Route index element={<Dashboard />} />
 
         <Route path="transactions">
           <Route index element={<Transactions.List />} />
