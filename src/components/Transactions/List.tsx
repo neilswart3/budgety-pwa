@@ -1,20 +1,9 @@
+import { StorageKey, StorageService, ITransaction } from '@/core';
 import { Text, Card, HStack, Stack, Badge, Heading } from '@chakra-ui/react';
 import Case from 'case';
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { IoLogoEuro } from 'react-icons/io5';
-
-interface Transaction {
-  id: string;
-  name: string;
-  description: string;
-  date: Date;
-  salaryMonth: Date;
-  amount: number;
-  category: string;
-  location: string;
-  source: string;
-  type: string;
-}
+import { Link } from 'react-router';
 
 const getTransactionDate = (date: Date, picks: string): string => {
   const theDate = new Date(date);
@@ -36,17 +25,30 @@ const getTransactionDate = (date: Date, picks: string): string => {
 };
 
 export const TransactionsList: React.FC = () => {
-  const transactions = useMemo<Transaction[]>(
-    () =>
-      JSON.parse(
-        window?.localStorage?.getItem('budgety-fake-transactions') || '[]'
-      ),
+  const [items, setItems] = useState<ITransaction[] | undefined>(undefined);
+
+  const instance = useMemo(
+    () => new StorageService<ITransaction>(StorageKey.TRANSACTIONS),
     []
   );
 
+  const fetchTransactions = useCallback(async () => {
+    try {
+      const entries = await instance.search();
+
+      setItems(entries as ITransaction[]);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  }, [instance]);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
+
   return (
     <Stack gap={4}>
-      {transactions?.map(
+      {items?.map(
         ({
           id,
           name,
@@ -59,7 +61,7 @@ export const TransactionsList: React.FC = () => {
           salaryMonth,
           description,
         }) => (
-          <Card.Root key={id} variant="subtle">
+          <Card.Root key={id} variant="subtle" {...{ as: Link, to: id }}>
             <Card.Header>
               <Card.Title
                 as={HStack}

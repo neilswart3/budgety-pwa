@@ -9,13 +9,20 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { v4 as uuid } from 'uuid';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useCallback, useMemo, useState } from 'react';
 import { Field, Datepicker, FormInput } from '@/components/ui';
 import { IoReload, IoSaveSharp } from 'react-icons/io5';
 import Case from 'case';
 import { useNavigate } from 'react-router';
+import {
+  ITransaction,
+  ITransactionItem,
+  ITransactionItemType,
+  StorageKey,
+  StorageService,
+} from '@/core';
 
-const initValues = {
+const initValues: ITransactionItem = {
   name: '',
   description: '',
   date: new Date(),
@@ -25,15 +32,20 @@ const initValues = {
   location: '',
   source: 'maaltijd cheques',
   user: 'me',
-  type: 'expense',
+  type: 'expense' as ITransactionItemType,
 };
 
 type Values = typeof initValues;
 type ValuesKey = keyof Values;
 
 export const CreateTransaction: React.FC = () => {
-  const [values, setValues] = useState<Values>({ ...initValues });
+  const [values, setValues] = useState<ITransactionItem>({ ...initValues });
   const navigate = useNavigate();
+
+  const storage = useMemo(
+    () => new StorageService<ITransaction>(StorageKey.TRANSACTIONS),
+    []
+  );
 
   const handleChange = ({
     target: { name, value },
@@ -47,29 +59,29 @@ export const CreateTransaction: React.FC = () => {
     setValues((prev) => ({ ...prev, [name]: new Date() }));
   };
 
-  const handleSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e: SyntheticEvent) => {
+      try {
+        e?.preventDefault();
 
-    const newTransaction = {
-      ...values,
-      id: uuid(),
-      created: values.date,
-      modified: values.date,
-    };
+        const newTransaction: ITransaction = {
+          ...(values as ITransactionItem),
+          id: uuid(),
+          created: values.date,
+          modified: values.date,
+          createdBy: 'me',
+        };
 
-    window.localStorage.setItem(
-      'budgety-fake-transactions',
-      JSON.stringify([
-        newTransaction,
-        ...JSON.parse(
-          window.localStorage.getItem('budgety-fake-transactions') || '[]'
-        ),
-      ])
-    );
+        await storage.create(newTransaction);
 
-    setValues({ ...initValues });
-    navigate('/transactions');
-  };
+        setValues({ ...initValues });
+        navigate('/transactions');
+      } catch (error) {
+        console.log('error:', error);
+      }
+    },
+    [navigate, storage, values]
+  );
 
   return (
     <Stack as="form" gap={6} onSubmit={handleSubmit}>

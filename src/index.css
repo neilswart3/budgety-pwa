@@ -1,6 +1,3 @@
-/* :root {
-    --global-color
-} */
 :root {
   --brand-color: var(--chakra-colors-blue-600);
   --brand-color-hover: var(--chakra-color-blue-400);
@@ -9,6 +6,10 @@
 .dark {
   --brand-color: var(--chakra-colors-blue-400);
   --brand-color-hover: var(--chakra-color-blue-300);
+}
+
+body {
+  overscroll-behavior-y: contain;
 }
 
 .react-datepicker,
@@ -42,10 +43,10 @@
   color: inherit;
 }
 
-.react-datepicker__day:not([aria-disabled="true"]):hover,
-.react-datepicker__month-text:not([aria-disabled="true"]):hover,
-.react-datepicker__quarter-text:not([aria-disabled="true"]):hover,
-.react-datepicker__year-text:not([aria-disabled="true"]):hover {
+.react-datepicker__day:not([aria-disabled='true']):hover,
+.react-datepicker__month-text:not([aria-disabled='true']):hover,
+.react-datepicker__quarter-text:not([aria-disabled='true']):hover,
+.react-datepicker__year-text:not([aria-disabled='true']):hover {
   background-color: var(--chakra-colors-bg-emphasized);
 }
 
