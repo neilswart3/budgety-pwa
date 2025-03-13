@@ -1,13 +1,11 @@
-import { ICollection } from '../collections';
+import { ICollectionItem } from '../collections';
 import { LocalStorageRepository } from '../repositories';
 import { StorageKey } from '../types';
-import BaseService from './BaseService';
-import { RepositoryTypes } from './types';
+import Service from './Service';
 
-export class StorageService<T extends ICollection> extends BaseService<
+export class StorageService<T extends ICollectionItem> extends Service<
   T,
-  StorageKey,
-  new (key: StorageKey) => RepositoryTypes<T>
+  StorageKey
 > {
   constructor(key: StorageKey) {
     super(key, LocalStorageRepository);

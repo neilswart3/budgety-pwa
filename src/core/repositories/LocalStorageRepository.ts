@@ -1,8 +1,8 @@
 import { IRepository, LocalStorageItem, localStorageRepoBase } from './types';
 import { StorageKey } from '../types';
-import { ICollection } from '../collections';
+import { ICollectionItem } from '../collections';
 
-export class LocalStorageRepository<T extends ICollection>
+export class LocalStorageRepository<T extends ICollectionItem>
   implements IRepository<T>
 {
   private key: StorageKey;
@@ -46,10 +46,19 @@ export class LocalStorageRepository<T extends ICollection>
     }
   }
 
-  async update(id: string): Promise<void | Error> {
+  async update(el: T): Promise<void | Error> {
     try {
-      //   const entries = await this.search();
-      console.log('id:', id);
+      const entries = await this.search();
+
+      const newEntries = (entries as T[]).reduce(
+        (acc: T[], item: T) =>
+          el.id === item.id ? [...acc, el] : [...acc, item],
+        []
+      );
+
+      Promise.resolve(
+        window.localStorage.setItem(this.item, JSON.stringify(newEntries))
+      );
     } catch (error) {
       throw new Error(
         `LocalStorageRepository.update: ${(error as Error).message}`

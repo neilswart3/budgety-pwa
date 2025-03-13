@@ -1,11 +1,13 @@
-import { ICollection } from '../collections';
+import { ICollectionItem } from '../collections';
 import { StorageKey } from '../types';
 import { IService, RepositoryTypes } from './types';
 
-export default class BaseService<
-  T extends ICollection,
+export default class Service<
+  T extends ICollectionItem,
   K extends StorageKey,
-  R extends new (key: StorageKey) => RepositoryTypes<T>
+  R extends new (key: StorageKey) => RepositoryTypes<T> = new (
+    key: StorageKey
+  ) => RepositoryTypes<T>
 > implements IService<T>
 {
   protected repository: RepositoryTypes<T>;
@@ -30,15 +32,15 @@ export default class BaseService<
     }
   }
 
-  update(id: string): Promise<void | Error> {
+  async update(el: T): Promise<void | Error> {
     try {
-      return this.repository.delete(id);
+      await this.repository.update(el);
     } catch (error) {
       throw new Error((error as Error).message);
     }
   }
 
-  delete(id: string): Promise<void | Error> {
+  async delete(id: string): Promise<void | Error> {
     try {
       return this.repository.delete(id);
     } catch (error) {
