@@ -15,14 +15,13 @@ import { IoReload, IoSaveSharp } from 'react-icons/io5';
 import Case from 'case';
 import { useNavigate } from 'react-router';
 import {
-  ITransaction,
+  IBaseTransactionItem,
   ITransactionItem,
   ITransactionItemType,
-  StorageKey,
-  StorageService,
+  TransactionCollection,
 } from '@/core';
 
-const initValues: ITransactionItem = {
+const initValues: IBaseTransactionItem = {
   name: '',
   description: '',
   date: new Date(),
@@ -39,13 +38,10 @@ type Values = typeof initValues;
 type ValuesKey = keyof Values;
 
 export const CreateTransaction: React.FC = () => {
-  const [values, setValues] = useState<ITransactionItem>({ ...initValues });
+  const [values, setValues] = useState<IBaseTransactionItem>({ ...initValues });
   const navigate = useNavigate();
 
-  const storage = useMemo(
-    () => new StorageService<ITransaction>(StorageKey.TRANSACTIONS),
-    []
-  );
+  const storage = useMemo(() => new TransactionCollection(), []);
 
   const handleChange = ({
     target: { name, value },
@@ -64,7 +60,7 @@ export const CreateTransaction: React.FC = () => {
       try {
         e?.preventDefault();
 
-        const newTransaction: ITransaction = {
+        const newTransaction: ITransactionItem = {
           ...(values as ITransactionItem),
           id: uuid(),
           created: values.date,
@@ -72,7 +68,7 @@ export const CreateTransaction: React.FC = () => {
           createdBy: 'me',
         };
 
-        await storage.create(newTransaction);
+        await storage.createItem(newTransaction);
 
         setValues({ ...initValues });
         navigate('/transactions');

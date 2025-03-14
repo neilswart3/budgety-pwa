@@ -1,24 +1,21 @@
-import { ITransaction, StorageKey, StorageService } from '@/core';
+import { ITransactionItem, TransactionCollection } from '@/core';
 import { Button, HStack, Stack } from '@chakra-ui/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { IoPencilSharp, IoTrashBinSharp } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router';
 
 export const SingleTransaction: React.FC = () => {
-  const [item, setItem] = useState<ITransaction | undefined>(undefined);
+  const [item, setItem] = useState<ITransactionItem | undefined>(undefined);
   const { transaction: id } = useParams();
   const navigate = useNavigate();
 
-  const storage = useMemo(
-    () => new StorageService<ITransaction>(StorageKey.TRANSACTIONS),
-    []
-  );
+  const storage = useMemo(() => new TransactionCollection(), []);
 
   const fetchTransaction = useCallback(async () => {
     try {
-      const res = await storage.read(id as string);
+      const res = await storage.fetchItem(id as string);
 
-      setItem(res as ITransaction);
+      setItem(res as ITransactionItem);
     } catch (error) {
       console.log('error:', error);
     }
@@ -26,7 +23,7 @@ export const SingleTransaction: React.FC = () => {
 
   const handleDelete = useCallback(async () => {
     try {
-      await storage.delete(id as string);
+      await storage.deleteItem(id as string);
 
       navigate('/transactions');
     } catch (error) {
