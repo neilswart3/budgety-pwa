@@ -1,10 +1,10 @@
-import { ICollectionItem } from '../collections';
+import { IBaseCollectionItem } from '../models';
 import { LocalStorageRepository } from '../repositories';
 
-export type RepositoryTypes<T extends ICollectionItem> =
+export type RepositoryTypes<T extends IBaseCollectionItem> =
   LocalStorageRepository<T>;
 
-export interface IService<T extends ICollectionItem> {
+export interface IService<T extends IBaseCollectionItem> {
   create(el: T): Promise<void | Error>;
   read(id: string): Promise<T | Error>;
   update(el: T): Promise<void | Error>;

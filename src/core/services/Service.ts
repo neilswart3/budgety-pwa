@@ -1,9 +1,9 @@
-import { ICollectionItem } from '../collections';
+import { IBaseCollectionItem } from '../models';
 import { StorageKey } from '../types';
 import { IService, RepositoryTypes } from './types';
 
 export default class Service<
-  T extends ICollectionItem,
+  T extends IBaseCollectionItem,
   K extends StorageKey,
   R extends new (key: StorageKey) => RepositoryTypes<T> = new (
     key: StorageKey
