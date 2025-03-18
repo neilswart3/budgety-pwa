@@ -4,8 +4,8 @@ import {
   Avatar,
   DrawerCloseTrigger,
   IconButton,
-} from "@chakra-ui/react";
-import { IoCloseSharp } from "react-icons/io5";
+} from '@chakra-ui/react';
+import { IoCloseSharp } from 'react-icons/io5';
 
 interface Props {
   onClose: () => void;
@@ -19,7 +19,7 @@ export const DrawerTitle: React.FC<Props> = ({ onClose }) => (
       </Avatar.Root>
       Budgety
     </HStack>
-    <DrawerCloseTrigger onClick={onClose}>
+    <DrawerCloseTrigger onClick={onClose} as="div">
       <IconButton variant="ghost" rounded="full">
         <IoCloseSharp />
       </IconButton>

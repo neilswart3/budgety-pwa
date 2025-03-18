@@ -1,8 +1,8 @@
 import { IRepository, LocalStorageItem, localStorageRepoBase } from './types';
 import { StorageKey } from '../types';
-import { ICollectionItem } from '../collections';
+import { IBaseCollectionItem } from '../models';
 
-export class LocalStorageRepository<T extends ICollectionItem>
+export class LocalStorageRepository<T extends IBaseCollectionItem>
   implements IRepository<T>
 {
   private key: StorageKey;

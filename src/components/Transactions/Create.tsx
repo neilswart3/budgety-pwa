@@ -38,7 +38,7 @@ type ValuesKey = keyof Values;
 export const CreateTransaction: React.FC = () => {
   const [values, setValues] = useState<IBaseTransactionItem>({ ...initValues });
   const navigate = useNavigate();
-  const { mutateAsync } = useTransactions.mutation({
+  const { createItem } = useTransactions.mutation({
     onSuccess: () => {
       setValues({ ...initValues });
       navigate('/transactions');
@@ -65,7 +65,7 @@ export const CreateTransaction: React.FC = () => {
       try {
         e?.preventDefault();
 
-        await mutateAsync(values);
+        await createItem.mutateAsync(values);
       } catch (error) {
         console.log('error:', error);
       }
