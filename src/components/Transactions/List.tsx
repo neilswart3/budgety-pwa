@@ -1,4 +1,4 @@
-import { useTransactions } from '@/core';
+import { ITransactionItem, useTransactions } from '@/core';
 import { TransactionCard } from '@/components/ui';
 import { Stack } from '@chakra-ui/react';
 
@@ -13,9 +13,9 @@ export const TransactionsList: React.FC = () => {
           <TransactionCard.Loading key={`transactions-list-placeholder-${i}`} />
         ))}
 
-      {data?.length &&
-        data?.map(
-          ({ id, name, date, amount, category, source, type, location }) => (
+      {(data as ITransactionItem[])?.length &&
+        (data as ITransactionItem[])?.map(
+          ({ id, name, date, amount, category, source, type }) => (
             <TransactionCard
               key={id}
               id={id}
@@ -24,7 +24,6 @@ export const TransactionsList: React.FC = () => {
               amount={amount}
               date={date}
               category={category}
-              location={location}
               source={source}
             />
           )
