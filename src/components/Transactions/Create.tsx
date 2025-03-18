@@ -8,7 +8,7 @@ import {
   IconButton,
   Stack,
 } from '@chakra-ui/react';
-import { SyntheticEvent, useCallback, useMemo, useState } from 'react';
+import { SyntheticEvent, useCallback, useState } from 'react';
 import { Field, Datepicker, FormInput } from '@/components/ui';
 import { IoReload, IoSaveSharp } from 'react-icons/io5';
 import Case from 'case';
@@ -16,8 +16,7 @@ import { useNavigate } from 'react-router';
 import {
   IBaseTransactionItem,
   TransactionItemTypeField,
-  TransactionCollection,
-  TransactionItemModel,
+  useTransactions,
 } from '@/core';
 
 const initValues: IBaseTransactionItem = {
@@ -39,8 +38,12 @@ type ValuesKey = keyof Values;
 export const CreateTransaction: React.FC = () => {
   const [values, setValues] = useState<IBaseTransactionItem>({ ...initValues });
   const navigate = useNavigate();
-
-  const storage = useMemo(() => new TransactionCollection(), []);
+  const { mutateAsync } = useTransactions.mutation({
+    onSuccess: () => {
+      setValues({ ...initValues });
+      navigate('/transactions');
+    },
+  });
 
   const handleChange = ({
     target: { name, value },
@@ -62,15 +65,12 @@ export const CreateTransaction: React.FC = () => {
       try {
         e?.preventDefault();
 
-        await storage.createItem(new TransactionItemModel({ ...values }));
-
-        setValues({ ...initValues });
-        navigate('/transactions');
+        await mutateAsync(values);
       } catch (error) {
         console.log('error:', error);
       }
     },
-    [navigate, storage, values]
+    [navigate, values]
   );
 
   return (

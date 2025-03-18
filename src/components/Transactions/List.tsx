@@ -3,13 +3,15 @@ import { TransactionCard } from '@/components/ui';
 import { Stack } from '@chakra-ui/react';
 
 export const TransactionsList: React.FC = () => {
-  const { data, isLoading } = useTransactions();
+  const { data, isLoading } = useTransactions.query();
 
   return (
     <Stack gap={4}>
       {!data &&
         isLoading &&
-        Array.from({ length: 9 }).map(() => <TransactionCard.Loading />)}
+        Array.from({ length: 9 }).map((_, i) => (
+          <TransactionCard.Loading key={`transactions-list-placeholder-${i}`} />
+        ))}
 
       {data?.length &&
         data?.map(

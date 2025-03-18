@@ -1,19 +1,11 @@
 import CollectionItemModel from './CollectionItemModel';
-import { ITransactionItem, TransactionItemTypeField } from './types';
-
-type ITransactionItemModelPayload = Pick<
+import {
+  IBaseTransactionItem,
   ITransactionItem,
-  | 'name'
-  | 'description'
-  | 'type'
-  | 'amount'
-  | 'user'
-  | 'category'
-  | 'source'
-  | 'location'
-  | 'date'
-  | 'salaryMonth'
->;
+  TransactionItemTypeField,
+} from './types';
+
+export type ITransactionItemModelPayload = IBaseTransactionItem;
 
 export class TransactionItemModel
   extends CollectionItemModel
