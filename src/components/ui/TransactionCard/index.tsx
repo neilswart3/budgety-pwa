@@ -7,10 +7,13 @@ import { Link } from 'react-router';
 import Template from './Template';
 import Loading from './Loading';
 
-type Props = Pick<
-  ITransactionItem,
-  'id' | 'name' | 'type' | 'amount' | 'date' | 'category' | 'source'
->;
+interface Props
+  extends Pick<
+    ITransactionItem,
+    'id' | 'name' | 'type' | 'amount' | 'date' | 'category' | 'source'
+  > {
+  link?: boolean;
+}
 
 const Component: React.FC<Props> & { Loading: React.FC } = ({
   id,
@@ -20,9 +23,10 @@ const Component: React.FC<Props> & { Loading: React.FC } = ({
   date,
   category,
   source,
+  link = false,
 }) => (
   <Template
-    {...{ as: Link, to: id }}
+    {...(link ? { as: Link, to: id } : {})}
     borderLeftColor={type === 'expense' ? 'red.400' : 'green.400'}
     borderLeftWidth={4}
     variant="elevated"

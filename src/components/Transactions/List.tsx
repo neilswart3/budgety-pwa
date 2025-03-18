@@ -17,6 +17,7 @@ export const TransactionsList: React.FC = () => {
         (data as ITransactionItem[])?.map(
           ({ id, name, date, amount, category, source, type }) => (
             <TransactionCard
+              link
               key={id}
               id={id}
               name={name}

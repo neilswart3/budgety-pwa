@@ -4,6 +4,7 @@ import {
   TransactionCollection,
 } from '@/core';
 import {
+  DefinedUseQueryResult,
   QueryFunctionContext,
   useMutation,
   UseMutationOptions,
@@ -13,14 +14,19 @@ import {
 import { useCallback, useMemo } from 'react';
 
 const queryKey = ['transactions'];
+type UseTransactionsQueryResult = ITransactionItem[] | ITransactionItem;
 
-const useTransactionsQuery = (id: string | undefined = undefined) => {
+const useTransactionsQuery = <T extends UseTransactionsQueryResult>(
+  id: string | undefined = undefined
+): DefinedUseQueryResult<T> => {
   const collection = useMemo(
     () => ({ transaction: new TransactionCollection() }),
     []
   );
 
-  const fetchTransactions = useCallback(async () => {
+  const fetchTransactions = useCallback(async (): Promise<
+    ITransactionItem[] | undefined
+  > => {
     try {
       return (await collection.transaction.search()) as ITransactionItem[];
     } catch (error) {
@@ -29,7 +35,10 @@ const useTransactionsQuery = (id: string | undefined = undefined) => {
   }, [collection]);
 
   const fetchSingleTransaction = useCallback(
-    async ({ client, queryKey }: QueryFunctionContext) => {
+    async ({
+      client,
+      queryKey,
+    }: QueryFunctionContext): Promise<ITransactionItem | undefined> => {
       try {
         const itemFromQuery = (
           client?.getQueryData([queryKey[0]]) as ITransactionItem[]
@@ -37,7 +46,9 @@ const useTransactionsQuery = (id: string | undefined = undefined) => {
 
         if (itemFromQuery?.id) return Promise.resolve(itemFromQuery);
 
-        return await collection.transaction.fetchItem(id as string);
+        return (await collection.transaction.fetchItem(
+          id as string
+        )) as ITransactionItem;
       } catch (error) {
         console.log('error:', error);
       }
@@ -45,10 +56,11 @@ const useTransactionsQuery = (id: string | undefined = undefined) => {
     [id]
   );
 
+  // @ts-ignore
   return useQuery({
     queryKey: id ? [...queryKey, id] : queryKey,
     queryFn: id ? fetchSingleTransaction : fetchTransactions,
-    initialData: id ? [] : {},
+    // initialData: id ? {} : [],
   });
 };
 
