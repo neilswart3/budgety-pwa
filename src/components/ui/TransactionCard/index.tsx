@@ -9,14 +9,7 @@ import Loading from './Loading';
 
 type Props = Pick<
   ITransactionItem,
-  | 'id'
-  | 'name'
-  | 'type'
-  | 'amount'
-  | 'date'
-  | 'category'
-  | 'location'
-  | 'source'
+  'id' | 'name' | 'type' | 'amount' | 'date' | 'category' | 'source'
 >;
 
 const Component: React.FC<Props> & { Loading: React.FC } = ({
@@ -27,7 +20,6 @@ const Component: React.FC<Props> & { Loading: React.FC } = ({
   date,
   category,
   source,
-  location,
 }) => (
   <Template
     {...{ as: Link, to: id }}
@@ -39,7 +31,6 @@ const Component: React.FC<Props> & { Loading: React.FC } = ({
     subtitle={
       <>
         <Badge variant="solid">{Case.title(source)}</Badge>
-        <Text fontSize={14}>{location}</Text>
       </>
     }
     amount={

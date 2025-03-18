@@ -2,6 +2,8 @@ import {
   Avatar,
   Card,
   CardRootProps,
+  Grid,
+  GridItem,
   HStack,
   Icon,
   Stack,
@@ -25,20 +27,30 @@ export default function Template({
 }: TemplateProps) {
   return (
     <Card.Root size="sm" {...props}>
-      <Card.Body w="full">
-        <HStack gap={4}>
-          <Avatar.Root variant="outline" size="2xl">
-            <Icon size="2xl">{category}</Icon>
-          </Avatar.Root>
-          <Stack flex={1} gap={1}>
-            <Card.Title fontWeight="bold">{title}</Card.Title>
+      <Card.Body w="full" p={3}>
+        <Grid gap={3} gridTemplateColumns="auto 1fr auto">
+          <GridItem as={Stack} justifyContent="center">
+            <Avatar.Root variant="outline" size="lg">
+              <Icon size="xl">{category}</Icon>
+            </Avatar.Root>
+          </GridItem>
+          <GridItem as={Stack} flex={1} gap={1} overflow="hidden">
+            <Card.Title
+              fontWeight="bold"
+              textWrap="nowrap"
+              textOverflow="ellipsis"
+              overflow="hidden"
+              fontSize={{ base: 14, sm: 16 }}
+            >
+              {title}
+            </Card.Title>
             <HStack>{subtitle}</HStack>
-          </Stack>
-          <Stack alignItems="flex-end">
+          </GridItem>
+          <GridItem as={Stack} alignItems="flex-end">
             <HStack fontWeight="bold">{amount}</HStack>
             {date}
-          </Stack>
-        </HStack>
+          </GridItem>
+        </Grid>
       </Card.Body>
     </Card.Root>
   );
