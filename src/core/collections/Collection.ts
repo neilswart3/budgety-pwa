@@ -1,8 +1,8 @@
 import { StorageKey } from '../types';
-import { ICollection, ICollectionItem, ServiceTypes } from './types';
+import { ICollection, ICollectionItemType, ServiceTypes } from './types';
 
 export default class Collection<
-  T extends ICollectionItem,
+  T extends ICollectionItemType,
   K extends StorageKey,
   R extends new (key: StorageKey) => ServiceTypes<T> = new (
     key: StorageKey
@@ -58,7 +58,7 @@ export default class Collection<
 
   async search(query?: unknown): Promise<Error | T[]> {
     try {
-      console.log('query:', query);
+      console.log('search query:', query);
 
       return await this.service.search();
     } catch (error) {

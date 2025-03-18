@@ -8,7 +8,6 @@ import {
   IconButton,
   Stack,
 } from '@chakra-ui/react';
-import { v4 as uuid } from 'uuid';
 import { SyntheticEvent, useCallback, useMemo, useState } from 'react';
 import { Field, Datepicker, FormInput } from '@/components/ui';
 import { IoReload, IoSaveSharp } from 'react-icons/io5';
@@ -16,9 +15,9 @@ import Case from 'case';
 import { useNavigate } from 'react-router';
 import {
   IBaseTransactionItem,
-  ITransactionItem,
-  ITransactionItemType,
+  TransactionItemTypeField,
   TransactionCollection,
+  TransactionItemModel,
 } from '@/core';
 
 const initValues: IBaseTransactionItem = {
@@ -31,7 +30,7 @@ const initValues: IBaseTransactionItem = {
   location: '',
   source: 'maaltijd cheques',
   user: 'me',
-  type: 'expense' as ITransactionItemType,
+  type: TransactionItemTypeField.EXPENSE,
 };
 
 type Values = typeof initValues;
@@ -48,11 +47,14 @@ export const CreateTransaction: React.FC = () => {
   }: {
     target: { name: string; value: string | null | undefined | Date };
   }) => {
-    setValues((prev) => ({ ...prev, [name]: value }));
+    setValues((prev: IBaseTransactionItem) => ({ ...prev, [name]: value }));
   };
 
   const handleResetDate = (name: 'date' | 'salaryMonth') => {
-    setValues((prev) => ({ ...prev, [name]: new Date() }));
+    setValues((prev: IBaseTransactionItem) => ({
+      ...prev,
+      [name]: new Date(),
+    }));
   };
 
   const handleSubmit = useCallback(
@@ -60,15 +62,7 @@ export const CreateTransaction: React.FC = () => {
       try {
         e?.preventDefault();
 
-        const newTransaction: ITransactionItem = {
-          ...(values as ITransactionItem),
-          id: uuid(),
-          created: values.date,
-          modified: values.date,
-          createdBy: 'me',
-        };
-
-        await storage.createItem(newTransaction);
+        await storage.createItem(new TransactionItemModel({ ...values }));
 
         setValues({ ...initValues });
         navigate('/transactions');
@@ -116,10 +110,14 @@ export const CreateTransaction: React.FC = () => {
                         ? [
                             {
                               value: 'Expense',
-                              id: 'expense',
+                              id: TransactionItemTypeField.EXPENSE,
                               label: 'Expense',
                             },
-                            { value: 'Income', id: 'income', label: 'Income' },
+                            {
+                              value: 'Income',
+                              id: TransactionItemTypeField.INCOME,
+                              label: 'Income',
+                            },
                           ]
                         : name === 'category'
                         ? [

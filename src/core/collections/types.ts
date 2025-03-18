@@ -1,8 +1,9 @@
-import { StorageService } from '../services';
+import { ITransactionItem } from '@/core/models';
+import { StorageService } from '@/core/services';
 
-export type ServiceTypes<T extends ICollectionItem> = StorageService<T>;
+export type ServiceTypes<T extends ICollectionItemType> = StorageService<T>;
 
-export interface ICollection<T extends ICollectionItem> {
+export interface ICollection<T extends ICollectionItemType> {
   createItem(el: T): Promise<void | Error>;
   fetchItem(id: string): Promise<T | Error>;
   fetchAll(): Promise<T[] | Error>;
@@ -11,29 +12,4 @@ export interface ICollection<T extends ICollectionItem> {
   search(query: unknown): Promise<T[] | Error>;
 }
 
-export interface IBaseCollectionItem {
-  id: string;
-  name: string;
-  created: Date;
-  modified: Date;
-  createdBy?: string;
-}
-
-export type ITransactionItemType = 'income' | 'expense';
-
-export interface IBaseTransactionItem {
-  name: string;
-  description: string;
-  type: ITransactionItemType;
-  amount: number;
-  user: string;
-  category: string;
-  source: string;
-  location: string;
-  date: Date;
-  salaryMonth: Date;
-}
-
-export type ITransactionItem = IBaseCollectionItem & IBaseTransactionItem;
-
-export type ICollectionItem = ITransactionItem;
+export type ICollectionItemType = ITransactionItem;

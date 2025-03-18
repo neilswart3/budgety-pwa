@@ -1,7 +1,7 @@
-import { StorageService } from '../services';
-import { StorageKey } from '../types';
+import { ITransactionItem } from '@/core/models';
+import { StorageService } from '@/core/services';
+import { StorageKey } from '@/core';
 import Collection from './Collection';
-import { ITransactionItem } from './types';
 
 export class TransactionCollection extends Collection<
   ITransactionItem,
