@@ -1,11 +1,13 @@
 import CollectionItemModel from './CollectionItemModel';
 import {
+  IBaseCollectionItem,
   IBaseTransactionItem,
   ITransactionItem,
   TransactionItemTypeField,
 } from './types';
 
-export type ITransactionItemModelPayload = IBaseTransactionItem;
+export type ITransactionItemModelPayload = IBaseTransactionItem &
+  Partial<Pick<IBaseCollectionItem, 'id' | 'name' | 'created' | 'createdBy'>>;
 
 export class TransactionItemModel
   extends CollectionItemModel
@@ -22,7 +24,11 @@ export class TransactionItemModel
   salaryMonth: Date;
 
   constructor({
+    id,
     name,
+    created,
+    createdBy,
+
     description,
     type,
     amount,
@@ -33,7 +39,7 @@ export class TransactionItemModel
     date,
     salaryMonth,
   }: ITransactionItemModelPayload) {
-    super({ name });
+    super({ id, name, created, createdBy });
 
     this.description = description;
     this.type = type;

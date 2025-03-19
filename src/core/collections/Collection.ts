@@ -39,13 +39,12 @@ export default class Collection<
     }
   }
 
-  async updateItem(id: string): Promise<void | Error> {
+  async updateItem(el: T & { id: string }): Promise<void | Error> {
     try {
-      await this.updateItem(id);
+      await this.service.update(el);
     } catch (error) {
       throw new Error((error as Error).message);
     }
-    throw new Error('Method not implemented.');
   }
 
   async deleteItem(id: string): Promise<void | Error> {

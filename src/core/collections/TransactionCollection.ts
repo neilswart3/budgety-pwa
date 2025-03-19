@@ -1,4 +1,5 @@
 import {
+  IBaseTransactionItem,
   ITransactionItem,
   ITransactionItemModelPayload,
   TransactionItemModel,
@@ -20,6 +21,22 @@ export class TransactionCollection extends Collection<
   ): Promise<void | Error> {
     try {
       await this.service.create(new TransactionItemModel(payload));
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async updateItem(
+    payload: ITransactionItemModelPayload & { id: string }
+  ): Promise<void | Error> {
+    try {
+      const currentItem = (await this.service.read(
+        payload.id
+      )) as IBaseTransactionItem;
+
+      const combinedPayload = { ...currentItem, ...payload };
+
+      await this.service.update(new TransactionItemModel(combinedPayload));
     } catch (error) {
       throw new Error((error as Error).message);
     }

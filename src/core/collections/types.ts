@@ -7,7 +7,7 @@ export interface ICollection<T extends ICollectionItemType> {
   createItem(el: T): Promise<void | Error>;
   fetchItem(id: string): Promise<T | Error>;
   fetchAll(): Promise<T[] | Error>;
-  updateItem(id: string): Promise<void | Error>;
+  updateItem(el: T & { id: string }): Promise<void | Error>;
   deleteItem(id: string): Promise<void | Error>;
   search(query: unknown): Promise<T[] | Error>;
 }

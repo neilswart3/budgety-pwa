@@ -53,9 +53,10 @@ const useTransactionsQuery = <T extends UseTransactionsQueryResult>(
         console.log('error:', error);
       }
     },
-    [id]
+    [collection.transaction, id]
   );
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return useQuery({
     queryKey: id ? [...queryKey, id] : queryKey,
@@ -64,8 +65,7 @@ const useTransactionsQuery = <T extends UseTransactionsQueryResult>(
   });
 };
 
-interface UseTransactionsMutationPayload
-  extends Omit<UseMutationOptions, 'mutationFn'> {}
+type UseTransactionsMutationPayload = Omit<UseMutationOptions, 'mutationFn'>;
 
 const useTransactionsMutation = (
   options: Partial<UseTransactionsMutationPayload> = {}
@@ -78,7 +78,10 @@ const useTransactionsMutation = (
 
   const handleSuccess = () => {
     queryClient.invalidateQueries({ queryKey });
-    options?.onSuccess && options.onSuccess({}, {} as unknown as void, {});
+
+    if (options?.onSuccess) {
+      options.onSuccess({}, {} as unknown as void, {});
+    }
   };
 
   const createItem = useCallback(
@@ -92,16 +95,37 @@ const useTransactionsMutation = (
     [collection.transaction]
   );
 
-  const deleteItem = useCallback(async (id: string) => {
-    try {
-      await collection.transaction.deleteItem(id);
-    } catch (error) {
-      console.log('error:', error);
-    }
-  }, []);
+  const deleteItem = useCallback(
+    async (id: string) => {
+      try {
+        await collection.transaction.deleteItem(id);
+      } catch (error) {
+        console.log('error:', error);
+      }
+    },
+    [collection.transaction]
+  );
+
+  const updateItem = useCallback(
+    async (
+      payload: ITransactionItemModelPayload & { id: string }
+    ): Promise<void> => {
+      try {
+        await collection.transaction.updateItem(payload);
+      } catch (error) {
+        console.log('error:', error);
+      }
+    },
+    [collection.transaction]
+  );
 
   const mutateCreate = useMutation({
     mutationFn: createItem,
+    onSuccess: handleSuccess,
+  });
+
+  const mutateUpdate = useMutation({
+    mutationFn: updateItem,
     onSuccess: handleSuccess,
   });
 
@@ -110,7 +134,11 @@ const useTransactionsMutation = (
     onSuccess: handleSuccess,
   });
 
-  return { createItem: mutateCreate, deleteItem: mutateDelete };
+  return {
+    createItem: mutateCreate,
+    updateItem: mutateUpdate,
+    deleteItem: mutateDelete,
+  };
 };
 
 export const useTransactions = {
