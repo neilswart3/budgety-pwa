@@ -6,6 +6,13 @@ export interface IBaseCollectionItem {
   createdBy: string;
 }
 
+export interface IBaseCategoryItem {
+  name: string;
+  description: string;
+}
+
+export type ICategoryItem = IBaseCollectionItem & IBaseCategoryItem;
+
 export enum TransactionItemTypeField {
   EXPENSE = 'expense',
   INCOME = 'income',

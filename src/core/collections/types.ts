@@ -1,4 +1,4 @@
-import { ITransactionItem } from '@/core/models';
+import { ICategoryItem, ITransactionItem } from '@/core/models';
 import { StorageService } from '@/core/services';
 
 export type ServiceTypes<T extends ICollectionItemType> = StorageService<T>;
@@ -12,4 +12,4 @@ export interface ICollection<T extends ICollectionItemType> {
   search(query: unknown): Promise<T[] | Error>;
 }
 
-export type ICollectionItemType = ITransactionItem;
+export type ICollectionItemType = ITransactionItem | ICategoryItem;
