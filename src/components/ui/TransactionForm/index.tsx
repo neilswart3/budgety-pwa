@@ -1,4 +1,8 @@
-import { IBaseTransactionItem, TransactionItemTypeField } from '@/core';
+import {
+  IBaseCollectionItem,
+  IBaseTransactionItem,
+  TransactionItemTypeField,
+} from '@/core';
 import {
   Button,
   Fieldset,
@@ -16,17 +20,22 @@ import { Field } from '../field';
 import { IoReload, IoSaveSharp } from 'react-icons/io5';
 import { Datepicker } from '../Datepicker';
 
+export type ITransactionFormValues = IBaseTransactionItem &
+  Pick<IBaseCollectionItem, 'name'>;
+
 interface Props {
-  initValues: IBaseTransactionItem;
-  onSubmit: (values: IBaseTransactionItem) => Promise<void>;
+  initValues: ITransactionFormValues;
+  onSubmit: (values: ITransactionFormValues) => Promise<void>;
 }
 
 export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
-  const [values, setValues] = useState<IBaseTransactionItem>({ ...initValues });
+  const [values, setValues] = useState<ITransactionFormValues>({
+    ...initValues,
+  });
 
   const fields: Record<
     'basicInfo' | 'transactionDate',
-    (keyof IBaseTransactionItem)[]
+    (keyof ITransactionFormValues)[]
   > = {
     basicInfo: [
       'type',
@@ -47,7 +56,7 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
     }: {
       target: { name: string; value: string | null | undefined | Date };
     }) => {
-      setValues((prev: IBaseTransactionItem) => ({ ...prev, [name]: value }));
+      setValues((prev) => ({ ...prev, [name]: value }));
     },
     []
   );

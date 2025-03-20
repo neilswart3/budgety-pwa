@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router';
 import { AppLayout } from './layouts';
-import { Wallet, Transactions, Dashboard } from '@/components';
+import { Wallet, Transactions, Dashboard, Categories } from '@/components';
 
 function App() {
   return (
@@ -16,13 +16,10 @@ function App() {
         </Route>
 
         <Route path="categories">
-          <Route index element={<div>List Categories</div>} />
-          <Route path="create" element={<div>Create Single Category</div>} />
-          <Route path=":category" element={<div>Single Category</div>} />
-          <Route
-            path=":category/edit"
-            element={<div>Edit Single Category</div>}
-          />
+          <Route index element={<Categories.List />} />
+          <Route path="create" element={<Categories.Create />} />
+          <Route path=":category" element={<Categories.Single />} />
+          <Route path=":category/edit" element={<Categories.Edit />} />
         </Route>
 
         <Route path="wallet">

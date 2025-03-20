@@ -1,10 +1,6 @@
 import { useCallback } from 'react';
-import { TransactionForm } from '../ui';
-import {
-  IBaseTransactionItem,
-  ITransactionItem,
-  useTransactions,
-} from '@/core';
+import { ITransactionFormValues, TransactionForm } from '../ui';
+import { ITransactionItem, useTransactions } from '@/core';
 import { useNavigate, useParams } from 'react-router';
 
 export const EditTransaction: React.FC = () => {
@@ -16,7 +12,7 @@ export const EditTransaction: React.FC = () => {
   });
 
   const handleSubmit = useCallback(
-    async (values: IBaseTransactionItem) => {
+    async (values: ITransactionFormValues) => {
       try {
         if (!data?.id) throw new Error('EditTransaction: id is not defined');
 

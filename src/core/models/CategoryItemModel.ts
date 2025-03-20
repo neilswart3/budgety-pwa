@@ -1,8 +1,7 @@
 import CollectionItemModel from './CollectionItemModel';
-import { IBaseCategoryItem, IBaseCollectionItem, ICategoryItem } from './types';
+import { IBaseCategoryItem, IBaseModelPayload, ICategoryItem } from './types';
 
-export type ICategoryItemModelPayload = IBaseCategoryItem &
-  Partial<Pick<IBaseCollectionItem, 'id' | 'name' | 'created' | 'createdBy'>>;
+export type ICategoryItemModelPayload = IBaseModelPayload<IBaseCategoryItem>;
 
 export class CategoryItemModel
   extends CollectionItemModel

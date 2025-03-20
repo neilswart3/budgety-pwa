@@ -7,11 +7,13 @@ export interface IBaseCollectionItem {
 }
 
 export interface IBaseCategoryItem {
-  name: string;
   description: string;
 }
 
-export type ICategoryItem = IBaseCollectionItem & IBaseCategoryItem;
+export interface IBaseAccountItem {
+  description: string;
+  monthBudgetAmount: number;
+}
 
 export enum TransactionItemTypeField {
   EXPENSE = 'expense',
@@ -19,7 +21,6 @@ export enum TransactionItemTypeField {
 }
 
 export interface IBaseTransactionItem {
-  name: string;
   description: string;
   type: TransactionItemTypeField;
   amount: number;
@@ -31,4 +32,15 @@ export interface IBaseTransactionItem {
   salaryMonth: Date;
 }
 
+type IBaseItems = IBaseTransactionItem | IBaseAccountItem | IBaseCategoryItem;
+
+export type IBaseModelPayload<
+  T extends IBaseItems,
+  B extends IBaseCollectionItem = IBaseCollectionItem,
+  Required extends keyof B = 'name',
+  Optional extends keyof B = 'id' | 'created' | 'createdBy'
+> = T & Pick<B, Required> & Partial<Pick<B, Optional>>;
+
+export type ICategoryItem = IBaseCollectionItem & IBaseCategoryItem;
+export type IAccountItem = IBaseCollectionItem & IBaseAccountItem;
 export type ITransactionItem = IBaseCollectionItem & IBaseTransactionItem;

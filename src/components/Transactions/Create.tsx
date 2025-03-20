@@ -1,13 +1,9 @@
 import { useCallback } from 'react';
-import { TransactionForm } from '@/components/ui';
+import { ITransactionFormValues, TransactionForm } from '@/components/ui';
 import { useNavigate } from 'react-router';
-import {
-  IBaseTransactionItem,
-  TransactionItemTypeField,
-  useTransactions,
-} from '@/core';
+import { TransactionItemTypeField, useTransactions } from '@/core';
 
-const initValues: IBaseTransactionItem = {
+const initValues: ITransactionFormValues = {
   name: '',
   description: '',
   date: new Date(),
@@ -29,7 +25,7 @@ export const CreateTransaction: React.FC = () => {
   });
 
   const handleSubmit = useCallback(
-    async (values: IBaseTransactionItem) => {
+    async (values: ITransactionFormValues) => {
       try {
         await createItem.mutateAsync(values);
       } catch (error) {

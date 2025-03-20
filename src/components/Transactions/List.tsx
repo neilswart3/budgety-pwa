@@ -13,7 +13,7 @@ export const TransactionsList: React.FC = () => {
           <TransactionCard.Loading key={`transactions-list-placeholder-${i}`} />
         ))}
 
-      {(data as ITransactionItem[])?.length &&
+      {!!(data as ITransactionItem[])?.length &&
         (data as ITransactionItem[])?.map(
           ({ id, name, date, amount, category, source, type }) => (
             <TransactionCard

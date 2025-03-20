@@ -1,13 +1,13 @@
 import CollectionItemModel from './CollectionItemModel';
 import {
-  IBaseCollectionItem,
+  IBaseModelPayload,
   IBaseTransactionItem,
   ITransactionItem,
   TransactionItemTypeField,
 } from './types';
 
-export type ITransactionItemModelPayload = IBaseTransactionItem &
-  Partial<Pick<IBaseCollectionItem, 'id' | 'name' | 'created' | 'createdBy'>>;
+export type ITransactionItemModelPayload =
+  IBaseModelPayload<IBaseTransactionItem>;
 
 export class TransactionItemModel
   extends CollectionItemModel

@@ -6,3 +6,4 @@ export * from './Accounts';
 export * from './Savings';
 export * from './Transactions';
 export * from './Dashboard';
+export * from './Categories';

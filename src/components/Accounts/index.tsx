@@ -1,10 +1,11 @@
-import { Stack } from "@chakra-ui/react";
-import { AccountCard } from "@/components/ui";
+import { AccountsList } from './List';
+import { SingleAccount } from './Single';
+import { CreateAccount } from './Create';
+import { EditAccount } from './Edit';
 
-export const Accounts: React.FC = () => (
-  <Stack gap={3}>
-    {[...Array(6)].map((_, i) => (
-      <AccountCard key={`account-card-${i}`} value={i} label="Account Item" />
-    ))}
-  </Stack>
-);
+export const Accounts = {
+  List: AccountsList,
+  Single: SingleAccount,
+  Create: CreateAccount,
+  Edit: EditAccount,
+};
