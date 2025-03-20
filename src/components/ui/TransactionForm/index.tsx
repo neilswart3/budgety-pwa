@@ -19,6 +19,7 @@ import { FormInput } from '../FormInput';
 import { Field } from '../field';
 import { IoReload, IoSaveSharp } from 'react-icons/io5';
 import { Datepicker } from '../Datepicker';
+import { Form } from '../Form';
 
 export type ITransactionFormValues = IBaseTransactionItem &
   Pick<IBaseCollectionItem, 'name'>;
@@ -81,158 +82,148 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
   );
 
   return (
-    <Stack as="form" gap={6} onSubmit={handleSubmit}>
-      <Fieldset.Root>
-        {Object.entries(fields).map(([name, keys]) => (
-          <Stack key={name} gap={4}>
-            <Fieldset.Legend>{Case.title(name)}</Fieldset.Legend>
-            <Fieldset.Content>
-              <Grid
-                gap={2}
-                gridTemplateColumns={{ md: 'repeat(2, minmax(0, 1fr))' }}
-              >
-                {keys.map((key) => (
-                  <GridItem
-                    key={key}
-                    gridColumn={{
-                      md: ['type', 'description'].includes(key)
-                        ? '1 / 3'
-                        : 'auto',
-                    }}
-                  >
-                    {(() => {
-                      if (['date', 'salaryMonth'].includes(key)) {
-                        return (
-                          <Field
-                            key={key}
-                            label={
-                              <HStack justify="space-between">
-                                {Case.title(key)}
-                                <IconButton
-                                  variant="subtle"
-                                  bg="bg.subtle"
-                                  onClick={() =>
-                                    handleResetDate(
-                                      name as 'date' | 'salaryMonth'
-                                    )
-                                  }
-                                >
-                                  <Icon>
-                                    <IoReload />
-                                  </Icon>
-                                </IconButton>
-                              </HStack>
-                            }
-                          >
-                            <Datepicker
-                              name={key}
-                              value={
-                                values[
-                                  key as keyof IBaseTransactionItem
-                                ] as Date
-                              }
-                              monthYearPicker={key === 'salaryMonth'}
-                              onChange={handleChange}
-                            />
-                          </Field>
-                        );
-                      }
-
-                      return (
-                        <FormInput
-                          name={key}
-                          value={
-                            values[key as keyof IBaseTransactionItem] as string
-                          }
-                          required={key !== 'description'}
-                          onChange={handleChange}
-                          options={
-                            key === 'type'
-                              ? [
-                                  {
-                                    value: 'Expense',
-                                    id: TransactionItemTypeField.EXPENSE,
-                                    label: 'Expense',
-                                  },
-                                  {
-                                    value: 'Income',
-                                    id: TransactionItemTypeField.INCOME,
-                                    label: 'Income',
-                                  },
-                                ]
-                              : key === 'category'
-                              ? [
-                                  {
-                                    id: 'household',
-                                    value: 'household',
-                                    label: 'Household',
-                                  },
-                                  {
-                                    id: 'food',
-                                    value: 'food',
-                                    label: 'Food',
-                                  },
-                                  {
-                                    id: 'holiday',
-                                    value: 'holiday',
-                                    label: 'Holiday',
-                                  },
-                                ]
-                              : key === 'source'
-                              ? [
-                                  {
-                                    id: 'maaltijdchecques',
-                                    value: 'maaltijdchecques',
-                                    label: 'Maaltijdchecques',
-                                  },
-                                  {
-                                    id: 'holiday savings',
-                                    value: 'holiday savings',
-                                    label: 'Holiday Savings',
-                                  },
-                                  {
-                                    id: 'spending money',
-                                    value: 'spending money',
-                                    label: 'Spending Money',
-                                  },
-                                ]
-                              : key === 'user'
-                              ? [
-                                  {
-                                    id: 'me',
-                                    value: 'me',
-                                    label: 'Me',
-                                  },
-                                  {
-                                    id: 'marisa',
-                                    value: 'marisa',
-                                    label: 'Marisa',
-                                  },
-                                  {
-                                    id: 'neil',
-                                    value: 'neil',
-                                    label: 'Neil',
-                                  },
-                                ]
-                              : undefined
-                          }
-                        />
-                      );
-                    })()}
-                  </GridItem>
-                ))}
-              </Grid>
-            </Fieldset.Content>
-          </Stack>
-        ))}
-      </Fieldset.Root>
-
-      <HStack>
-        <Button type="submit">
+    <Form.Container
+      onSubmit={handleSubmit}
+      button={
+        <>
           <IoSaveSharp />
           Submit
-        </Button>
-      </HStack>
-    </Stack>
+        </>
+      }
+    >
+      {Object.entries(fields).map(([name, keys]) => (
+        <Form.Block key={name} title={Case.title(name)}>
+          <Grid
+            gap={2}
+            gridTemplateColumns={{ md: 'repeat(2, minmax(0, 1fr))' }}
+          >
+            {keys.map((key) => (
+              <GridItem
+                key={key}
+                gridColumn={{
+                  md: ['type', 'description'].includes(key) ? '1 / 3' : 'auto',
+                }}
+              >
+                {(() => {
+                  if (['date', 'salaryMonth'].includes(key)) {
+                    return (
+                      <Field
+                        key={key}
+                        label={
+                          <HStack justify="space-between">
+                            {Case.title(key)}
+                            <IconButton
+                              variant="subtle"
+                              bg="bg.subtle"
+                              onClick={() =>
+                                handleResetDate(name as 'date' | 'salaryMonth')
+                              }
+                            >
+                              <Icon>
+                                <IoReload />
+                              </Icon>
+                            </IconButton>
+                          </HStack>
+                        }
+                      >
+                        <Datepicker
+                          name={key}
+                          value={
+                            values[key as keyof IBaseTransactionItem] as Date
+                          }
+                          monthYearPicker={key === 'salaryMonth'}
+                          onChange={handleChange}
+                        />
+                      </Field>
+                    );
+                  }
+
+                  return (
+                    <FormInput
+                      name={key}
+                      value={
+                        values[key as keyof IBaseTransactionItem] as string
+                      }
+                      required={key !== 'description'}
+                      onChange={handleChange}
+                      options={
+                        key === 'type'
+                          ? [
+                              {
+                                value: 'Expense',
+                                id: TransactionItemTypeField.EXPENSE,
+                                label: 'Expense',
+                              },
+                              {
+                                value: 'Income',
+                                id: TransactionItemTypeField.INCOME,
+                                label: 'Income',
+                              },
+                            ]
+                          : key === 'category'
+                          ? [
+                              {
+                                id: 'household',
+                                value: 'household',
+                                label: 'Household',
+                              },
+                              {
+                                id: 'food',
+                                value: 'food',
+                                label: 'Food',
+                              },
+                              {
+                                id: 'holiday',
+                                value: 'holiday',
+                                label: 'Holiday',
+                              },
+                            ]
+                          : key === 'source'
+                          ? [
+                              {
+                                id: 'maaltijdchecques',
+                                value: 'maaltijdchecques',
+                                label: 'Maaltijdchecques',
+                              },
+                              {
+                                id: 'holiday savings',
+                                value: 'holiday savings',
+                                label: 'Holiday Savings',
+                              },
+                              {
+                                id: 'spending money',
+                                value: 'spending money',
+                                label: 'Spending Money',
+                              },
+                            ]
+                          : key === 'user'
+                          ? [
+                              {
+                                id: 'me',
+                                value: 'me',
+                                label: 'Me',
+                              },
+                              {
+                                id: 'marisa',
+                                value: 'marisa',
+                                label: 'Marisa',
+                              },
+                              {
+                                id: 'neil',
+                                value: 'neil',
+                                label: 'Neil',
+                              },
+                            ]
+                          : undefined
+                      }
+                    />
+                  );
+                })()}
+              </GridItem>
+            ))}
+          </Grid>
+        </Form.Block>
+      ))}
+    </Form.Container>
   );
 };
