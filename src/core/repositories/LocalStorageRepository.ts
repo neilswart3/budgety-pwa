@@ -17,6 +17,8 @@ export class LocalStorageRepository<T extends IBaseCollectionItem>
     try {
       const entries = await this.search();
 
+      console.log('entries:', entries);
+
       Promise.resolve(
         window.localStorage.setItem(
           this.item,
@@ -88,10 +90,13 @@ export class LocalStorageRepository<T extends IBaseCollectionItem>
 
   async search(): Promise<T[] | Error> {
     try {
-      const entries = window?.localStorage?.getItem(this.item);
+      let entries = window?.localStorage?.getItem(this.item);
 
-      if (entries === null)
-        throw new Error(`Storage key "${this.key}" does not exist.`);
+      if (entries === null) {
+        const initValue = JSON.stringify([]);
+        window?.localStorage?.setItem(this.item, initValue);
+        entries = JSON.stringify(initValue);
+      }
 
       return Promise.resolve(JSON.parse(entries));
     } catch (error) {

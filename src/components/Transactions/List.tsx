@@ -38,7 +38,7 @@ export const TransactionsList: React.FC<Props> = ({ categoryId }) => {
     if (categoryId) fetchTransactionsByCategory(categoryId);
   }, [categoryId, fetchTransactionsByCategory]);
 
-  const theData = categoryId ? transactionsByCat : data;
+  const theData = categoryId ? transactionsByCat || [] : data || [];
 
   return (
     <Stack gap={4}>
