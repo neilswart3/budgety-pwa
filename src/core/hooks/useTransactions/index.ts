@@ -1,67 +1,22 @@
-import {
-  ITransactionItem,
-  ITransactionItemModelPayload,
-  TransactionCollection,
-} from '@/core';
-import {
-  DefinedUseQueryResult,
-  QueryFunctionContext,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
-import { useCallback, useMemo } from 'react';
+import { ITransactionItem, TransactionCollection } from '@/core';
+import { UseMutationOptions, UseQueryResult } from '@tanstack/react-query';
+import { useMemo } from 'react';
+import { useCollection } from '../useCollection';
 
 const queryKey = ['transactions'];
-type UseTransactionsQueryResult = ITransactionItem[] | ITransactionItem;
 
-const useTransactionsQuery = <T extends UseTransactionsQueryResult>(
+const useTransactionsQuery = (
   id: string | undefined = undefined
-): DefinedUseQueryResult<T> => {
+): UseQueryResult<ITransactionItem | ITransactionItem[]> => {
   const collection = useMemo(
     () => ({ transaction: new TransactionCollection() }),
     []
   );
 
-  const fetchTransactions = useCallback(async (): Promise<
-    ITransactionItem[] | undefined
-  > => {
-    try {
-      return (await collection.transaction.search()) as ITransactionItem[];
-    } catch (error) {
-      console.log('error:', error);
-    }
-  }, [collection]);
-
-  const fetchSingleTransaction = useCallback(
-    async ({
-      client,
-      queryKey,
-    }: QueryFunctionContext): Promise<ITransactionItem | undefined> => {
-      try {
-        const itemFromQuery = (
-          client?.getQueryData([queryKey[0]]) as ITransactionItem[]
-        )?.find((t) => t.id === id);
-
-        if (itemFromQuery?.id) return Promise.resolve(itemFromQuery);
-
-        return (await collection.transaction.fetchItem(
-          id as string
-        )) as ITransactionItem;
-      } catch (error) {
-        console.log('error:', error);
-      }
-    },
-    [collection.transaction, id]
-  );
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return useQuery({
-    queryKey: id ? [...queryKey, id] : queryKey,
-    queryFn: id ? fetchSingleTransaction : fetchTransactions,
-    // initialData: id ? {} : [],
+  return useCollection.query<ITransactionItem, TransactionCollection>({
+    id,
+    queryKey,
+    collection: collection.transaction,
   });
 };
 
@@ -70,75 +25,16 @@ type UseTransactionsMutationPayload = Omit<UseMutationOptions, 'mutationFn'>;
 const useTransactionsMutation = (
   options: Partial<UseTransactionsMutationPayload> = {}
 ) => {
-  const queryClient = useQueryClient();
   const collection = useMemo(
     () => ({ transaction: new TransactionCollection() }),
     []
   );
 
-  const handleSuccess = () => {
-    queryClient.invalidateQueries({ queryKey });
-
-    if (options?.onSuccess) {
-      options.onSuccess({}, {} as unknown as void, {});
-    }
-  };
-
-  const createItem = useCallback(
-    async (payload: ITransactionItemModelPayload) => {
-      try {
-        await collection.transaction.createItem(payload);
-      } catch (error) {
-        console.log('error:', error);
-      }
-    },
-    [collection.transaction]
-  );
-
-  const deleteItem = useCallback(
-    async (id: string) => {
-      try {
-        await collection.transaction.deleteItem(id);
-      } catch (error) {
-        console.log('error:', error);
-      }
-    },
-    [collection.transaction]
-  );
-
-  const updateItem = useCallback(
-    async (
-      payload: ITransactionItemModelPayload & { id: string }
-    ): Promise<void> => {
-      try {
-        await collection.transaction.updateItem(payload);
-      } catch (error) {
-        console.log('error:', error);
-      }
-    },
-    [collection.transaction]
-  );
-
-  const mutateCreate = useMutation({
-    mutationFn: createItem,
-    onSuccess: handleSuccess,
+  return useCollection.mutation<ITransactionItem, TransactionCollection>({
+    queryKey,
+    collection: collection.transaction,
+    options,
   });
-
-  const mutateUpdate = useMutation({
-    mutationFn: updateItem,
-    onSuccess: handleSuccess,
-  });
-
-  const mutateDelete = useMutation({
-    mutationFn: deleteItem,
-    onSuccess: handleSuccess,
-  });
-
-  return {
-    createItem: mutateCreate,
-    updateItem: mutateUpdate,
-    deleteItem: mutateDelete,
-  };
 };
 
 export const useTransactions = {

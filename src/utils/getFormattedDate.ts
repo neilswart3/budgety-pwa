@@ -1,4 +1,9 @@
-export const getFormattedDate = (date: Date, picks: string): string => {
+export const getFormattedDate = (
+  date: Date | undefined,
+  picks: string
+): string | undefined => {
+  if (!date) return undefined;
+
   const theDate = new Date(date);
 
   const t = {

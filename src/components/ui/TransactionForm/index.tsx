@@ -1,7 +1,9 @@
 import {
   IBaseCollectionItem,
   IBaseTransactionItem,
+  ICategoryItem,
   TransactionItemTypeField,
+  useCategories,
 } from '@/core';
 import { Grid, GridItem, HStack, IconButton } from '@chakra-ui/react';
 import Case from 'case';
@@ -11,7 +13,7 @@ import { IoReload, IoSaveSharp } from 'react-icons/io5';
 import { Datepicker } from '../Datepicker';
 import { Form } from '../Form';
 import { useForm, UseFormHandleChangePayload } from '@/hooks';
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback, useMemo } from 'react';
 
 export type ITransactionFormValues = IBaseTransactionItem &
   Pick<IBaseCollectionItem, 'name'>;
@@ -38,6 +40,18 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
     ],
     transactionDate: ['date', 'salaryMonth'],
   };
+
+  const categories = useCategories.query();
+
+  const categoryOptions = useMemo(
+    () =>
+      (categories.data as ICategoryItem[])?.map(({ id, name }) => ({
+        id,
+        value: id,
+        label: name,
+      })) || [],
+    [categories.data]
+  );
 
   const {
     values,
@@ -136,23 +150,7 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
                               },
                             ]
                           : key === 'category'
-                          ? [
-                              {
-                                id: 'household',
-                                value: 'household',
-                                label: 'Household',
-                              },
-                              {
-                                id: 'food',
-                                value: 'food',
-                                label: 'Food',
-                              },
-                              {
-                                id: 'holiday',
-                                value: 'holiday',
-                                label: 'Holiday',
-                              },
-                            ]
+                          ? categoryOptions
                           : key === 'source'
                           ? [
                               {

@@ -9,3 +9,4 @@ export * from './InstallMessage';
 export * from './TransactionCard';
 export * from './CategoryCard';
 export * from './TransactionForm';
+export * from './CategoryForm';

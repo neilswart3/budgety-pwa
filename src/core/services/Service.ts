@@ -32,7 +32,7 @@ export default class Service<
     }
   }
 
-  async update(el: T): Promise<void | Error> {
+  async update(el: T & { id: string }): Promise<void | Error> {
     try {
       await this.repository.update(el);
     } catch (error) {

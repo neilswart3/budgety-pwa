@@ -34,9 +34,31 @@ export class TransactionCollection extends Collection<
         payload.id
       )) as IBaseTransactionItem;
 
-      const combinedPayload = { ...currentItem, ...payload };
+      await this.service.update(
+        new TransactionItemModel({ ...currentItem, ...payload })
+      );
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
 
-      await this.service.update(new TransactionItemModel(combinedPayload));
+  async search(query?: {
+    transactionId?: string;
+    categoryId?: string;
+  }): Promise<Error | ITransactionItem[]> {
+    try {
+      console.log('query:', query);
+
+      const entries = await this.service.search();
+
+      if (!entries) throw new Error('No entries found');
+
+      return (entries as ITransactionItem[]).filter((e) =>
+        [
+          ...(query?.transactionId ? [e.id === query.transactionId] : []),
+          ...(query?.categoryId ? [e.category === query.categoryId] : []),
+        ].every(Boolean)
+      );
     } catch (error) {
       throw new Error((error as Error).message);
     }

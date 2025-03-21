@@ -1,12 +1,15 @@
 import { useCallback } from 'react';
 import { ITransactionFormValues, TransactionForm } from '../ui';
-import { ITransactionItem, useTransactions } from '@/core';
+import { IBaseModelPayload, ITransactionItem, useTransactions } from '@/core';
 import { useNavigate, useParams } from 'react-router';
+import { UseQueryResult } from '@tanstack/react-query';
 
 export const EditTransaction: React.FC = () => {
   const navigate = useNavigate();
   const { transaction: id } = useParams();
-  const { data, isFetching } = useTransactions.query<ITransactionItem>(id);
+  const { data, isFetching } = useTransactions.query(
+    id
+  ) as UseQueryResult<ITransactionItem>;
   const { updateItem } = useTransactions.mutation({
     onSuccess: () => navigate(`/transactions/${id}`),
   });
@@ -16,7 +19,10 @@ export const EditTransaction: React.FC = () => {
       try {
         if (!data?.id) throw new Error('EditTransaction: id is not defined');
 
-        await updateItem.mutateAsync({ id: data.id, ...values });
+        await updateItem.mutateAsync({
+          id: data?.id,
+          ...values,
+        } as unknown as IBaseModelPayload<ITransactionItem>);
       } catch (error) {
         console.log('error:', error);
       }
@@ -25,6 +31,8 @@ export const EditTransaction: React.FC = () => {
   );
 
   if (!data && isFetching) return <div>Loading</div>;
+
+  if (!data) return <div>Not found</div>;
 
   return (
     <TransactionForm

@@ -1,22 +1,31 @@
-import { Button, HStack, Icon, Stack } from '@chakra-ui/react';
+import { Button, HStack, Stack } from '@chakra-ui/react';
 import { IoAddSharp } from 'react-icons/io5';
 import { CategoryCard } from '../ui';
+import { Link } from 'react-router';
+import { ICategoryItem, useCategories } from '@/core';
 
 export const CategoriesList: React.FC = () => {
+  const { data, isLoading } = useCategories.query();
+
   return (
-    <Stack>
+    <Stack gap={6}>
       <HStack>
-        <Button>
-          <Icon>
-            <IoAddSharp />
-          </Icon>
+        <Button {...{ as: Link, to: 'create' }}>
+          <IoAddSharp />
           Add New
         </Button>
       </HStack>
       <Stack gap={4}>
-        <CategoryCard id="randowm-id" name="food" description="Something" />
-        <CategoryCard id="randowm-id-1" name="food" description="Something" />
-        <CategoryCard.Loading />
+        {!data &&
+          isLoading &&
+          Array.from({ length: 9 }).map((_, i) => (
+            <CategoryCard.Loading key={`categories-list-placeholder-${i}`} />
+          ))}
+
+        {!!(data as ICategoryItem[])?.length &&
+          (data as ICategoryItem[])?.map((props) => (
+            <CategoryCard link key={props.id} {...props} />
+          ))}
       </Stack>
     </Stack>
   );

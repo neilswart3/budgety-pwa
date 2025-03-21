@@ -55,10 +55,8 @@ export default class Collection<
     }
   }
 
-  async search(query?: unknown): Promise<Error | T[]> {
+  async search(): Promise<Error | T[]> {
     try {
-      console.log('search query:', query);
-
       return await this.service.search();
     } catch (error) {
       throw new Error((error as Error).message);

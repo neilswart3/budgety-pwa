@@ -35,7 +35,7 @@ export interface IBaseTransactionItem {
 type IBaseItems = IBaseTransactionItem | IBaseAccountItem | IBaseCategoryItem;
 
 export type IBaseModelPayload<
-  T extends IBaseItems,
+  T extends IBaseItems = IBaseItems,
   B extends IBaseCollectionItem = IBaseCollectionItem,
   Required extends keyof B = 'name',
   Optional extends keyof B = 'id' | 'created' | 'createdBy'
