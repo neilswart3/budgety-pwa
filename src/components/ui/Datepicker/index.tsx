@@ -1,23 +1,17 @@
-import { Box, Button, IconButton } from "@chakra-ui/react";
-import { PropsWithChildren } from "react";
-import ReactDatePicker, { CalendarContainer } from "react-datepicker";
-import { IconType } from "react-icons";
+import { Box, Button, IconButton } from '@chakra-ui/react';
+import { ChangeEvent, PropsWithChildren, useMemo } from 'react';
+import ReactDatePicker, { CalendarContainer } from 'react-datepicker';
+import { IconType } from 'react-icons';
 
 interface Props {
   name: string;
-  value: Date;
+  value: string;
   monthYearPicker?: boolean;
   icon?: IconType;
-  onChange: (e: {
-    target: { name: string; value: string | null | undefined | Date };
-  }) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const fmt = {
-  d: "dd",
-  m: "MMMM",
-  y: "yyyy",
-};
+const fmt = { d: 'dd', m: 'MMMM', y: 'yyyy' };
 
 export const Datepicker: React.FC<Props> = ({
   name,
@@ -25,17 +19,21 @@ export const Datepicker: React.FC<Props> = ({
   monthYearPicker = false,
   onChange,
 }) => {
+  const dateValue = useMemo(() => new Date(value), [value]);
+
   const handleChange = (value: Date | null) =>
-    onChange({ target: { name, value } });
+    onChange({
+      target: { name, value: value?.toISOString() },
+    } as ChangeEvent<HTMLInputElement>);
 
   return (
     <ReactDatePicker
       name={name}
-      startDate={value}
+      startDate={dateValue}
+      selected={dateValue}
       inline
-      selected={value}
       showMonthYearPicker={monthYearPicker}
-      dateFormat={`${monthYearPicker ? "" : fmt.d} ${fmt.m} ${fmt.y}`.trim()}
+      dateFormat={`${monthYearPicker ? '' : fmt.d} ${fmt.m} ${fmt.y}`.trim()}
       onChange={handleChange}
       calendarContainer={({
         className,

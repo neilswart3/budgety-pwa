@@ -17,6 +17,7 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import { IoAddCircleSharp, IoRemoveCircleSharp } from 'react-icons/io5';
+import { ChangeEvent } from 'react';
 
 interface Props {
   name: string;
@@ -24,7 +25,7 @@ interface Props {
   value: string | number | undefined;
   required?: boolean;
   options?: { value: string; label: string; id: string }[];
-  onChange: (e: { target: { name: string; value: string } }) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 export const FormInput: React.FC<Props> = ({
@@ -47,7 +48,11 @@ export const FormInput: React.FC<Props> = ({
           bg="bg.muted"
           defaultValue={value as string}
           w="full"
-          onValueChange={({ value }) => onChange({ target: { name, value } })}
+          onValueChange={({ value }) =>
+            onChange({
+              target: { name, value },
+            } as ChangeEvent<HTMLInputElement>)
+          }
         >
           <HStack>
             {options.map(({ id, value }) => (
@@ -87,7 +92,7 @@ export const FormInput: React.FC<Props> = ({
           onValueChange={({ value }) =>
             onChange({
               target: { value: value[0], name },
-            })
+            } as ChangeEvent<HTMLInputElement>)
           }
         >
           <SelectTrigger>

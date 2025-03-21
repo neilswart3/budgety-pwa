@@ -3,23 +3,15 @@ import {
   IBaseTransactionItem,
   TransactionItemTypeField,
 } from '@/core';
-import {
-  Button,
-  Fieldset,
-  Grid,
-  GridItem,
-  HStack,
-  Icon,
-  IconButton,
-  Stack,
-} from '@chakra-ui/react';
+import { Grid, GridItem, HStack, IconButton } from '@chakra-ui/react';
 import Case from 'case';
-import { SyntheticEvent, useCallback, useState } from 'react';
 import { FormInput } from '../FormInput';
 import { Field } from '../field';
 import { IoReload, IoSaveSharp } from 'react-icons/io5';
 import { Datepicker } from '../Datepicker';
 import { Form } from '../Form';
+import { useForm, UseFormHandleChangePayload } from '@/hooks';
+import { ChangeEvent, useCallback } from 'react';
 
 export type ITransactionFormValues = IBaseTransactionItem &
   Pick<IBaseCollectionItem, 'name'>;
@@ -30,10 +22,6 @@ interface Props {
 }
 
 export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
-  const [values, setValues] = useState<ITransactionFormValues>({
-    ...initValues,
-  });
-
   const fields: Record<
     'basicInfo' | 'transactionDate',
     (keyof ITransactionFormValues)[]
@@ -51,34 +39,19 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
     transactionDate: ['date', 'salaryMonth'],
   };
 
+  const {
+    values,
+    handleChange: onChange,
+    handleResetValue,
+    handleSubmit,
+  } = useForm<ITransactionFormValues>({ initValues, onSubmit });
+
   const handleChange = useCallback(
-    ({
-      target: { name, value },
-    }: {
-      target: { name: string; value: string | null | undefined | Date };
-    }) => {
-      setValues((prev) => ({ ...prev, [name]: value }));
-    },
-    []
-  );
-
-  const handleResetDate = useCallback(
-    (key: keyof Pick<IBaseTransactionItem, 'date' | 'salaryMonth'>) => {
-      setValues((prev) => ({ ...prev, [key]: initValues[key] }));
-    },
-    [initValues]
-  );
-
-  const handleSubmit = useCallback(
-    async (e: SyntheticEvent) => {
-      try {
-        e?.preventDefault();
-        await onSubmit(values);
-      } catch (error) {
-        console.log('error:', error);
-      }
-    },
-    [onSubmit, values]
+    ({ target }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      onChange({
+        target: { name: target.name, value: target.value },
+      } as UseFormHandleChangePayload<ITransactionFormValues>),
+    [onChange]
   );
 
   return (
@@ -116,12 +89,12 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
                               variant="subtle"
                               bg="bg.subtle"
                               onClick={() =>
-                                handleResetDate(name as 'date' | 'salaryMonth')
+                                handleResetValue(
+                                  name as keyof ITransactionFormValues
+                                )
                               }
                             >
-                              <Icon>
-                                <IoReload />
-                              </Icon>
+                              <IoReload />
                             </IconButton>
                           </HStack>
                         }
@@ -129,7 +102,9 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
                         <Datepicker
                           name={key}
                           value={
-                            values[key as keyof IBaseTransactionItem] as Date
+                            values[
+                              key as keyof ITransactionFormValues
+                            ] as string
                           }
                           monthYearPicker={key === 'salaryMonth'}
                           onChange={handleChange}
@@ -142,7 +117,7 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
                     <FormInput
                       name={key}
                       value={
-                        values[key as keyof IBaseTransactionItem] as string
+                        values[key as keyof ITransactionFormValues] as string
                       }
                       required={key !== 'description'}
                       onChange={handleChange}
