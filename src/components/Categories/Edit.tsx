@@ -8,9 +8,9 @@ export const EditCategory: React.FC = () => {
   const navigate = useNavigate();
   const { category: id } = useParams();
 
-  const { data, isFetching } = useCategories.query({
-    categoryId: id,
-  }) as UseQueryResult<ICategoryItem>;
+  const { data, isFetching } = useCategories.query(
+    id
+  ) as UseQueryResult<ICategoryItem>;
   const { updateItem } = useCategories.mutation({
     onSuccess: () => navigate(`/categories/${id}`),
   });
