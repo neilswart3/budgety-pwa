@@ -19,12 +19,18 @@ import {
 import { IoAddCircleSharp, IoRemoveCircleSharp } from 'react-icons/io5';
 import { ChangeEvent } from 'react';
 
+export interface FormInputOption {
+  value: string;
+  label: React.ReactNode;
+  id: string;
+}
+
 interface Props {
   name: string;
   label?: string;
   value: string | number | undefined;
   required?: boolean;
-  options?: { value: string; label: string; id: string }[];
+  options?: FormInputOption[];
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
@@ -80,7 +86,10 @@ export const FormInput: React.FC<Props> = ({
       </Field>
     );
 
-  if (['category', 'source', 'user'].includes(name) && options?.length) {
+  if (
+    ['category', 'source', 'user', 'icon', 'color'].includes(name) &&
+    options?.length
+  ) {
     const collection = createListCollection({ items: options });
 
     return (

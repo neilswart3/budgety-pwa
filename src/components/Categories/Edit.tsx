@@ -1,5 +1,4 @@
 import { IBaseModelPayload, ICategoryItem, useCategories } from '@/core';
-import { UseQueryResult } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { CategoryForm, ICategoryFormValues } from '@/components/ui';
@@ -8,9 +7,7 @@ export const EditCategory: React.FC = () => {
   const navigate = useNavigate();
   const { category: id } = useParams();
 
-  const { data, isFetching } = useCategories.query(
-    id
-  ) as UseQueryResult<ICategoryItem>;
+  const { data, isFetching } = useCategories.single(id);
   const { updateItem } = useCategories.mutation({
     onSuccess: () => navigate(`/categories/${id}`),
   });
@@ -36,7 +33,12 @@ export const EditCategory: React.FC = () => {
 
   return (
     <CategoryForm
-      initValues={{ name: data.name, description: data.description }}
+      initValues={{
+        name: data.name,
+        description: data.description,
+        icon: data?.icon,
+        color: data?.color,
+      }}
       onSubmit={handleSubmit}
     />
   );

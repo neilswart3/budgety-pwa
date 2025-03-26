@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { BrowserRouter } from 'react-router';
-import { ChakraProvider, createSystem, defaultConfig } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { ThemeProvider } from 'next-themes';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
@@ -9,16 +9,16 @@ import './index.css';
 import { scan } from 'react-scan';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { themeSystem } from '@/core';
 
 scan({ enabled: import.meta.env.DEV });
 
-const system = createSystem(defaultConfig);
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider value={system}>
+      <ChakraProvider value={themeSystem}>
         <ThemeProvider attribute="class">
           <BrowserRouter>
             <App />

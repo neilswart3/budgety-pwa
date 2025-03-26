@@ -35,6 +35,8 @@ export const SingleCategory: React.FC = () => {
           id={data?.id}
           name={data?.name}
           description={data?.description}
+          icon={data?.icon}
+          color={data?.color}
         />
       )}
 

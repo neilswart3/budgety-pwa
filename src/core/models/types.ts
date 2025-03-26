@@ -1,3 +1,5 @@
+import * as io5Icons from 'react-icons/io5';
+
 export interface IBaseCollectionItem {
   id: string;
   name: string;
@@ -6,8 +8,12 @@ export interface IBaseCollectionItem {
   createdBy: string;
 }
 
+export type IconKey = keyof typeof io5Icons;
+
 export interface IBaseCategoryItem {
   description: string;
+  icon: IconKey;
+  color: string;
 }
 
 export interface IBaseAccountItem {
