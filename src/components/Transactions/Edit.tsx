@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 import { ITransactionFormValues, TransactionForm } from '../ui';
 import { IBaseModelPayload, ITransactionItem, useTransactions } from '@/core';
 import { useNavigate, useParams } from 'react-router';
-import { UseQueryResult } from '@tanstack/react-query';
 
 export const EditTransaction: React.FC = () => {
   const navigate = useNavigate();
