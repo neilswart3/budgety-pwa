@@ -41,7 +41,7 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
     transactionDate: ['date', 'salaryMonth'],
   };
 
-  const categories = useCategories.query();
+  const categories = useCategories.search();
 
   const categoryOptions = useMemo(
     () =>

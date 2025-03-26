@@ -7,9 +7,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 export const EditTransaction: React.FC = () => {
   const navigate = useNavigate();
   const { transaction: id } = useParams();
-  const { data, isFetching } = useTransactions.query(
-    id
-  ) as UseQueryResult<ITransactionItem>;
+  const { data, isFetching } = useTransactions.single(id as string);
   const { updateItem } = useTransactions.mutation({
     onSuccess: () => navigate(`/transactions/${id}`),
   });
