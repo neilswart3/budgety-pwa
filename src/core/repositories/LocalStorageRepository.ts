@@ -1,4 +1,9 @@
-import { IRepository, LocalStorageItem, localStorageRepoBase } from './types';
+import {
+  IRepository,
+  LocalStorageItem,
+  localStorageRepoBase,
+  LocalStorageSearchQuery,
+} from './types';
 import { StorageKey } from '../types';
 import { IBaseCollectionItem } from '../models';
 
@@ -15,9 +20,7 @@ export class LocalStorageRepository<T extends IBaseCollectionItem>
 
   async create(el: T): Promise<void | Error> {
     try {
-      const entries = await this.search();
-
-      console.log('entries:', entries);
+      const entries = await this.list();
 
       Promise.resolve(
         window.localStorage.setItem(
@@ -32,9 +35,11 @@ export class LocalStorageRepository<T extends IBaseCollectionItem>
     }
   }
 
-  async read(id: string): Promise<T | Error> {
+  async read(id: string | undefined): Promise<T | Error | undefined> {
     try {
-      const entries = (await this.search()) as T[];
+      if (!id) return;
+
+      const entries = (await this.list()) as T[];
       const entry = entries?.find((e) => e.id === id);
 
       if (!entry)
@@ -50,7 +55,7 @@ export class LocalStorageRepository<T extends IBaseCollectionItem>
 
   async update(el: T): Promise<void | Error> {
     try {
-      const entries = await this.search();
+      const entries = await this.list();
 
       const newEntries = (entries as T[]).reduce(
         (acc: T[], item: T) =>
@@ -70,7 +75,7 @@ export class LocalStorageRepository<T extends IBaseCollectionItem>
 
   async delete(id: string): Promise<void | Error> {
     try {
-      const entries = (await this.search()) as T[];
+      const entries = (await this.list()) as T[];
       const entry = entries?.find((e) => e.id === id);
 
       if (!entry?.id)
@@ -88,7 +93,7 @@ export class LocalStorageRepository<T extends IBaseCollectionItem>
     }
   }
 
-  async search(): Promise<T[] | Error> {
+  async list(): Promise<T[] | Error> {
     try {
       let entries = window?.localStorage?.getItem(this.item);
 
@@ -99,6 +104,33 @@ export class LocalStorageRepository<T extends IBaseCollectionItem>
       }
 
       return Promise.resolve(JSON.parse(entries));
+    } catch (error) {
+      throw new Error(
+        `LocalStorageRepository.list: ${(error as Error).message}`
+      );
+    }
+  }
+
+  async search(
+    query: LocalStorageSearchQuery | undefined = undefined
+  ): Promise<T[] | Error> {
+    try {
+      const entries = await this.list();
+
+      if (!query || !Object.values(query).filter(Boolean).length)
+        return entries;
+
+      if (!entries) throw new Error('No entries found for this key');
+      if (entries instanceof Error) throw new Error(entries.message);
+
+      const queryArr = Object.entries(query);
+      const entriesWithQuery = entries.filter((entry) =>
+        queryArr.every(
+          ([key, value]) => entry[key as keyof typeof entry] === value
+        )
+      );
+
+      return await Promise.resolve(entriesWithQuery);
     } catch (error) {
       throw new Error(
         `LocalStorageRepository.search: ${(error as Error).message}`

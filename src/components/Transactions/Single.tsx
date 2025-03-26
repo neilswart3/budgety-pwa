@@ -1,9 +1,4 @@
-import {
-  ICategoryItem,
-  ITransactionItem,
-  useCategories,
-  useTransactions,
-} from '@/core';
+import { useCategories, useTransactions } from '@/core';
 import { Button, HStack, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { useCallback, useMemo } from 'react';
 import { IoPencilSharp, IoTrashBinSharp } from 'react-icons/io5';
@@ -11,23 +6,26 @@ import { Link, useNavigate, useParams } from 'react-router';
 import { TransactionCard } from '../ui';
 import { getFormattedDate } from '@/utils';
 import Case from 'case';
-import { UseQueryResult } from '@tanstack/react-query';
 
 export const SingleTransaction: React.FC = () => {
   const { transaction: id } = useParams();
   const navigate = useNavigate();
 
-  const transaction = useTransactions.query(
-    id
-  ) as UseQueryResult<ITransactionItem>;
-
-  const category = useCategories.query(
-    transaction?.data?.category
-  ) as UseQueryResult<ICategoryItem>;
+  const transaction = useTransactions.single(id as string);
+  const category = useCategories.single(transaction?.data?.category);
 
   const loading = useMemo(
-    () => !transaction.data && transaction.isFetching,
-    [transaction.data, transaction.isFetching]
+    () =>
+      !transaction.data &&
+      transaction.isFetching &&
+      !category.data &&
+      category.isFetching,
+    [
+      category.data,
+      category.isFetching,
+      transaction.data,
+      transaction.isFetching,
+    ]
   );
 
   const { deleteItem } = useTransactions.mutation({
@@ -92,16 +90,13 @@ export const SingleTransaction: React.FC = () => {
           createdBy: transaction?.data?.createdBy,
           location: transaction?.data?.location,
           description: transaction?.data?.description,
-        }).map(([k, v]) => {
-          console.log('v:', v);
-          return (
-            <Stack key={k}>
-              <Text fontWeight="black">{Case.title(k)}:</Text>
-              {loading && <Skeleton h={6} w="full" />}
-              {(!!transaction?.data && v) || <Text>{Case.title(`${v}`)}</Text>}
-            </Stack>
-          );
-        })}
+        }).map(([k, v]) => (
+          <Stack key={k}>
+            <Text fontWeight="black">{Case.title(k)}:</Text>
+            {loading && <Skeleton h={6} w="full" />}
+            {(!!transaction?.data && v) || <Text>{Case.title(`${v}`)}</Text>}
+          </Stack>
+        ))}
       </Stack>
     </Stack>
   );

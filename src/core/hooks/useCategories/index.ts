@@ -1,42 +1,31 @@
 import { CategoryCollection } from '@/core/collections/CategoryCollection';
 import { ICategoryItem } from '@/core/models';
-import { UseMutationOptions, UseQueryResult } from '@tanstack/react-query';
-import { useMemo } from 'react';
+import { UseMutationOptions } from '@tanstack/react-query';
 import { useCollection } from '../useCollection';
+import { CollectionSearchQueryArg } from '@/core/collections';
 
 const queryKey = ['categories'];
 
-const useCategoriesQuery = (
-  id: string | undefined = undefined
-): UseQueryResult<ICategoryItem | ICategoryItem[]> => {
-  const collection = useMemo(
-    () => ({ category: new CategoryCollection() }),
-    []
-  );
-
-  return useCollection.query<ICategoryItem, CategoryCollection>({
-    id,
-    queryKey,
-    collection: collection.category,
-  });
-};
-
 type UseCategoriesMutationPayload = Omit<UseMutationOptions, 'mutationFn'>;
-
-const useCategoriesMutation = (options: UseCategoriesMutationPayload) => {
-  const collection = useMemo(
-    () => ({ category: new CategoryCollection() }),
-    []
-  );
-
-  return useCollection.mutation<ICategoryItem, CategoryCollection>({
+const useCategoriesMutation = (options: UseCategoriesMutationPayload) =>
+  useCollection.mutation<ICategoryItem, typeof CategoryCollection>({
     queryKey,
-    collection: collection.category,
+    collection: CategoryCollection,
     options,
   });
-};
 
 export const useCategories = {
-  query: useCategoriesQuery,
   mutation: useCategoriesMutation,
+  search: (query: CollectionSearchQueryArg<ICategoryItem> = undefined) =>
+    useCollection.search<ICategoryItem>({
+      queryKey,
+      query,
+      fetchFn: () => CategoryCollection.search(query),
+    }),
+  single: (id: string | undefined) =>
+    useCollection.single<ICategoryItem>({
+      queryKey,
+      id,
+      fetchFn: () => CategoryCollection.fetchItem(id),
+    }),
 };

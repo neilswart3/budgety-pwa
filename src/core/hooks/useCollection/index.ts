@@ -1,70 +1,68 @@
-import { IBaseModelPayload, ICollectionItemType, StorageKey } from '@/core';
+import {
+  CollectionSearchQueryArg,
+  IBaseModelPayload,
+  ICollectionItemType,
+  StorageKey,
+} from '@/core';
 import Collection from '@/core/collections/Collection';
 import {
-  QueryFunctionContext,
   QueryKey,
   useMutation,
   UseMutationOptions,
   UseMutationResult,
-  useQueries,
+  useQuery,
   useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
-interface UseCollectionQueryPayload<
-  T extends ICollectionItemType,
-  C extends Collection<T, StorageKey>
-> {
-  id: string | undefined;
-  queryKey: QueryKey;
-  collection: C;
-}
-
-const useCollectionQuery = <
-  T extends ICollectionItemType,
-  C extends Collection<T, StorageKey>
->({
+const useCollectionQuerySearch = <T extends ICollectionItemType>({
   queryKey,
-  id,
-  collection,
-}: UseCollectionQueryPayload<T, C>): UseQueryResult<T | T[]> => {
-  const fetchAll = useCallback(async (): Promise<T[] | undefined> => {
+  query,
+  fetchFn,
+}: {
+  queryKey: QueryKey;
+  fetchFn: () => Promise<T[] | Error>;
+  query?: CollectionSearchQueryArg<T>;
+}): UseQueryResult<T[]> => {
+  const fetchCollection = useCallback(async () => {
     try {
-      return (await collection.fetchAll()) as T[];
+      return await fetchFn();
     } catch (error) {
       console.log('error:', error);
     }
-  }, [collection]);
+  }, [fetchFn]);
 
-  const fetchItem = useCallback(
-    async ({
-      client,
-      queryKey,
-    }: QueryFunctionContext): Promise<T | undefined> => {
-      try {
-        const itemFromQuery = (
-          client?.getQueryData([queryKey[0]]) as T[]
-        )?.find((t) => t.id === id);
-
-        if (itemFromQuery?.id) return await Promise.resolve(itemFromQuery);
-
-        return (await collection.fetchItem(id as string)) as T;
-      } catch (error) {
-        console.log('error:', error);
-      }
-    },
-    [collection, id]
-  );
-
-  const [list, single]: [UseQueryResult<T[]>, UseQueryResult<T>] = useQueries({
-    queries: [
-      ...[{ queryKey, queryFn: fetchAll }],
-      ...(id ? [{ queryKey: [...queryKey, id], queryFn: fetchItem }] : []),
+  return useQuery({
+    queryKey: [
+      ...queryKey,
+      ...(Object.values(query || {}).filter(Boolean).length ? [query] : []),
     ],
+    queryFn: fetchCollection,
   });
+};
 
-  return id ? single : list;
+const useCollectionQuerySingle = <T extends ICollectionItemType>({
+  queryKey,
+  id,
+  fetchFn,
+}: {
+  queryKey: QueryKey;
+  fetchFn: () => Promise<T | Error | undefined>;
+  id: string | undefined;
+}): UseQueryResult<T> => {
+  const fetchCollection = useCallback(async () => {
+    try {
+      return await fetchFn();
+    } catch (error) {
+      console.log('error:', error);
+    }
+  }, [fetchFn]);
+
+  return useQuery({
+    queryKey: [...queryKey, id],
+    queryFn: fetchCollection,
+  });
 };
 
 interface UseCollectionMutationPayload<C> {
@@ -151,6 +149,7 @@ const useCollectionMutation = <
 };
 
 export const useCollection = {
-  query: useCollectionQuery,
+  search: useCollectionQuerySearch,
+  single: useCollectionQuerySingle,
   mutation: useCollectionMutation,
 };

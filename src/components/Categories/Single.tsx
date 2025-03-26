@@ -1,6 +1,5 @@
-import { ICategoryItem, useCategories, useTransactions } from '@/core';
+import { useCategories, useTransactions } from '@/core';
 import { Button, HStack, Skeleton, Stack, Text } from '@chakra-ui/react';
-import { UseQueryResult } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { IoPencilSharp, IoTrashBinSharp } from 'react-icons/io5';
@@ -13,9 +12,7 @@ export const SingleCategory: React.FC = () => {
   const { category: id } = useParams();
   const navigate = useNavigate();
 
-  const { data, isFetching } = useCategories.query(
-    id
-  ) as UseQueryResult<ICategoryItem>;
+  const { data, isFetching } = useCategories.single(id);
   const loading = useMemo(() => !data && isFetching, [data, isFetching]);
 
   const { deleteItem } = useTransactions.mutation({

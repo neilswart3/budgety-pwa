@@ -1,6 +1,6 @@
 import { IBaseCollectionItem } from '../models';
 import { StorageKey } from '../types';
-import { IService, RepositoryTypes } from './types';
+import { IService, RepositoryTypes, ServiceSearchQuery } from './types';
 
 export default class Service<
   T extends IBaseCollectionItem,
@@ -24,7 +24,7 @@ export default class Service<
     }
   }
 
-  async read(id: string): Promise<T | Error> {
+  async read(id: string | undefined): Promise<T | Error | undefined> {
     try {
       return this.repository.read(id);
     } catch (error) {
@@ -48,9 +48,19 @@ export default class Service<
     }
   }
 
-  async search(): Promise<Error | T[]> {
+  async list(): Promise<Error | T[]> {
     try {
-      return await this.repository.search();
+      return await this.repository.list();
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async search(
+    query: ServiceSearchQuery | undefined = undefined
+  ): Promise<Error | T[]> {
+    try {
+      return await this.repository.search(query);
     } catch (error) {
       throw new Error((error as Error).message);
     }

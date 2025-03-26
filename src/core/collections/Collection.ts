@@ -1,5 +1,10 @@
 import { StorageKey } from '../types';
-import { ICollection, ICollectionItemType, ServiceTypes } from './types';
+import {
+  CollectionSearchQueryArg,
+  ICollection,
+  ICollectionItemType,
+  ServiceTypes,
+} from './types';
 
 export default class Collection<
   T extends ICollectionItemType,
@@ -23,7 +28,7 @@ export default class Collection<
     }
   }
 
-  async fetchItem(id: string): Promise<T | Error> {
+  async fetchItem(id: string | undefined): Promise<T | Error | undefined> {
     try {
       return this.service.read(id);
     } catch (error) {
@@ -33,7 +38,7 @@ export default class Collection<
 
   async fetchAll(): Promise<Error | T[]> {
     try {
-      return await this.service.search();
+      return await this.service.list();
     } catch (error) {
       throw new Error((error as Error).message);
     }
@@ -55,9 +60,11 @@ export default class Collection<
     }
   }
 
-  async search(): Promise<Error | T[]> {
+  async search(
+    query: CollectionSearchQueryArg<T> = undefined
+  ): Promise<Error | T[]> {
     try {
-      return await this.service.search();
+      return await this.service.search(query);
     } catch (error) {
       throw new Error((error as Error).message);
     }

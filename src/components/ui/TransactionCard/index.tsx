@@ -26,7 +26,7 @@ const Component: React.FC<Props> & { Loading: React.FC } = ({
   link = false,
 }) => (
   <Template
-    {...(link ? { as: Link, to: id } : {})}
+    {...(link ? { as: Link, to: `/transactions/${id}` } : {})}
     borderLeftColor={type === 'expense' ? 'red.400' : 'green.400'}
     borderLeftWidth={4}
     variant="elevated"

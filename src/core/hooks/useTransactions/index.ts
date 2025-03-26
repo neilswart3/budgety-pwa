@@ -1,43 +1,35 @@
-import { ITransactionItem, TransactionCollection } from '@/core';
-import { UseMutationOptions, UseQueryResult } from '@tanstack/react-query';
-import { useMemo } from 'react';
+import {
+  CollectionSearchQueryArg,
+  ITransactionItem,
+  TransactionCollection,
+} from '@/core';
+import { UseMutationOptions } from '@tanstack/react-query';
 import { useCollection } from '../useCollection';
 
 const queryKey = ['transactions'];
 
-const useTransactionsQuery = (
-  id: string | undefined = undefined
-): UseQueryResult<ITransactionItem | ITransactionItem[]> => {
-  const collection = useMemo(
-    () => ({ transaction: new TransactionCollection() }),
-    []
-  );
-
-  return useCollection.query<ITransactionItem, TransactionCollection>({
-    id,
-    queryKey,
-    collection: collection.transaction,
-  });
-};
-
 type UseTransactionsMutationPayload = Omit<UseMutationOptions, 'mutationFn'>;
-
 const useTransactionsMutation = (
   options: Partial<UseTransactionsMutationPayload> = {}
-) => {
-  const collection = useMemo(
-    () => ({ transaction: new TransactionCollection() }),
-    []
-  );
-
-  return useCollection.mutation<ITransactionItem, TransactionCollection>({
+) =>
+  useCollection.mutation<ITransactionItem, typeof TransactionCollection>({
     queryKey,
-    collection: collection.transaction,
+    collection: TransactionCollection,
     options,
   });
-};
 
 export const useTransactions = {
-  query: useTransactionsQuery,
   mutation: useTransactionsMutation,
+  search: (query: CollectionSearchQueryArg<ITransactionItem> = undefined) =>
+    useCollection.search<ITransactionItem>({
+      queryKey,
+      query,
+      fetchFn: () => TransactionCollection.search(query),
+    }),
+  single: (id: string) =>
+    useCollection.single<ITransactionItem>({
+      queryKey,
+      id,
+      fetchFn: () => TransactionCollection.fetchItem(id),
+    }),
 };

@@ -26,7 +26,7 @@ const BaseHeader: React.FC<{
 );
 
 const TransactionHeader: React.FC<{ id: string }> = ({ id }) => {
-  const { data, isFetching } = useTransactions.query(id);
+  const { data, isFetching } = useTransactions.single(id);
 
   return (
     <BaseHeader
@@ -38,7 +38,7 @@ const TransactionHeader: React.FC<{ id: string }> = ({ id }) => {
 };
 
 const CategoryHeader: React.FC<{ id: string }> = ({ id }) => {
-  const { data, isFetching } = useCategories.query(id);
+  const { data, isFetching } = useCategories.single(id);
 
   return (
     <BaseHeader

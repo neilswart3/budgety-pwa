@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import { ICategoryItem, useCategories } from '@/core';
 
 export const CategoriesList: React.FC = () => {
-  const { data, isLoading } = useCategories.query();
+  const { data, isLoading } = useCategories.search();
 
   return (
     <Stack gap={6}>

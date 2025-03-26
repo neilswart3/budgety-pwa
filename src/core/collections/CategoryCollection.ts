@@ -7,7 +7,7 @@ import { StorageService } from '../services';
 import { StorageKey } from '../types';
 import Collection from './Collection';
 
-export class CategoryCollection extends Collection<
+class CategoryCollectionClass extends Collection<
   ICategoryItem,
   StorageKey.CATEGORIES
 > {
@@ -39,3 +39,5 @@ export class CategoryCollection extends Collection<
     }
   }
 }
+
+export const CategoryCollection = new CategoryCollectionClass();

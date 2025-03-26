@@ -5,10 +5,10 @@ import {
   TransactionItemModel,
 } from '@/core/models';
 import { StorageService } from '@/core/services';
-import { StorageKey } from '@/core';
+import { StorageKey } from '../types';
 import Collection from './Collection';
 
-export class TransactionCollection extends Collection<
+class TransactionCollectionClass extends Collection<
   ITransactionItem,
   StorageKey.TRANSACTIONS
 > {
@@ -41,26 +41,6 @@ export class TransactionCollection extends Collection<
       throw new Error((error as Error).message);
     }
   }
-
-  async search(query?: {
-    transactionId?: string;
-    categoryId?: string;
-  }): Promise<Error | ITransactionItem[]> {
-    try {
-      console.log('query:', query);
-
-      const entries = await this.service.search();
-
-      if (!entries) throw new Error('No entries found');
-
-      return (entries as ITransactionItem[]).filter((e) =>
-        [
-          ...(query?.transactionId ? [e.id === query.transactionId] : []),
-          ...(query?.categoryId ? [e.category === query.categoryId] : []),
-        ].every(Boolean)
-      );
-    } catch (error) {
-      throw new Error((error as Error).message);
-    }
-  }
 }
+
+export const TransactionCollection = new TransactionCollectionClass();
