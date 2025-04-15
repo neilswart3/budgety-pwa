@@ -1,10 +1,6 @@
+import { ThemeIcon } from '../theme';
 import CollectionItemModel from './CollectionItemModel';
-import {
-  IBaseCategoryItem,
-  IBaseModelPayload,
-  ICategoryItem,
-  IconKey,
-} from './types';
+import { IBaseCategoryItem, IBaseModelPayload, ICategoryItem } from './types';
 
 export type ICategoryItemModelPayload = IBaseModelPayload<IBaseCategoryItem>;
 
@@ -13,7 +9,7 @@ export class CategoryItemModel
   implements ICategoryItem
 {
   description: string;
-  icon: IconKey;
+  icon: ThemeIcon;
   color: string;
 
   constructor({

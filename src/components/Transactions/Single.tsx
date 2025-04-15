@@ -1,5 +1,12 @@
 import { useCategories, useTransactions } from '@/core';
-import { Button, HStack, Skeleton, Stack, Text } from '@chakra-ui/react';
+import {
+  Button,
+  DataList,
+  HStack,
+  Skeleton,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import { useCallback, useMemo } from 'react';
 import { IoPencilSharp, IoTrashBinSharp } from 'react-icons/io5';
 import { Link, useNavigate, useParams } from 'react-router';
@@ -68,7 +75,7 @@ export const SingleTransaction: React.FC = () => {
         </Button>
       </HStack>
 
-      <Stack gap={4}>
+      <DataList.Root orientation="horizontal">
         {Object.entries({
           fullName: transaction?.data?.name,
           type: transaction?.data?.type,
@@ -91,13 +98,20 @@ export const SingleTransaction: React.FC = () => {
           location: transaction?.data?.location,
           description: transaction?.data?.description,
         }).map(([k, v]) => (
-          <Stack key={k}>
-            <Text fontWeight="black">{Case.title(k)}:</Text>
-            {loading && <Skeleton h={6} w="full" />}
-            {(!!transaction?.data && v) || <Text>{Case.title(`${v}`)}</Text>}
-          </Stack>
+          <DataList.Item
+            key={k}
+            {...(['description'].includes(k)
+              ? { flexDirection: 'column', alignItems: 'start' }
+              : {})}
+          >
+            <DataList.ItemLabel>{Case.title(k)}</DataList.ItemLabel>
+            <DataList.ItemValue>
+              {loading && <Skeleton h={6} w="full" />}
+              {(!!transaction?.data && v) ?? Case.title(`${v}`)}
+            </DataList.ItemValue>
+          </DataList.Item>
         ))}
-      </Stack>
+      </DataList.Root>
     </Stack>
   );
 };

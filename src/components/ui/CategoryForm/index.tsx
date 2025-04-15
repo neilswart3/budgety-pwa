@@ -1,11 +1,15 @@
-import { IBaseCategoryItem, IBaseCollectionItem, themeSystem } from '@/core';
+import {
+  IBaseCategoryItem,
+  IBaseCollectionItem,
+  themeIcons,
+  themeSystem,
+} from '@/core';
 import { useForm, UseFormHandleChangePayload } from '@/hooks';
 import { Form } from '../Form';
 import { IoSaveSharp } from 'react-icons/io5';
 import Case from 'case';
 import { FormInput, FormInputOption } from '../FormInput';
 import { ChangeEvent, useCallback, useMemo } from 'react';
-import * as io5Icons from 'react-icons/io5';
 import { Box, HStack, Icon } from '@chakra-ui/react';
 
 export type ICategoryFormValues = IBaseCategoryItem &
@@ -34,7 +38,7 @@ export const CategoryForm: React.FC<Props> = ({ initValues, onSubmit }) => {
 
   const iconOptions = useMemo(
     () =>
-      Object.entries(io5Icons).map(([id, IconValue]) => ({
+      Object.entries(themeIcons).map(([id, IconValue]) => ({
         id,
         value: id,
         label: (
@@ -42,7 +46,7 @@ export const CategoryForm: React.FC<Props> = ({ initValues, onSubmit }) => {
             <Icon size="lg">
               <IconValue />
             </Icon>
-            {Case.title(id.replace('Io', ''))}
+            {Case.title(id.replace('Md', ''))}
           </HStack>
         ),
       })),

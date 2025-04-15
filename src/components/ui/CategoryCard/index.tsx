@@ -1,9 +1,8 @@
-import { ICategoryItem } from '@/core';
+import { ICategoryItem, themeIcons } from '@/core';
 import Case from 'case';
 import { Link } from 'react-router';
 import Template from './Template';
 import Loading from './Loading';
-import * as io5Icons from 'react-icons/io5';
 import { Text } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
@@ -19,11 +18,14 @@ const Component: React.FC<Props> & { Loading: React.FC } = ({
   id,
   name,
   description,
-  icon = 'IoShapes',
+  icon = 'MdFormatShapes',
   color,
   link = false,
 }) => {
-  const CategoryIcon = useMemo(() => io5Icons[icon], [icon]);
+  const CategoryIcon = useMemo(
+    () => themeIcons[icon] || themeIcons.MdCategory,
+    [icon]
+  );
 
   return (
     <Template

@@ -1,4 +1,4 @@
-import * as io5Icons from 'react-icons/io5';
+import { ThemeIcon } from '../theme';
 
 export interface IBaseCollectionItem {
   id: string;
@@ -8,11 +8,9 @@ export interface IBaseCollectionItem {
   createdBy: string;
 }
 
-export type IconKey = keyof typeof io5Icons;
-
 export interface IBaseCategoryItem {
   description: string;
-  icon: IconKey;
+  icon: ThemeIcon;
   color: string;
 }
 

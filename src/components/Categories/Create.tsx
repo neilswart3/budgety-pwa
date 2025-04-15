@@ -27,7 +27,7 @@ export const CreateCategory: React.FC = () => {
       initValues={{
         name: '',
         description: '',
-        icon: 'IoAccessibility',
+        icon: 'MdCategory',
         color: 'gray',
       }}
       onSubmit={handleSubmit}

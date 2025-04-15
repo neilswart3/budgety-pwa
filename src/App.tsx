@@ -1,6 +1,12 @@
 import { Route, Routes } from 'react-router';
 import { AppLayout } from './layouts';
-import { Wallet, Transactions, Dashboard, Categories } from '@/components';
+import {
+  Transactions,
+  Dashboard,
+  Categories,
+  Accounts,
+  Occurrences,
+} from '@/components';
 
 function App() {
   return (
@@ -22,12 +28,18 @@ function App() {
           <Route path=":category/edit" element={<Categories.Edit />} />
         </Route>
 
-        <Route path="wallet">
-          <Route index element={<Wallet />} />
+        <Route path="occurrences">
+          <Route index element={<Occurrences.List />} />
+          <Route path="create" element={<Occurrences.Create />} />
+          <Route path=":occurrence" element={<Occurrences.Single />} />
+          <Route path=":occurrence/edit" element={<Occurrences.Edit />} />
+        </Route>
 
-          <Route path="create" element={<div>Create Wallet Item</div>} />
-          <Route path=":wallet" element={<div>Wallet Item</div>} />
-          <Route path=":wallet/edit" element={<div>Edit Wallet Item</div>} />
+        <Route path="accounts">
+          <Route index element={<Accounts.List />} />
+          <Route path="create" element={<Accounts.Create />} />
+          <Route path=":account" element={<Accounts.Single />} />
+          <Route path=":account/edit" element={<Accounts.Edit />} />
         </Route>
 
         <Route path="profile">
