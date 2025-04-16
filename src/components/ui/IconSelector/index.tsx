@@ -57,7 +57,10 @@ export const IconSelector: React.FC<Props> = ({ iconKey }) => {
     [handleIconSearch]
   );
 
-  const handleSearchDebounce = useDebounce(handleSearch, 1000);
+  const handleSearchDebounce = useDebounce(
+    (args) => handleSearch(args as string),
+    1000
+  );
 
   const handleChange = useCallback(
     ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +87,7 @@ export const IconSelector: React.FC<Props> = ({ iconKey }) => {
       setQuery(newQuery);
       handleSearch(newQuery);
     }
-  }, [handleSearch]);
+  }, [handleSearch, iconKey, query]);
 
   return (
     <Modal>
@@ -94,7 +97,7 @@ export const IconSelector: React.FC<Props> = ({ iconKey }) => {
       <Modal.Content>
         <Modal.Header>Select Icon</Modal.Header>
         <Modal.Body>
-          {/* <Grid
+          <Grid
             gap={5}
             gridTemplateRows="auto 1fr"
             // flexGrow={1}
@@ -152,7 +155,7 @@ export const IconSelector: React.FC<Props> = ({ iconKey }) => {
                 ))}
               </Grid>
             </GridItem>
-          </Grid> */}
+          </Grid>
         </Modal.Body>
         <Modal.Footer>Footer</Modal.Footer>
       </Modal.Content>
