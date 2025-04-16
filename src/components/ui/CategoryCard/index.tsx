@@ -23,7 +23,8 @@ const Component: React.FC<Props> & { Loading: React.FC } = ({
   link = false,
 }) => {
   const CategoryIcon = useMemo(
-    () => themeIcons[icon] || themeIcons.MdCategory,
+    // @ts-ignore
+    () => themeIcons[icon] || themeIcons?.MdCategory,
     [icon]
   );
 
