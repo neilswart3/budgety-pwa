@@ -1,12 +1,5 @@
 import { useCategories, useTransactions } from '@/core';
-import {
-  Button,
-  DataList,
-  HStack,
-  Skeleton,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Button, DataList, HStack, Skeleton, Stack } from '@chakra-ui/react';
 import { useCallback, useMemo } from 'react';
 import { IoPencilSharp, IoTrashBinSharp } from 'react-icons/io5';
 import { Link, useNavigate, useParams } from 'react-router';

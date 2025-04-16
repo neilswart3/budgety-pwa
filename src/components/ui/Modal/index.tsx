@@ -1,11 +1,4 @@
-import {
-  Grid,
-  GridItem,
-  HStack,
-  IconButton,
-  Portal,
-  Stack,
-} from '@chakra-ui/react';
+import { Grid, HStack, IconButton, Portal, Stack } from '@chakra-ui/react';
 import {
   cloneElement,
   createContext,
