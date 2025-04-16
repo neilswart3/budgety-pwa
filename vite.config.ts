@@ -83,7 +83,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
       },
 
-      includeAssets: ['favicon.png'],
+      includeAssets: ['favicon.ico'],
 
       devOptions: {
         enabled: false,
