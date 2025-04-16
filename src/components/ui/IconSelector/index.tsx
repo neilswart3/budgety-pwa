@@ -1,23 +1,23 @@
 import {
   Button,
   Grid,
-  GridItem,
-  Icon,
-  Input,
-  Stack,
-  Text,
+  //   GridItem,
+  //   Icon,
+  //   Input,
+  //   Stack,
+  //   Text,
 } from '@chakra-ui/react';
-import Case from 'case';
-import {
-  ChangeEvent,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { Field } from '../field';
-import { useSearchIcons } from '@/hooks';
+// import Case from 'case';
+// import {
+//   //   ChangeEvent,
+//   //   MouseEvent,
+//   //   useCallback,
+//   useEffect,
+//   //   useRef,
+//   useState,
+// } from 'react';
+// import { Field } from '../field';
+// import { useSearchIcons } from '@/hooks';
 import { Modal } from '../Modal';
 import { ThemeIcon } from '@/core';
 
@@ -25,69 +25,69 @@ interface Props {
   iconKey?: ThemeIcon;
 }
 
-const useDebounce = (callback: (args: unknown) => void, delay: number) => {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+// const useDebounce = (callback: (args: unknown) => void, delay: number) => {
+//   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  return useCallback(
-    (args: unknown) => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+//   return useCallback(
+//     (args: unknown) => {
+//       if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-      timeoutRef.current = setTimeout(() => {
-        callback(args);
-      }, delay);
-    },
-    [callback, delay]
-  );
-};
+//       timeoutRef.current = setTimeout(() => {
+//         callback(args);
+//       }, delay);
+//     },
+//     [callback, delay]
+//   );
+// };
 
 export const IconSelector: React.FC<Props> = ({ iconKey }) => {
-  const [query, setQuery] = useState<string>(
-    // iconKey ? iconKey.replace(/Md/, '') : ''
-    ''
-  );
-  const [selected, setSelected] = useState<ThemeIcon | undefined>(iconKey);
-  const { icons, handleIconSearch } = useSearchIcons({
-    initQuery: iconKey,
-  });
+  //   const [query, setQuery] = useState<string>(
+  //     // iconKey ? iconKey.replace(/Md/, '') : ''
+  //     ''
+  //   );
+  //   const [selected, setSelected] = useState<ThemeIcon | undefined>(iconKey);
+  //   const { icons, handleIconSearch } = useSearchIcons({
+  //     initQuery: iconKey,
+  //   });
 
-  const handleSearch = useCallback(
-    (query: string) => {
-      handleIconSearch(query);
-    },
-    [handleIconSearch]
-  );
+  //   const handleSearch = useCallback(
+  //     (query: string) => {
+  //       handleIconSearch(query);
+  //     },
+  //     [handleIconSearch]
+  //   );
 
-  const handleSearchDebounce = useDebounce(
-    (args) => handleSearch(args as string),
-    1000
-  );
+  //   const handleSearchDebounce = useDebounce(
+  //     (args) => handleSearch(args as string),
+  //     1000
+  //   );
 
-  const handleChange = useCallback(
-    ({ target }: ChangeEvent<HTMLInputElement>) => {
-      setQuery(target.value);
+  //   const handleChange = useCallback(
+  //     ({ target }: ChangeEvent<HTMLInputElement>) => {
+  //       setQuery(target.value);
 
-      if (target.value.trim().length < 2) return;
+  //       if (target.value.trim().length < 2) return;
 
-      handleSearchDebounce(target.value);
-    },
-    [handleSearchDebounce]
-  );
+  //       handleSearchDebounce(target.value);
+  //     },
+  //     [handleSearchDebounce]
+  //   );
 
-  const handleSelect = (e: MouseEvent<HTMLButtonElement>) => {
-    setSelected(
-      (e.target as HTMLElement)
-        ?.closest('button')
-        ?.attributes?.getNamedItem('data-key')?.nodeValue as ThemeIcon
-    );
-  };
+  //   const handleSelect = (e: MouseEvent<HTMLButtonElement>) => {
+  //     setSelected(
+  //       (e.target as HTMLElement)
+  //         ?.closest('button')
+  //         ?.attributes?.getNamedItem('data-key')?.nodeValue as ThemeIcon
+  //     );
+  //   };
 
-  useEffect(() => {
-    if (iconKey && !query) {
-      const newQuery = iconKey.replace(/Md/, '');
-      setQuery(newQuery);
-      handleSearch(newQuery);
-    }
-  }, [handleSearch, iconKey, query]);
+  //   useEffect(() => {
+  //     if (iconKey && !query) {
+  //       const newQuery = iconKey.replace(/Md/, '');
+  //       setQuery(newQuery);
+  //       handleSearch(newQuery);
+  //     }
+  //   }, [handleSearch, iconKey, query]);
 
   return (
     <Modal>
@@ -105,12 +105,13 @@ export const IconSelector: React.FC<Props> = ({ iconKey }) => {
             // maxH="full"
             overflow="hidden"
           >
-            <GridItem>
+            {iconKey}
+            {/* <GridItem>
               <Field label="Search">
                 <Input name="search" value={query} onChange={handleChange} />
               </Field>
-            </GridItem>
-            <GridItem
+            </GridItem> */}
+            {/* <GridItem
               //   flexGrow={1}
               //   maxH="full"
               height="full"
@@ -154,7 +155,7 @@ export const IconSelector: React.FC<Props> = ({ iconKey }) => {
                   </Button>
                 ))}
               </Grid>
-            </GridItem>
+            </GridItem> */}
           </Grid>
         </Modal.Body>
         <Modal.Footer>Footer</Modal.Footer>
