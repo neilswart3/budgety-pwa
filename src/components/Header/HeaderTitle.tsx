@@ -1,52 +1,58 @@
+// import {
+//   ICategoryItem,
+//   ITransactionItem,
+//   useCategories,
+//   useTransactions,
+// } from '@/core';
 import {
-  ICategoryItem,
-  ITransactionItem,
-  useCategories,
-  useTransactions,
-} from '@/core';
-import { Skeleton, Text } from '@chakra-ui/react';
+  //  Skeleton,
+  Text,
+} from '@chakra-ui/react';
 import Case from 'case';
 import { useMemo } from 'react';
 import { useLocation, useParams } from 'react-router';
 
-const BaseHeader: React.FC<{
-  name: string | undefined;
-  isFetching: boolean;
-  label: string;
-}> = ({ label, name, isFetching }) => (
-  <>
-    {!name && isFetching ? (
-      <Skeleton display="inline-block" as="span" h={6} w={64} />
-    ) : (
-      <>
-        {label}: {name as string}
-      </>
-    )}
-  </>
-);
+// const BaseHeader: React.FC<{
+//   name: string | undefined;
+//   isFetching: boolean;
+//   label: string;
+// }> = ({ label, name, isFetching }) => (
+//   <>
+//     {!name && isFetching ? (
+//       <Skeleton display="inline-block" as="span" h={6} w={64} />
+//     ) : (
+//       <>
+//         {label}: {name as string}
+//       </>
+//     )}
+//   </>
+// );
 
 const TransactionHeader: React.FC<{ id: string }> = ({ id }) => {
-  const { data, isFetching } = useTransactions.single(id);
+  //   const { data, isFetching } = useTransactions.single(id);
 
-  return (
-    <BaseHeader
-      name={(data as ITransactionItem)?.name}
-      isFetching={isFetching}
-      label="Transaction"
-    />
-  );
+  //   return (
+  //     <BaseHeader
+  //       name={(data as ITransactionItem)?.name}
+  //       isFetching={isFetching}
+  //       label="Transaction"
+  //     />
+  //   );
+  return <>TransactionHeader: {id}</>;
 };
 
 const CategoryHeader: React.FC<{ id: string }> = ({ id }) => {
-  const { data, isFetching } = useCategories.single(id);
+  //   const { data, isFetching } = useCategories.single(id);
 
-  return (
-    <BaseHeader
-      name={(data as ICategoryItem)?.name}
-      isFetching={isFetching}
-      label="Category"
-    />
-  );
+  //   return (
+  //     <BaseHeader
+  //       name={(data as ICategoryItem)?.name}
+  //       isFetching={isFetching}
+  //       label="Category"
+  //     />
+  //   );
+
+  return <>CategoryHeader: {id}</>;
 };
 
 export const HeaderTitle: React.FC = () => {

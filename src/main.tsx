@@ -9,7 +9,7 @@ import './index.css';
 import { scan } from 'react-scan';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { themeSystem } from '@/core';
+import { themeSystem } from '@/theme';
 
 scan({ enabled: import.meta.env.DEV });
 

@@ -1,3 +1,3 @@
 export const CreateAccount: React.FC = () => {
-  return <div>CreateAccount Component</div>;
+  return <div>Create Component</div>;
 };

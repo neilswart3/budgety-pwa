@@ -1,11 +1,11 @@
-import { CreateTransaction } from "./Create";
-import { EditTransaction } from "./Edit";
-import { TransactionsList } from "./List";
-import { SingleTransaction } from "./Single";
+import { CreateTransaction } from './Create';
+import { EditTransaction } from './Edit';
+import { ListTransactions } from './List';
+import { SingleTransaction } from './Single';
 
 export const Transactions = {
-  List: TransactionsList,
-  Single: SingleTransaction,
+  List: ListTransactions,
   Create: CreateTransaction,
+  Single: SingleTransaction,
   Edit: EditTransaction,
 };

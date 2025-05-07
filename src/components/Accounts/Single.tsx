@@ -1,3 +1,3 @@
 export const SingleAccount: React.FC = () => {
-  return <div>SingleAccount Component</div>;
+  return <div>Single Component</div>;
 };

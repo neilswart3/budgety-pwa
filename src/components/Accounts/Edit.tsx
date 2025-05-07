@@ -1,3 +1,3 @@
 export const EditAccount: React.FC = () => {
-  return <div>EditAccount Component</div>;
+  return <div>Edit Component</div>;
 };

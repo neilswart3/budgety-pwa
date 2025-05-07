@@ -2,10 +2,10 @@ import { Route, Routes } from 'react-router';
 import { AppLayout } from './layouts';
 import {
   Transactions,
-  Dashboard,
-  Categories,
   Accounts,
   Occurrences,
+  Dashboard,
+  Categories,
 } from '@/components';
 
 function App() {
