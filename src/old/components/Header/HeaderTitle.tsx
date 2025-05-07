@@ -3,7 +3,7 @@ import {
   ITransactionItem,
   useCategories,
   useTransactions,
-} from '@/core';
+} from '@/old/core';
 import { Skeleton, Text } from '@chakra-ui/react';
 import Case from 'case';
 import { useMemo } from 'react';

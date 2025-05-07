@@ -1,17 +1,16 @@
 import { Button, HStack, Icon, Stack } from '@chakra-ui/react';
-import { AccountCard } from '@/components/ui';
+import { AccountCard } from '@/old/components/ui';
 import { IoAddSharp } from 'react-icons/io5';
-import { AccountItemModel } from '@/core';
 import { Link } from 'react-router';
 
 export const AccountsList: React.FC = () => {
-  const fieldTypes = AccountItemModel.fieldTypes;
+  //   const fieldTypes = AccountItemModel?.fieldTypes;
 
   return (
     <Stack gap={3}>
-      <div>
+      {/* <div>
         <pre>{JSON.stringify(fieldTypes, null, 2)}</pre>
-      </div>
+      </div> */}
 
       <HStack>
         <Button {...{ as: Link, to: 'create' }}>

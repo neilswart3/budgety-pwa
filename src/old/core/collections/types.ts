@@ -1,5 +1,9 @@
-import { IAccountItem, ICategoryItem, ITransactionItem } from '@/core/models';
-import { StorageService } from '@/core/services';
+import {
+  IAccountItem,
+  ICategoryItem,
+  ITransactionItem,
+} from '@/old/core/models';
+import { StorageService } from '@/old/core/services';
 
 export type ServiceTypes<T extends ICollectionItemType> = StorageService<T>;
 

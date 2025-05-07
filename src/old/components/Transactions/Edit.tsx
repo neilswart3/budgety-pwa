@@ -1,6 +1,10 @@
 import { useCallback } from 'react';
 import { ITransactionFormValues, TransactionForm } from '../ui';
-import { IBaseModelPayload, ITransactionItem, useTransactions } from '@/core';
+import {
+  IBaseModelPayload,
+  ITransactionItem,
+  useTransactions,
+} from '@/old/core';
 import { useNavigate, useParams } from 'react-router';
 
 export const EditTransaction: React.FC = () => {

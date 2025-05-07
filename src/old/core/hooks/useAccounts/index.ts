@@ -1,8 +1,8 @@
-import { IAccountItem } from '@/core/models';
+import { IAccountItem } from '@/old/core/models';
 import { UseMutationOptions } from '@tanstack/react-query';
 import { useCollection } from '../useCollection';
-import { CollectionSearchQueryArg } from '@/core/collections';
-import { AccountCollection } from '@/core/collections/AccountCollection';
+import { CollectionSearchQueryArg } from '@/old/core/collections';
+import { AccountCollection } from '@/old/core/collections/AccountCollection';
 
 const queryKey = ['accounts'];
 

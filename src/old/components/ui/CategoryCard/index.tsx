@@ -1,4 +1,4 @@
-import { ICategoryItem, themeIcons } from '@/core';
+import { ICategoryItem, themeIcons } from '@/old/core';
 import Case from 'case';
 import { Link } from 'react-router';
 import Template from './Template';
@@ -23,7 +23,7 @@ const Component: React.FC<Props> & { Loading: React.FC } = ({
   link = false,
 }) => {
   const CategoryIcon = useMemo(
-    () => themeIcons[icon] || themeIcons?.MdCategory,
+    () => themeIcons[icon as keyof typeof themeIcons] || themeIcons?.MdCategory,
     [icon]
   );
 

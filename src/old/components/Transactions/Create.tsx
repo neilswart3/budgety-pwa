@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
-import { ITransactionFormValues, TransactionForm } from '@/components/ui';
+import { ITransactionFormValues, TransactionForm } from '@/old/components/ui';
 import { useNavigate } from 'react-router';
 import {
   IBaseModelPayload,
   ITransactionItem,
   TransactionItemTypeField,
   useTransactions,
-} from '@/core';
+} from '@/old/core';
 
 export const CreateTransaction: React.FC = () => {
   const navigate = useNavigate();

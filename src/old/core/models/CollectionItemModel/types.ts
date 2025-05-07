@@ -1,4 +1,4 @@
-import { ICollectionFieldType } from '../baseTypes';
+import { ICollectionInputType } from '../baseTypes';
 
 export interface IBaseCollectionItem {
   id: string;
@@ -12,7 +12,7 @@ export type IBaseCollectionItemInput = Pick<IBaseCollectionItem, 'name'>;
 
 export const baseCollectionItemFieldTypes: Record<
   keyof IBaseCollectionItemInput,
-  ICollectionFieldType
+  ICollectionInputType
 > = {
   name: 'text',
 };

@@ -1,5 +1,5 @@
-import { ITransactionItem, useTransactions } from '@/core';
-import { TransactionCard } from '@/components/ui';
+import { ITransactionItem, useTransactions } from '@/old/core';
+import { TransactionCard } from '@/old/components/ui';
 import { Stack } from '@chakra-ui/react';
 
 interface Props {

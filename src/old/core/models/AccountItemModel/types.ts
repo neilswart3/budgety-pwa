@@ -1,4 +1,4 @@
-import { IBaseModelPayload, ICollectionFieldType } from '../baseTypes';
+import { IBaseModelPayload, ICollectionInputType } from '../baseTypes';
 import {
   IBaseCollectionItem,
   IBaseCollectionItemInput,
@@ -11,7 +11,7 @@ export interface IBaseAccountItem {
 
 export type IBaseAcountItemInputTypes = Record<
   keyof (IBaseCollectionItemInput & IBaseAccountItem),
-  ICollectionFieldType
+  ICollectionInputType
 >;
 
 export type IAccountItemModelPayload = IBaseModelPayload<IBaseAccountItem>;

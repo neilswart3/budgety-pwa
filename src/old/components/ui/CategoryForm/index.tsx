@@ -3,8 +3,8 @@ import {
   IBaseCollectionItem,
   themeIcons,
   themeSystem,
-} from '@/core';
-import { useForm, UseFormHandleChangePayload } from '@/hooks';
+} from '@/old/core';
+import { useForm, UseFormHandleChangePayload } from '@/old/hooks';
 import { Form } from '../Form';
 import { IoSaveSharp } from 'react-icons/io5';
 import Case from 'case';

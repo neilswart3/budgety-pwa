@@ -1,8 +1,8 @@
-import { CategoryCollection } from '@/core/collections/CategoryCollection';
-import { ICategoryItem } from '@/core/models';
+import { CategoryCollection } from '@/old/core/collections/CategoryCollection';
+import { ICategoryItem } from '@/old/core/models';
 import { UseMutationOptions } from '@tanstack/react-query';
 import { useCollection } from '../useCollection';
-import { CollectionSearchQueryArg } from '@/core/collections';
+import { CollectionSearchQueryArg } from '@/old/core/collections';
 
 const queryKey = ['categories'];
 

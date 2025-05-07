@@ -19,7 +19,7 @@ import {
 // import { Field } from '../field';
 // import { useSearchIcons } from '@/hooks';
 import { Modal } from '../Modal';
-import { ThemeIcon } from '@/core';
+import { ThemeIcon } from '@/old/core';
 
 interface Props {
   iconKey?: ThemeIcon;

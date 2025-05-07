@@ -4,7 +4,7 @@ import {
   ICategoryItem,
   TransactionItemTypeField,
   useCategories,
-} from '@/core';
+} from '@/old/core';
 import { Grid, GridItem, HStack, IconButton } from '@chakra-ui/react';
 import Case from 'case';
 import { FormInput } from '../FormInput';
@@ -12,7 +12,7 @@ import { Field } from '../field';
 import { IoReload, IoSaveSharp } from 'react-icons/io5';
 import { Datepicker } from '../Datepicker';
 import { Form } from '../Form';
-import { useForm, UseFormHandleChangePayload } from '@/hooks';
+import { useForm, UseFormHandleChangePayload } from '@/old/hooks';
 import { ChangeEvent, useCallback, useMemo } from 'react';
 
 export type ITransactionFormValues = IBaseTransactionItem &

@@ -7,7 +7,7 @@ import {
   SelectValueText,
   SelectContent,
   SelectItem,
-} from '@/components/ui';
+} from '@/old/components/ui';
 import Case from 'case';
 import {
   createListCollection,

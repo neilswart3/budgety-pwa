@@ -1,4 +1,4 @@
-import { ThemeIcon } from '@/core';
+import { ThemeIcon } from '@/old/core';
 import CollectionItemModel from '../CollectionItemModel';
 import { ICategoryItem, ICategoryItemModelPayload } from './types';
 

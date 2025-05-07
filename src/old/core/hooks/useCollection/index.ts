@@ -3,8 +3,8 @@ import {
   IBaseModelPayload,
   ICollectionItemType,
   StorageKey,
-} from '@/core';
-import Collection from '@/core/collections/Collection';
+} from '@/old/core';
+import Collection from '@/old/core/collections/Collection';
 import {
   QueryKey,
   useMutation,

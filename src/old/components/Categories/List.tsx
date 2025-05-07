@@ -2,7 +2,7 @@ import { Button, HStack, Stack } from '@chakra-ui/react';
 import { IoAddSharp } from 'react-icons/io5';
 import { CategoryCard } from '../ui';
 import { Link } from 'react-router';
-import { ICategoryItem, useCategories } from '@/core';
+import { ICategoryItem, useCategories } from '@/old/core';
 
 export const CategoriesList: React.FC = () => {
   const { data, isLoading } = useCategories.search();

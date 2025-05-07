@@ -1,5 +1,5 @@
-import { CategoryForm, ICategoryFormValues } from '@/components/ui';
-import { IBaseModelPayload, ICategoryItem, useCategories } from '@/core';
+import { CategoryForm, ICategoryFormValues } from '@/old/components/ui';
+import { IBaseModelPayload, ICategoryItem, useCategories } from '@/old/core';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 

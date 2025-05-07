@@ -2,7 +2,7 @@ import {
   //   AccountItemModel,
   //   ICollectionModels,
   TransactionItemModel,
-} from '@/core';
+} from '@/old/core';
 // import { useState } from 'react';
 
 interface Props {

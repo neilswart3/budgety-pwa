@@ -2,7 +2,7 @@ import {
   CollectionSearchQueryArg,
   ITransactionItem,
   TransactionCollection,
-} from '@/core';
+} from '@/old/core';
 import { UseMutationOptions } from '@tanstack/react-query';
 import { useCollection } from '../useCollection';
 

@@ -1,5 +1,5 @@
-import { Stack } from "@chakra-ui/react";
-import { AccountCard } from "@/components/ui";
+import { Stack } from '@chakra-ui/react';
+import { AccountCard } from '@/old/components/ui';
 
 export const Savings: React.FC = () => (
   <Stack gap={3}>

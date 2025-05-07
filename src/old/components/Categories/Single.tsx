@@ -1,12 +1,12 @@
-import { useCategories, useTransactions } from '@/core';
+import { useCategories, useTransactions } from '@/old/core';
 import { Button, DataList, HStack, Skeleton, Stack } from '@chakra-ui/react';
 import { useCallback, useMemo } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { IoPencilSharp, IoTrashBinSharp } from 'react-icons/io5';
 import Case from 'case';
 import { getFormattedDate } from '@/utils';
-import { Transactions } from '@/components';
-import { Tabs, CategoryCard } from '@/components/ui';
+import { Transactions } from '@/old/components';
+import { Tabs, CategoryCard } from '@/old/components/ui';
 
 export const SingleCategory: React.FC = () => {
   const { category: id } = useParams();

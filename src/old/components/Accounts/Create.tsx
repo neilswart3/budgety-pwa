@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Stack } from '@chakra-ui/react';
-import { IAccountItem, IBaseModelPayload, useAccounts } from '@/core';
-import { Form, FormInput } from '@/components/ui';
+import { IAccountItem, IBaseModelPayload, useAccounts } from '@/old/core';
+import { Form, FormInput } from '@/old/components/ui';
 import Case from 'case';
-import { useForm } from '@/hooks';
+import { useForm } from '@/old/hooks';
 import { IoSaveSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router';
 import { useCallback } from 'react';
@@ -60,6 +61,7 @@ export const CreateAccount: React.FC = () => {
                   key={key}
                   name={key}
                   value={values[key]}
+                  // @ts-expect-error
                   onChange={handleChange}
                 />
               );

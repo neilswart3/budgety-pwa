@@ -1,4 +1,4 @@
-import { ThemeIcon, themeIcons } from '@/core';
+import { ThemeIcon, themeIcons } from '@/old/core';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { IconType } from 'react-icons';
 

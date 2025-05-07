@@ -1,4 +1,4 @@
-import { ITransactionItem } from '@/core';
+import { ITransactionItem } from '@/old/core';
 import { getFormattedDate } from '@/utils';
 import { Badge, Icon, Text } from '@chakra-ui/react';
 import Case from 'case';

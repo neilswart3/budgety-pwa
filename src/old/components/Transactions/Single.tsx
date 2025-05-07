@@ -1,4 +1,4 @@
-import { useCategories, useTransactions } from '@/core';
+import { useCategories, useTransactions } from '@/old/core';
 import { Button, DataList, HStack, Skeleton, Stack } from '@chakra-ui/react';
 import { useCallback, useMemo } from 'react';
 import { IoPencilSharp, IoTrashBinSharp } from 'react-icons/io5';

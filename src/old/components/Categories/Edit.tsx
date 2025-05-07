@@ -1,7 +1,7 @@
-import { IBaseModelPayload, ICategoryItem, useCategories } from '@/core';
+import { IBaseModelPayload, ICategoryItem, useCategories } from '@/old/core';
 import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { CategoryForm, ICategoryFormValues } from '@/components/ui';
+import { CategoryForm, ICategoryFormValues } from '@/old/components/ui';
 
 export const EditCategory: React.FC = () => {
   const navigate = useNavigate();
