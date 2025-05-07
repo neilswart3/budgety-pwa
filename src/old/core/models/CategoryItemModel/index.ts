@@ -1,4 +1,3 @@
-import { ThemeIcon } from '@/old/core';
 import CollectionItemModel from '../CollectionItemModel';
 import { ICategoryItem, ICategoryItemModelPayload } from './types';
 
@@ -7,7 +6,7 @@ export class CategoryItemModel
   implements ICategoryItem
 {
   description: string;
-  icon: ThemeIcon;
+  icon: string;
   color: string;
 
   constructor({

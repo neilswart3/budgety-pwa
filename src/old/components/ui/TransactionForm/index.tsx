@@ -151,7 +151,7 @@ export const TransactionForm: React.FC<Props> = ({ initValues, onSubmit }) => {
                             ]
                           : key === 'category'
                           ? categoryOptions
-                          : key === 'source'
+                          : key === 'account'
                           ? [
                               {
                                 id: 'maaltijdchecques',

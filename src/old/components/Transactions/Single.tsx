@@ -48,7 +48,7 @@ export const SingleTransaction: React.FC = () => {
           <TransactionCard
             id={transaction?.data?.id}
             date={transaction?.data?.date}
-            source={transaction?.data?.source}
+            account={transaction?.data?.account}
             name={transaction?.data?.name}
             type={transaction?.data?.type}
             amount={transaction?.data?.amount}
@@ -73,7 +73,7 @@ export const SingleTransaction: React.FC = () => {
           fullName: transaction?.data?.name,
           type: transaction?.data?.type,
           category: category?.data?.name || '',
-          source: transaction?.data?.source,
+          account: transaction?.data?.account,
           date: getFormattedDate(transaction?.data?.date, 'd MMMM y - t'),
           salaryMonth: getFormattedDate(
             transaction?.data?.salaryMonth,
