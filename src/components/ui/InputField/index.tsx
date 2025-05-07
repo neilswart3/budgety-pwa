@@ -10,18 +10,20 @@ interface Props {
 }
 
 export const InputField: React.FC<Props> = ({ name, label, value, type }) => {
+  console.log('InputField value:', value);
+
   return (
     <Field.Root>
       <Field.Label>{label}</Field.Label>
       {type === 'textarea' ? (
-        <Textarea name={name} value={value} />
+        <Textarea name={name} />
       ) : (
         <Input
           type={type}
           name={name}
           {...(type === 'currencyNumber'
             ? { value: parseFloat('0').toFixed(2) }
-            : { value })}
+            : {})}
         />
       )}
     </Field.Root>
