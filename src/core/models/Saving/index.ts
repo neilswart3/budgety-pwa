@@ -1,6 +1,7 @@
 import { CollectionItem } from '../CollectionItem';
-import { InputTypes } from '../CollectionItem/types';
+import { InputTypes, InputValidations } from '../CollectionItem/types';
 import { ISaving, ISavingPayload } from './types';
+import { z } from 'zod';
 
 export class Saving extends CollectionItem implements ISaving {
   description: string;
@@ -30,8 +31,17 @@ export class Saving extends CollectionItem implements ISaving {
     ...CollectionItem.inputTypes,
     goalAmount: 'currencyNumber',
     goalDate: 'date',
-    description: 'textarea',
     color: 'color',
     icon: 'select',
+    description: 'textarea',
+  };
+
+  static inputValidation: InputValidations<ISavingPayload> = {
+    ...CollectionItem.inputValidation,
+    goalAmount: z.number().finite().positive(),
+    goalDate: z.date().min(new Date()),
+    color: z.string(),
+    icon: z.string(),
+    description: z.string().optional(),
   };
 }

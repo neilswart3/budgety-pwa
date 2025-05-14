@@ -3,9 +3,10 @@ import { AppLayout } from './layouts';
 import {
   Transactions,
   Accounts,
-  Occurrences,
   Dashboard,
   Categories,
+  Savings,
+  Occasions,
 } from '@/components';
 
 function App() {
@@ -28,11 +29,11 @@ function App() {
           <Route path=":category/edit" element={<Categories.Edit />} />
         </Route>
 
-        <Route path="occurrences">
-          <Route index element={<Occurrences.List />} />
-          <Route path="create" element={<Occurrences.Create />} />
-          <Route path=":occurrence" element={<Occurrences.Single />} />
-          <Route path=":occurrence/edit" element={<Occurrences.Edit />} />
+        <Route path="occasions">
+          <Route index element={<Occasions.List />} />
+          <Route path="create" element={<Occasions.Create />} />
+          <Route path=":occasion" element={<Occasions.Single />} />
+          <Route path=":occasion/edit" element={<Occasions.Edit />} />
         </Route>
 
         <Route path="accounts">
@@ -40,6 +41,13 @@ function App() {
           <Route path="create" element={<Accounts.Create />} />
           <Route path=":account" element={<Accounts.Single />} />
           <Route path=":account/edit" element={<Accounts.Edit />} />
+        </Route>
+
+        <Route path="Savings">
+          <Route index element={<Savings.List />} />
+          <Route path="create" element={<Savings.Create />} />
+          <Route path=":saving" element={<Savings.Single />} />
+          <Route path=":saving/edit" element={<Savings.Edit />} />
         </Route>
 
         <Route path="profile">

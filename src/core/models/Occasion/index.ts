@@ -1,6 +1,7 @@
 import { CollectionItem } from '../CollectionItem';
-import { InputTypes } from '../CollectionItem/types';
+import { InputTypes, InputValidations } from '../CollectionItem/types';
 import { IOccasion, IOccasionPayload } from './types';
+import { z } from 'zod';
 
 export class Occasion extends CollectionItem implements IOccasion {
   description: string;
@@ -9,13 +10,19 @@ export class Occasion extends CollectionItem implements IOccasion {
   constructor({ description, categories, ...args }: IOccasionPayload) {
     super(args);
 
-    this.description = description;
     this.categories = categories;
+    this.description = description;
   }
 
   static inputTypes: InputTypes<IOccasionPayload> = {
     ...CollectionItem.inputTypes,
-    description: 'textarea',
     categories: 'multiSelect',
+    description: 'textarea',
+  };
+
+  static inputValidation: InputValidations<IOccasionPayload> = {
+    ...CollectionItem.inputValidation,
+    categories: z.array(z.string()),
+    description: z.string().optional(),
   };
 }

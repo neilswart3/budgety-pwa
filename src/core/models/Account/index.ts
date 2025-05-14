@@ -1,6 +1,7 @@
 import { CollectionItem } from '../CollectionItem';
-import { InputTypes } from '../CollectionItem/types';
+import { InputTypes, InputValidations } from '../CollectionItem/types';
 import { IAccount, IAccountPayload } from './types';
+import { z } from 'zod';
 
 export class Account extends CollectionItem implements IAccount {
   description: string;
@@ -10,15 +11,22 @@ export class Account extends CollectionItem implements IAccount {
   constructor({ description, amount, monthBudget, ...args }: IAccountPayload) {
     super(args);
 
-    this.description = description;
     this.amount = amount;
     this.monthBudget = monthBudget;
+    this.description = description;
   }
 
   static inputTypes: InputTypes<IAccountPayload> = {
     ...CollectionItem.inputTypes,
-    description: 'textarea',
     amount: 'currencyNumber',
     monthBudget: 'currencyNumber',
+    description: 'textarea',
+  };
+
+  static inputValidation: InputValidations<IAccountPayload> = {
+    ...CollectionItem.inputValidation,
+    amount: z.number().finite().positive(),
+    monthBudget: z.number().finite().positive(),
+    description: z.string().optional(),
   };
 }

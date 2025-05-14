@@ -1,32 +1,24 @@
-// import {
-//   ICategoryItem,
-//   ITransactionItem,
-//   useCategories,
-//   useTransactions,
-// } from '@/core';
-import {
-  //  Skeleton,
-  Text,
-} from '@chakra-ui/react';
+import { useSavingsItem } from '@/hooks';
+import { Skeleton, Text } from '@chakra-ui/react';
 import Case from 'case';
 import { useMemo } from 'react';
 import { useLocation, useParams } from 'react-router';
 
-// const BaseHeader: React.FC<{
-//   name: string | undefined;
-//   isFetching: boolean;
-//   label: string;
-// }> = ({ label, name, isFetching }) => (
-//   <>
-//     {!name && isFetching ? (
-//       <Skeleton display="inline-block" as="span" h={6} w={64} />
-//     ) : (
-//       <>
-//         {label}: {name as string}
-//       </>
-//     )}
-//   </>
-// );
+const BaseHeader: React.FC<{
+  name: string | undefined;
+  isFetching: boolean;
+  label: string;
+}> = ({ label, name, isFetching }) => (
+  <>
+    {!name && isFetching ? (
+      <Skeleton display="inline-block" as="span" h={6} w={64} />
+    ) : (
+      <>
+        {label}: {name as string}
+      </>
+    )}
+  </>
+);
 
 const TransactionHeader: React.FC<{ id: string }> = ({ id }) => {
   //   const { data, isFetching } = useTransactions.single(id);
@@ -55,6 +47,14 @@ const CategoryHeader: React.FC<{ id: string }> = ({ id }) => {
   return <>CategoryHeader: {id}</>;
 };
 
+const SavingHeader: React.FC<{ id: string }> = ({ id }) => {
+  const { data, isFetching } = useSavingsItem(id);
+
+  return (
+    <BaseHeader name={data?.name} isFetching={isFetching} label="Saving" />
+  );
+};
+
 export const HeaderTitle: React.FC = () => {
   const params = useParams();
   const { pathname } = useLocation();
@@ -74,6 +74,8 @@ export const HeaderTitle: React.FC = () => {
         return <TransactionHeader id={params.transaction} />;
       case !!params?.category:
         return <CategoryHeader id={params.category} />;
+      case !!params?.saving:
+        return <SavingHeader id={params.saving} />;
       case !!params['*']:
       default:
         return <>Not found</>;

@@ -1,4 +1,6 @@
 import { HTMLInputTypeAttribute } from 'react';
+import { z } from 'zod';
+import { TransactionType } from '../Transaction/types';
 
 export interface ICollectionItem {
   id: string;
@@ -34,4 +36,17 @@ export type InputTypesValues =
 export type InputTypes<T> = Record<
   keyof Omit<T, keyof Omit<ICollectionItem, 'name'>>,
   InputTypesValues
+>;
+
+export type InputValidationsValues =
+  | z.ZodString
+  | z.ZodNumber
+  | z.ZodDate
+  | z.ZodEnum<[TransactionType.INCOME, TransactionType.EXPENSE]>
+  | z.ZodArray<z.ZodString>
+  | z.ZodOptional<InputValidationsValues>;
+
+export type InputValidations<T> = Record<
+  keyof InputTypes<T>,
+  InputValidationsValues
 >;

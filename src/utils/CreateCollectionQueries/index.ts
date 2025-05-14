@@ -12,10 +12,11 @@ import {
   ControllerConstructor,
   CreateCollectionQueriesResult,
 } from './types';
+import { CollectionItem } from '@/core/models/CollectionItem';
 
 export class CreateCollectionQueries {
   private static getMethodType = (name: CollectionMethodName) => {
-    if (['fetch', 'search'].some((s) => name.startsWith(s))) {
+    if (['list', 'item', 'search'].some((s) => name.startsWith(s))) {
       return 'Query';
     }
 
@@ -43,19 +44,24 @@ export class CreateCollectionQueries {
     method,
     args,
     key,
+    name,
   }: {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     method: Function;
     args: unknown[];
     key: CollectionKey;
+    name: string;
   }) => {
-    const stringArg = args.length === 1 && typeof args.at(0) === 'string';
-    const queryArg = args.length === 1 && typeof args.at(0) === 'object';
+    const stringArg = args?.length === 1 && typeof args?.at(0) === 'string';
+    const queryArg = args?.length === 1 && typeof args?.at(0) === 'object';
 
     let fn: QueryFunction | MutationFunction;
     let queryKey: (CollectionKey | string)[] = [key];
 
     switch (true) {
+      case this.getMethodType(name) === 'Mutation':
+        fn = (newArgs: unknown) => method(newArgs);
+        break;
       case stringArg:
         queryKey = [...queryKey, ...(stringArg ? [args.at(0) as string] : [])];
         fn = () => method(args.at(0) as string);
@@ -71,15 +77,16 @@ export class CreateCollectionQueries {
     return { queryKey, fn };
   };
 
-  static createQueries = <T extends CollectionKey>(
+  static createQueries = <T extends CollectionKey, R extends CollectionItem>(
     ControllerClass: ControllerConstructor
-  ): CreateCollectionQueriesResult<T> => {
+  ): CreateCollectionQueriesResult<T, R> => {
     const controller = new ControllerClass();
 
     return Object.entries(controller).reduce((acc, [name, method]) => {
       if (typeof method !== 'function') return acc;
 
       const methodType = this.getMethodType(name);
+
       if (!methodType) return acc;
 
       const methodName = this.getMethodName(controller.key, name);
@@ -89,6 +96,7 @@ export class CreateCollectionQueries {
           ...acc,
           [methodName]: (...args: unknown[]) => {
             const { fn: queryFn, queryKey } = this.getQueryOptions({
+              name,
               method,
               args,
               key: controller.key,
@@ -104,13 +112,14 @@ export class CreateCollectionQueries {
           ...acc,
           [methodName]: (...args: unknown[]) => {
             const { fn } = this.getQueryOptions({
+              name,
               method,
               args,
               key: controller.key,
             });
 
-            return useMutation({
-              mutationFn: fn as MutationFunction,
+            return useMutation<void>({
+              mutationFn: fn as MutationFunction<void>,
               onSuccess: () => {
                 const queryClient = new QueryClient();
                 queryClient.invalidateQueries({ queryKey: [controller.key] });
@@ -121,6 +130,6 @@ export class CreateCollectionQueries {
       }
 
       return acc;
-    }, {} as CreateCollectionQueriesResult<T>);
+    }, {} as CreateCollectionQueriesResult<T, R>);
   };
 }

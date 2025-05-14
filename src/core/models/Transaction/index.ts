@@ -1,6 +1,7 @@
 import { CollectionItem } from '../CollectionItem';
 import { ITransaction, ITransactionPayload, TransactionType } from './types';
-import { InputTypes } from '../CollectionItem/types';
+import { InputTypes, InputValidations } from '../CollectionItem/types';
+import { z } from 'zod';
 
 export class Transaction extends CollectionItem implements ITransaction {
   type: TransactionType;
@@ -36,22 +37,36 @@ export class Transaction extends CollectionItem implements ITransaction {
     this.categories = categories;
     this.accounts = accounts;
     this.occasion = occasion;
-    this.description = description;
     this.location = location;
     this.vendor = vendor;
+    this.description = description;
   }
 
   static inputTypes: InputTypes<ITransactionPayload> = {
     ...CollectionItem.inputTypes,
-    amount: 'currencyNumber',
     type: 'switch',
+    amount: 'currencyNumber',
     date: 'datetime-local',
     salaryMonth: 'month',
     categories: 'multiSelect',
     accounts: 'multiSelect',
     occasion: 'select',
-    description: 'textarea',
     location: 'text',
     vendor: 'text',
+    description: 'textarea',
+  };
+
+  static inputValidation: InputValidations<ITransactionPayload> = {
+    ...CollectionItem.inputValidation,
+    type: z.enum([TransactionType.INCOME, TransactionType.EXPENSE]),
+    amount: z.number().finite().positive(),
+    date: z.date(),
+    salaryMonth: z.date(),
+    categories: z.array(z.string()),
+    accounts: z.array(z.string()),
+    occasion: z.string(),
+    description: z.string().optional(),
+    location: z.string().optional(),
+    vendor: z.string().optional(),
   };
 }

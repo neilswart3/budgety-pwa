@@ -1,5 +1,11 @@
 import { v4 as uuid } from 'uuid';
-import { ICollectionItem, ICollectionItemPayload, InputTypes } from './types';
+import {
+  ICollectionItem,
+  ICollectionItemPayload,
+  InputTypes,
+  InputValidations,
+} from './types';
+import { z } from 'zod';
 
 export abstract class CollectionItem implements ICollectionItem {
   id: string;
@@ -29,5 +35,9 @@ export abstract class CollectionItem implements ICollectionItem {
 
   static inputTypes: InputTypes<ICollectionItemPayload> = {
     name: 'text',
+  };
+
+  static inputValidation: InputValidations<ICollectionItemPayload> = {
+    name: z.string().min(3),
   };
 }

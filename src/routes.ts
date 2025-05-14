@@ -4,6 +4,7 @@ import {
   MdLocalActivity,
   MdPerson,
   MdReceiptLong,
+  MdSavings,
   MdWallet,
 } from 'react-icons/md';
 
@@ -23,15 +24,20 @@ export const routeMeta = {
     label: 'Categories',
     slug: 'categories',
   },
-  occurrences: {
+  occasions: {
     icon: MdLocalActivity,
-    label: 'Occurrences',
-    slug: 'occurrences',
+    label: 'Occasions',
+    slug: 'occasions',
   },
   accounts: {
     icon: MdWallet,
     label: 'Accounts',
     slug: 'accounts',
+  },
+  savings: {
+    icon: MdSavings,
+    label: 'Savings',
+    slug: 'savings',
   },
   profile: {
     icon: MdPerson,

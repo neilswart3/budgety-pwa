@@ -1,20 +1,20 @@
-import { Account, Category, Occasion, Saving, Transaction } from '@/core';
-import { Heading, HStack, Stack } from '@chakra-ui/react';
-import Case from 'case';
-import { InputField, SelectField, SelectFieldType } from '../ui';
+// import { Account, Category, Occasion, Saving, Transaction } from '@/core';
+import { Stack } from '@chakra-ui/react';
+// import Case from 'case';
+// import { InputField, SelectField, SelectFieldType } from '../ui';
 
 export const Dashboard: React.FC = () => {
-  const modelInputTypes = {
-    Account: Account.inputTypes,
-    Category: Category.inputTypes,
-    Occasion: Occasion.inputTypes,
-    Saving: Saving.inputTypes,
-    Transaction: Transaction.inputTypes,
-  };
+  //   const modelInputTypes = {
+  //     Account: Account.inputTypes,
+  //     Category: Category.inputTypes,
+  //     Occasion: Occasion.inputTypes,
+  //     Saving: Saving.inputTypes,
+  //     Transaction: Transaction.inputTypes,
+  //   };
 
   return (
     <Stack>
-      <Stack gap={8}>
+      {/* <Stack gap={8}>
         {Object.entries(modelInputTypes).map(([model, inputTypes]) => (
           <Stack key={model}>
             <Heading>{model}</Heading>
@@ -59,7 +59,7 @@ export const Dashboard: React.FC = () => {
             </Stack>
           </Stack>
         ))}
-      </Stack>
+      </Stack> */}
     </Stack>
   );
 };
