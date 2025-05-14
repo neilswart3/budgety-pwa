@@ -16,8 +16,8 @@ interface GetFormInitValuesPayload {
 
 export const getFormEmptyValues = ({
   inputTypes,
-  options = {},
-}: GetFormInitValuesPayload) =>
+}: //   options = {},
+GetFormInitValuesPayload) =>
   Object.entries(inputTypes).reduce((acc, [name, type]) => {
     let value;
     switch (true) {
