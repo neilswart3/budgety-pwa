@@ -14,10 +14,10 @@ export const getParsedSubmitValues = ({
 
     let val;
     switch (true) {
-      case /number/i.test(type):
+      case /number/gi.test(type):
         val = parseFloat(value as string);
         break;
-      case /date/i.test(type):
+      case /date|month/gi.test(type):
         val = new Date(value as string);
         break;
       default:
