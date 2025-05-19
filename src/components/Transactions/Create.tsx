@@ -1,6 +1,7 @@
 import { useTransactionsCreate } from '@/hooks';
 import { CollectionForm } from '../CollectionForm';
 import { Transaction } from '@/core';
+import { TransactionType } from '@/core/models/Transaction/types';
 
 export const CreateTransaction: React.FC = () => {
   const { mutateAsync } = useTransactionsCreate({});
@@ -19,6 +20,10 @@ export const CreateTransaction: React.FC = () => {
         ],
         accounts: [{ label: 'fake account', value: 'fake-accounts' }],
         occasion: [{ label: 'fake occasion', value: 'fake-occasion' }],
+        type: [
+          { value: TransactionType.EXPENSE, label: 'Expense' },
+          { value: TransactionType.INCOME, label: 'Income' },
+        ],
       }}
     />
   );

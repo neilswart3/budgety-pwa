@@ -31,7 +31,8 @@ export type InputTypesValues =
   | 'textarea'
   | 'select'
   | 'multiSelect'
-  | 'switch';
+  | 'switch'
+  | 'enum';
 
 export type InputTypes<T> = Record<
   keyof Omit<T, keyof Omit<ICollectionItem, 'name'>>,

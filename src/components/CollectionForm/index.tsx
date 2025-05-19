@@ -11,7 +11,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { InputField, SelectField, SelectFieldType } from '../ui';
+import { EnumField, InputField, SelectField, SelectFieldType } from '../ui';
 import Case from 'case';
 import { MdClose, MdSave } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router';
@@ -100,6 +100,8 @@ export const CollectionForm: React.FC<CollectionFormProps> = ({
 
   if (!initValues) return <div>Loading...</div>;
 
+  console.log('values:', values);
+
   return (
     <Stack>
       <Stack as="form" gap={8} onSubmit={handleSubmit}>
@@ -121,6 +123,24 @@ export const CollectionForm: React.FC<CollectionFormProps> = ({
                         name={name}
                         label={label}
                         type={type as SelectFieldType}
+                        value={value}
+                        onChange={handleChange}
+                        options={
+                          options ? options[name as keyof typeof options] : []
+                        }
+                      />
+                    );
+                  }
+
+                  //   if (type === 'switch') {
+                  //     return <SwitchField label="Thing" />;
+                  //   }
+
+                  if (type === 'enum') {
+                    return (
+                      <EnumField
+                        name={name}
+                        label={label}
                         value={value}
                         onChange={handleChange}
                         options={
