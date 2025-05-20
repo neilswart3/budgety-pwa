@@ -8,12 +8,13 @@ export enum TransactionType {
   EXPENSE = 'EXPENSE',
 }
 
-export interface ITransaction extends ICollectionItem {
+interface IBaseTransactionPayload {
   type: TransactionType;
   amount: number;
   date: string;
   salaryMonth: string;
   categories: string[];
+  subCategories: string[];
   accounts: string[];
   occasion: string;
   description: string;
@@ -21,4 +22,6 @@ export interface ITransaction extends ICollectionItem {
   vendor?: string;
 }
 
-export type ITransactionPayload = ICollectionItemPayload & ITransaction;
+export type ITransaction = ICollectionItem & IBaseTransactionPayload;
+export type ITransactionPayload = IBaseTransactionPayload &
+  ICollectionItemPayload;

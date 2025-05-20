@@ -3,12 +3,15 @@ import {
   ICollectionItemPayload,
 } from '../CollectionItem/types';
 
-export interface ISaving extends ICollectionItem {
+interface IBaseSavingPayload {
   description: string;
+  amount: number;
   goalAmount: number;
-  goalDate: number;
+  contributionMonthly?: number;
+  goalDate?: Date;
   color: string;
   icon: string;
 }
 
-export type ISavingPayload = ICollectionItemPayload & ISaving;
+export type ISaving = ICollectionItem & IBaseSavingPayload;
+export type ISavingPayload = IBaseSavingPayload & ICollectionItemPayload;

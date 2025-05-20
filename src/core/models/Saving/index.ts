@@ -5,8 +5,10 @@ import { z } from 'zod';
 
 export class Saving extends CollectionItem implements ISaving {
   description: string;
+  amount: number;
+  contributionMonthly: number | undefined;
   goalAmount: number;
-  goalDate: number;
+  goalDate: Date | undefined;
   color: string;
   icon: string;
 
@@ -16,10 +18,14 @@ export class Saving extends CollectionItem implements ISaving {
     goalDate,
     color,
     icon,
+    amount,
+    contributionMonthly,
     ...args
   }: ISavingPayload) {
     super(args);
 
+    this.amount = amount;
+    this.contributionMonthly = contributionMonthly;
     this.description = description;
     this.goalAmount = goalAmount;
     this.goalDate = goalDate;
@@ -29,7 +35,9 @@ export class Saving extends CollectionItem implements ISaving {
 
   static inputTypes: InputTypes<ISavingPayload> = {
     ...CollectionItem.inputTypes,
+    amount: 'currencyNumber',
     goalAmount: 'currencyNumber',
+    contributionMonthly: 'number',
     goalDate: 'date',
     color: 'color',
     icon: 'select',
@@ -38,6 +46,8 @@ export class Saving extends CollectionItem implements ISaving {
 
   static inputValidation: InputValidations<ISavingPayload> = {
     ...CollectionItem.inputValidation,
+    amount: z.number().finite().positive(),
+    contributionMonthly: z.number().finite().positive(),
     goalAmount: z.number().finite().positive(),
     goalDate: z.date().min(new Date()),
     color: z.string(),

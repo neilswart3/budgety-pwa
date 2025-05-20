@@ -9,3 +9,5 @@ export * from './Footer';
 export * from './Header';
 export * from './MenuDrawer';
 export * from './CollectionForm';
+export * from './Profile';
+export * from './Settings';

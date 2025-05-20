@@ -3,9 +3,11 @@ import {
   ICollectionItemPayload,
 } from '../CollectionItem/types';
 
-export interface IOccasion extends ICollectionItem {
+interface IBaseOccasionPayload {
   description: string;
   categories: string[];
+  complete: boolean;
 }
 
-export type IOccasionPayload = ICollectionItemPayload & IOccasion;
+export type IOccasion = ICollectionItem & IBaseOccasionPayload;
+export type IOccasionPayload = IBaseOccasionPayload & ICollectionItemPayload;

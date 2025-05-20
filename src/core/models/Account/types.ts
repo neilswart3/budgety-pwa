@@ -3,10 +3,11 @@ import {
   ICollectionItemPayload,
 } from '../CollectionItem/types';
 
-export interface IAccount extends ICollectionItem {
+interface IBaseAccountPayload {
   description: string;
   amount: number;
   monthBudget: number;
 }
 
-export type IAccountPayload = ICollectionItemPayload & IAccount;
+export type IAccount = ICollectionItem & IBaseAccountPayload;
+export type IAccountPayload = IBaseAccountPayload & ICollectionItemPayload;

@@ -1,21 +1,20 @@
 import { CollectionKey } from '@/constants';
 import { CollectionController } from './Collection.Controller';
 import { LocalStorageRepository } from '../repositories';
-import { Saving } from '../models';
-import { ISaving, ISavingPayload } from '../models/Saving/types';
+import { ISubCategory, ISubCategoryPayload, SubCategory } from '../models';
 
-export class SavingController extends CollectionController {
+export class SubCategoryController extends CollectionController {
   key: CollectionKey;
-  repository: LocalStorageRepository<Saving>;
+  repository: LocalStorageRepository<SubCategory>;
 
   constructor() {
     super();
 
-    this.key = CollectionKey.SAVINGS;
+    this.key = CollectionKey.SUB_CATEGORIES;
     this.repository = new LocalStorageRepository(this.key);
   }
 
-  list = async (): Promise<Saving[] | Error> => {
+  list = async (): Promise<SubCategory[] | Error> => {
     try {
       return await this.repository.list();
     } catch (error) {
@@ -23,7 +22,7 @@ export class SavingController extends CollectionController {
     }
   };
 
-  search = async (query = {}): Promise<Saving[] | Error> => {
+  search = async (query = {}): Promise<SubCategory[] | Error> => {
     try {
       return await this.repository.search(query);
     } catch (error) {
@@ -31,7 +30,7 @@ export class SavingController extends CollectionController {
     }
   };
 
-  item = async (id: string): Promise<Saving | Error> => {
+  item = async (id: string): Promise<SubCategory | Error> => {
     try {
       return await this.repository.item(id);
     } catch (error) {
@@ -39,20 +38,17 @@ export class SavingController extends CollectionController {
     }
   };
 
-  create = async (payload: ISavingPayload | Saving): Promise<void> => {
+  create = async (payload: ISubCategoryPayload): Promise<void> => {
     try {
-      const newElement =
-        payload instanceof Saving ? payload : new Saving(payload);
-
-      await this.repository.create(newElement);
+      await this.repository.create(new SubCategory(payload));
     } catch (error) {
       throw new Error((error as Error).message);
     }
   };
 
-  update = async (payload: ISaving): Promise<void | Error> => {
+  update = async (payload: ISubCategory): Promise<void | Error> => {
     try {
-      const updatedItem = new Saving({
+      const updatedItem = new SubCategory({
         ...payload,
         modifiedAt: new Date().toISOString(),
       });

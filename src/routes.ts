@@ -5,6 +5,7 @@ import {
   MdPerson,
   MdReceiptLong,
   MdSavings,
+  MdSettings,
   MdWallet,
 } from 'react-icons/md';
 
@@ -43,5 +44,10 @@ export const routeMeta = {
     icon: MdPerson,
     label: 'Profile',
     slug: 'profile',
+  },
+  settings: {
+    icon: MdSettings,
+    label: 'Settings',
+    slug: 'settings',
   },
 };

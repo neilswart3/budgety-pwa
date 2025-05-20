@@ -7,7 +7,7 @@ export abstract class CollectionController {
   abstract search(query: object): void;
   abstract item(id: string): void;
 
-  abstract create(payload: object): void;
+  abstract create(payload: object): Promise<void>;
   abstract update(payload: object): void;
   abstract delete(id: string): void;
 }

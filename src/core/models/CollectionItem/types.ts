@@ -45,6 +45,7 @@ export type InputValidationsValues =
   | z.ZodDate
   | z.ZodEnum<[TransactionType.INCOME, TransactionType.EXPENSE]>
   | z.ZodArray<z.ZodString>
+  | z.ZodBoolean
   | z.ZodOptional<InputValidationsValues>;
 
 export type InputValidations<T> = Record<

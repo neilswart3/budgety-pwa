@@ -1,8 +1,7 @@
 import { CollectionKey } from '@/constants';
 import { CollectionController } from './Collection.Controller';
 import { LocalStorageRepository } from '../repositories';
-import { Category } from '../models';
-import { ICategory, ICategoryPayload } from '../models/Category/types';
+import { Category, ICategory, ICategoryPayload } from '../models';
 
 export class CategoryController extends CollectionController {
   key: CollectionKey;
@@ -39,9 +38,12 @@ export class CategoryController extends CollectionController {
     }
   };
 
-  create = async (payload: ICategoryPayload): Promise<void> => {
+  create = async (payload: ICategoryPayload | Category): Promise<void> => {
     try {
-      await this.repository.create(new Category(payload));
+      const newElement =
+        payload instanceof Category ? payload : new Category(payload);
+
+      await this.repository.create(newElement);
     } catch (error) {
       throw new Error((error as Error).message);
     }

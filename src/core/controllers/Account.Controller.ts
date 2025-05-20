@@ -39,9 +39,11 @@ export class AccountController extends CollectionController {
     }
   };
 
-  create = async (payload: IAccountPayload): Promise<void> => {
+  create = async (payload: IAccountPayload | Account): Promise<void> => {
     try {
-      await this.repository.create(new Account(payload));
+      await this.repository.create(
+        payload instanceof Account ? payload : new Account(payload)
+      );
     } catch (error) {
       throw new Error((error as Error).message);
     }

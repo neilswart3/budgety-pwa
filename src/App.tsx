@@ -7,6 +7,8 @@ import {
   Categories,
   Savings,
   Occasions,
+  Profile,
+  Settings,
 } from '@/components';
 
 function App() {
@@ -51,7 +53,11 @@ function App() {
         </Route>
 
         <Route path="profile">
-          <Route index element={<div>Profile</div>} />
+          <Route index element={<Profile />} />
+        </Route>
+
+        <Route path="settings">
+          <Route index element={<Settings />} />
         </Route>
 
         <Route path="*" element={<div>404</div>} />

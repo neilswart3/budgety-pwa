@@ -39,9 +39,12 @@ export class OccasionController extends CollectionController {
     }
   };
 
-  create = async (payload: IOccasionPayload): Promise<void> => {
+  create = async (payload: IOccasionPayload | Occasion): Promise<void> => {
     try {
-      await this.repository.create(new Occasion(payload));
+      const newElement =
+        payload instanceof Occasion ? payload : new Occasion(payload);
+
+      await this.repository.create(newElement);
     } catch (error) {
       throw new Error((error as Error).message);
     }

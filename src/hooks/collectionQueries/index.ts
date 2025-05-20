@@ -8,6 +8,8 @@ import {
   OccasionController,
   Saving,
   SavingController,
+  SubCategory,
+  SubCategoryController,
   Transaction,
   TransactionController,
 } from '@/core';
@@ -34,6 +36,13 @@ export const {
   useCategoriesSearch,
   useCategoriesUpdate,
 
+  useSubCategoriesCreate,
+  useSubCategoriesDelete,
+  useSubCategoriesItem,
+  useSubCategoriesList,
+  useSubCategoriesSearch,
+  useSubCategoriesUpdate,
+
   useOccasionsCreate,
   useOccasionsDelete,
   useOccasionsItem,
@@ -57,6 +66,9 @@ export const {
 } = {
   ...createQueries<CollectionKey.ACCOUNTS, Account>(AccountController),
   ...createQueries<CollectionKey.CATEGORIES, Category>(CategoryController),
+  ...createQueries<CollectionKey.SUB_CATEGORIES, SubCategory>(
+    SubCategoryController
+  ),
   ...createQueries<CollectionKey.OCCASIONS, Occasion>(OccasionController),
   ...createQueries<CollectionKey.SAVINGS, Saving>(SavingController),
   ...createQueries<CollectionKey.TRANSACTIONS, Transaction>(
