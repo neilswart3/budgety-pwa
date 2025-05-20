@@ -53,6 +53,10 @@ export class LocalStorageRepository<Data extends CollectionItem> {
     try {
       const items = (await this.list()) as Data[];
 
+      if (items.find(({ id }) => id === payload.id)) {
+        throw new Error('An item with this id already exists');
+      }
+
       await Promise.resolve(
         window.localStorage.setItem(
           this.key,
