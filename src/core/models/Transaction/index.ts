@@ -9,6 +9,7 @@ export class Transaction extends CollectionItem implements ITransaction {
   date: string;
   salaryMonth: string;
   categories: string[];
+  subCategories: string[];
   accounts: string[];
   occasion: string;
   description: string;
@@ -21,6 +22,7 @@ export class Transaction extends CollectionItem implements ITransaction {
     date,
     salaryMonth,
     categories,
+    subCategories,
     accounts,
     occasion,
     description,
@@ -35,6 +37,7 @@ export class Transaction extends CollectionItem implements ITransaction {
     this.date = date;
     this.salaryMonth = salaryMonth;
     this.categories = categories;
+    this.subCategories = subCategories;
     this.accounts = accounts;
     this.occasion = occasion;
     this.location = location;
@@ -49,6 +52,7 @@ export class Transaction extends CollectionItem implements ITransaction {
     date: 'date',
     salaryMonth: 'month',
     categories: 'multiSelect',
+    subCategories: 'multiSelect',
     accounts: 'multiSelect',
     occasion: 'select',
     location: 'text',
@@ -63,6 +67,7 @@ export class Transaction extends CollectionItem implements ITransaction {
     date: z.date(),
     salaryMonth: z.date(),
     categories: z.array(z.string()).min(1),
+    subCategories: z.array(z.string()).min(1),
     accounts: z.array(z.string()).min(1),
     occasion: z.string().optional(),
     description: z.string().optional(),
