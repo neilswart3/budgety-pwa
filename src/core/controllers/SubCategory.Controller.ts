@@ -3,7 +3,7 @@ import { CollectionController } from './Collection.Controller';
 import { LocalStorageRepository } from '../repositories';
 import { ISubCategory, ISubCategoryPayload, SubCategory } from '../models';
 
-export class SubCategoryController extends CollectionController {
+export class SubCategoryController extends CollectionController<SubCategory> {
   key: CollectionKey;
   repository: LocalStorageRepository<SubCategory>;
 
@@ -22,7 +22,9 @@ export class SubCategoryController extends CollectionController {
     }
   };
 
-  search = async (query = {}): Promise<SubCategory[] | Error> => {
+  search = async (
+    query: Partial<Record<keyof SubCategory, string[]>> = {}
+  ): Promise<SubCategory[] | Error> => {
     try {
       return await this.repository.search(query);
     } catch (error) {

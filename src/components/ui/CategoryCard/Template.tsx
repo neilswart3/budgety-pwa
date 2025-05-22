@@ -18,7 +18,7 @@ interface Props {
   colorPalette?: string;
   ring?: boolean;
   avatarBg?: string;
-  link?: string;
+  link?: string | false;
 }
 
 export const CategoryCardTemplate: React.FC<Props> = ({

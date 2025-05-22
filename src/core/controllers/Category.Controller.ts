@@ -3,7 +3,7 @@ import { CollectionController } from './Collection.Controller';
 import { LocalStorageRepository } from '../repositories';
 import { Category, ICategory, ICategoryPayload } from '../models';
 
-export class CategoryController extends CollectionController {
+export class CategoryController extends CollectionController<Category> {
   key: CollectionKey;
   repository: LocalStorageRepository<Category>;
 
@@ -16,6 +16,8 @@ export class CategoryController extends CollectionController {
 
   list = async (): Promise<Category[] | Error> => {
     try {
+      console.log('%c CategoryController.list ', 'background:green');
+
       return await this.repository.list();
     } catch (error) {
       throw new Error((error as Error).message);
@@ -38,7 +40,9 @@ export class CategoryController extends CollectionController {
     }
   };
 
-  create = async (payload: ICategoryPayload | Category): Promise<void> => {
+  create = async (
+    payload: ICategoryPayload | Category
+  ): Promise<void | Error> => {
     try {
       const newElement =
         payload instanceof Category ? payload : new Category(payload);

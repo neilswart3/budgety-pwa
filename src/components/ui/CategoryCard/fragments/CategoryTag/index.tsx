@@ -10,11 +10,7 @@ interface Props {
   icon: string;
 }
 
-const Component: React.FC<Props> & { Loading: React.FC } = ({
-  id,
-  name,
-  icon,
-}) => {
+const Component: React.FC<Props> & { Loading: React.FC } = ({ name, icon }) => {
   const TagIcon = useMemo(
     () => mdIcons[icon.trim() as keyof typeof mdIcons],
     [icon]

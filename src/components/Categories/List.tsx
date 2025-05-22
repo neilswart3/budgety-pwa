@@ -15,7 +15,7 @@ export const ListCategories: React.FC = () => {
             <CategoryCard.Loading key={`categoryCard__loading--${i}`} />
           ))}
         {!!data?.length &&
-          data?.map((item) => <CategoryCard key={item.id} {...item} />)}
+          data?.map((item) => <CategoryCard key={item.id} {...item} link />)}
       </Stack>
     </ListLayout>
   );

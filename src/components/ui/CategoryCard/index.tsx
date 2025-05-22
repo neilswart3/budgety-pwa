@@ -9,7 +9,9 @@ import { CategoryTag } from './fragments';
 import { CategoryCardTemplate } from './Template';
 import { CategoryCardLoading } from './Loading';
 
-type Props = ICategory;
+interface Props extends ICategory {
+  link?: boolean;
+}
 
 export const Component: React.FC<Props> & { Loading: React.FC } = ({
   id,
@@ -17,6 +19,7 @@ export const Component: React.FC<Props> & { Loading: React.FC } = ({
   color,
   name,
   subCategories,
+  link,
 }) => {
   const colorPalette = useMemo(
     () => tinyColor(color).toName() || 'grey',
@@ -35,7 +38,7 @@ export const Component: React.FC<Props> & { Loading: React.FC } = ({
       colorPalette={colorPalette}
       icon={<TheIcon />}
       label={Case.title(name)}
-      link={id}
+      link={link && id}
       tags={
         <HStack flexWrap="wrap">
           {isFetching &&
