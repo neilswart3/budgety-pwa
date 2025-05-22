@@ -63,12 +63,22 @@ export class CreateCollectionQueries {
         fn = (newArgs: unknown) => method(newArgs);
         break;
       case stringArg:
-        queryKey = [...queryKey, ...(stringArg ? [args.at(0) as string] : [])];
+        queryKey = [...queryKey, `id:${args.at(0) as string}`];
         fn = () => method(args.at(0) as string);
         break;
-      case queryArg:
+      case queryArg: {
+        const otherKeys = Object.entries((args.at(0) as object) || {}).reduce(
+          (acc: string[], [key, values]) => [
+            ...acc,
+            ...values.map((v: string) => `${key}:${v}`),
+          ],
+          []
+        );
+
+        queryKey = [...queryKey, ...otherKeys];
         fn = () => method(args.at(0));
         break;
+      }
       default:
         fn = () => method();
         break;

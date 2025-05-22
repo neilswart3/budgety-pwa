@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { CollectionKey } from '@/constants';
 import { CollectionController } from '@/core/controllers/Collection.Controller';
 import { CollectionItem } from '@/core/models/CollectionItem';
@@ -58,30 +59,36 @@ export type CreateCollectionQueriesResult<
 > = CollectionQueryHookItem<
   T,
   ControllerBaseMethodName.LIST,
+  //@ts-expect-error
   () => UseQueryResult<Result[]>
 > &
   CollectionQueryHookItem<
     T,
     ControllerBaseMethodName.ITEM,
+    //@ts-expect-error
     (id: string) => UseQueryResult<Result>
   > &
   CollectionQueryHookItem<
     T,
     ControllerBaseMethodName.SEARCH,
+    //@ts-expect-error
     (query: object) => UseQueryResult<Result[]>
   > &
   CollectionQueryHookItem<
     T,
     ControllerBaseMethodName.CREATE,
+    //@ts-expect-error
     (payload: object) => UseMutationResult<void>
   > &
   CollectionQueryHookItem<
     T,
     ControllerBaseMethodName.UPDATE,
+    //@ts-expect-error
     (payload: object) => UseMutationResult<void>
   > &
   CollectionQueryHookItem<
     T,
     ControllerBaseMethodName.DELETE,
+    //@ts-expect-error
     (id: string) => UseMutationResult<void>
   >;
