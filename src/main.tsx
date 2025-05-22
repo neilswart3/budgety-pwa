@@ -13,7 +13,14 @@ import { themeSystem } from '@/theme';
 
 scan({ enabled: import.meta.env.DEV });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 10 * (60 * 1000), // 10 mins
+      //   cacheTime: 15 * (60 * 1000), // 15 mins
+    },
+  },
+});
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

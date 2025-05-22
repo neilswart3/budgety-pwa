@@ -26,11 +26,28 @@ export class LocalStorageRepository<Data extends CollectionItem> {
     }
   };
 
-  search = async (query = {}): Promise<Data[] | Error> => {
+  search = async (
+    query: Partial<Record<keyof Data, string[]>> = {}
+  ): Promise<Data[] | Error> => {
     try {
-      console.log('LocalStorageRepository.search query:', query);
+      const entries = (await this.list()) as Data[];
 
-      return await this.list();
+      const newEntries =
+        Object.entries(query).reduce((acc: Data[], [key, values]) => {
+          const newValues = values.reduce((vAcc: Data[], vCur: string) => {
+            const item = entries.find(
+              (item) => item[key as keyof typeof item] === vCur
+            );
+
+            if (!item) return vAcc;
+
+            return [...vAcc, item];
+          }, []);
+
+          return [...acc, ...newValues];
+        }, []) || [];
+
+      return await Promise.resolve(newEntries);
     } catch (error) {
       throw new Error((error as Error).message);
     }

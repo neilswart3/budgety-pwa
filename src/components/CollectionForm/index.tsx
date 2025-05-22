@@ -100,8 +100,6 @@ export const CollectionForm: React.FC<CollectionFormProps> = ({
 
   if (!initValues) return <div>Loading...</div>;
 
-  console.log('values:', values);
-
   return (
     <Stack>
       <Stack as="form" gap={8} onSubmit={handleSubmit}>

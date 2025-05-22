@@ -1,4 +1,8 @@
-import { useSavingsItem } from '@/hooks';
+import {
+  useCategoriesItem,
+  useSavingsItem,
+  useTransactionsItem,
+} from '@/hooks';
 import { Skeleton, Text } from '@chakra-ui/react';
 import Case from 'case';
 import { useMemo } from 'react';
@@ -21,30 +25,19 @@ const BaseHeader: React.FC<{
 );
 
 const TransactionHeader: React.FC<{ id: string }> = ({ id }) => {
-  //   const { data, isFetching } = useTransactions.single(id);
+  const { data, isFetching } = useTransactionsItem(id);
 
-  //   return (
-  //     <BaseHeader
-  //       name={(data as ITransactionItem)?.name}
-  //       isFetching={isFetching}
-  //       label="Transaction"
-  //     />
-  //   );
-  return <>TransactionHeader: {id}</>;
+  return (
+    <BaseHeader name={data?.name} isFetching={isFetching} label="Transaction" />
+  );
 };
 
 const CategoryHeader: React.FC<{ id: string }> = ({ id }) => {
-  //   const { data, isFetching } = useCategories.single(id);
+  const { data, isFetching } = useCategoriesItem(id);
 
-  //   return (
-  //     <BaseHeader
-  //       name={(data as ICategoryItem)?.name}
-  //       isFetching={isFetching}
-  //       label="Category"
-  //     />
-  //   );
-
-  return <>CategoryHeader: {id}</>;
+  return (
+    <BaseHeader name={data?.name} isFetching={isFetching} label="Category" />
+  );
 };
 
 const SavingHeader: React.FC<{ id: string }> = ({ id }) => {

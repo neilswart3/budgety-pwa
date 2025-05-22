@@ -1,13 +1,22 @@
 import { Account } from './Account';
-import { IAccountPayload } from './Account/types';
+import { IAccount, IAccountPayload } from './Account/types';
 import { Category } from './Category';
-import { ICategoryPayload } from './Category/types';
+import { ICategory, ICategoryPayload } from './Category/types';
 import { Occasion } from './Occasion';
-import { IOccasionPayload } from './Occasion/types';
+import { IOccasion, IOccasionPayload } from './Occasion/types';
 import { Saving } from './Saving';
-import { ISavingPayload } from './Saving/types';
+import { ISaving, ISavingPayload } from './Saving/types';
+import { ISubCategory } from './SubCategory/types';
 import { Transaction } from './Transaction';
-import { ITransactionPayload } from './Transaction/types';
+import { ITransaction, ITransactionPayload } from './Transaction/types';
+
+export type CollectionItems =
+  | IAccount
+  | ICategory
+  | ISubCategory
+  | IOccasion
+  | ISaving
+  | ITransaction;
 
 export type CollectionModelType =
   | (new (payload: IAccountPayload) => Account)

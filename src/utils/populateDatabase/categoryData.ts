@@ -34,7 +34,7 @@ food.subCategories = [homeFood.id, extraFood.id, diningOut.id, snacks.id];
 
 const houseHold = new Category({
   name: 'Household',
-  icon: 'MdHouse ',
+  icon: 'MdHouse',
   color: '#0f0',
   description: 'Basics for the household.',
 });
