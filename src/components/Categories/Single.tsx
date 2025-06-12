@@ -7,9 +7,9 @@ import { SingleLayout } from '@/layouts';
 import { useParams } from 'react-router';
 import { CategoryCard } from '../ui';
 import { ICategory } from '@/core';
-import { Avatar, Card, HStack, Icon, Stack, Text } from '@chakra-ui/react';
+import { Avatar, Box, Card, HStack, Icon, Stack, Text } from '@chakra-ui/react';
 import Case from 'case';
-import * as mdIcons from 'react-icons/md';
+// import * as mdIcons from 'react-icons/md';
 
 export const SingleCategory: React.FC = () => {
   const { category: id } = useParams();
@@ -35,7 +35,8 @@ export const SingleCategory: React.FC = () => {
         <Stack px={6}>
           {subCategories?.data?.length &&
             subCategories.data.map(({ id, name, icon, description }) => {
-              const TheIcon = mdIcons[icon.trim() as keyof typeof mdIcons];
+              //   const TheIcon = mdIcons[icon.trim() as keyof typeof mdIcons];
+              const TheIcon = () => <Box scale={0.5}>{icon}</Box>;
 
               return (
                 <Card.Root key={id}>

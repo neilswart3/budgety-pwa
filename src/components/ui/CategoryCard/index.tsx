@@ -1,13 +1,17 @@
 import { ICategory } from '@/core';
 import { useSubCategoriesSearch } from '@/hooks';
-import { HStack } from '@chakra-ui/react';
+import { Box, HStack } from '@chakra-ui/react';
 import Case from 'case';
 import { useMemo } from 'react';
-import * as mdIcons from 'react-icons/md';
+// import * as mdIcons from 'react-icons/md';
+
 import tinyColor from 'tinycolor2';
 import { CategoryTag } from './fragments';
 import { CategoryCardTemplate } from './Template';
 import { CategoryCardLoading } from './Loading';
+
+// const mdIcons = await import('react-icons/md');
+// const mdIcons = import.meta.glob('react-icons/md');
 
 interface Props extends ICategory {
   link?: boolean;
@@ -25,10 +29,12 @@ export const Component: React.FC<Props> & { Loading: React.FC } = ({
     () => tinyColor(color).toName() || 'grey',
     [color]
   );
-  const TheIcon = useMemo(
-    () => mdIcons[icon.trim() as keyof typeof mdIcons] || mdIcons.MdCategory,
-    [icon]
-  );
+  //   const TheIcon = useMemo(
+  //     () => mdIcons[icon.trim() as keyof typeof mdIcons] || mdIcons.MdCategory,
+  //     [icon]
+  //   );
+
+  //   console.log('mdIcons:', mdIcons);
 
   const { data, isFetching } = useSubCategoriesSearch({ id: subCategories });
 
@@ -36,7 +42,8 @@ export const Component: React.FC<Props> & { Loading: React.FC } = ({
     <CategoryCardTemplate
       ring
       colorPalette={colorPalette}
-      icon={<TheIcon />}
+      //   icon={<TheIcon />}
+      icon={<Box scale={0.5}>{icon}</Box>}
       label={Case.title(name)}
       link={link && id}
       tags={
