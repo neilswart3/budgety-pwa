@@ -81,6 +81,7 @@ export default defineConfig({
 
       injectManifest: {
         globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+        maximumFileSizeToCacheInBytes: 3 * 1024 ** 2,
       },
 
       //   includeAssets: ['favicon.ico'],
