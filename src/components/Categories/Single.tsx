@@ -5,11 +5,9 @@ import {
 } from '@/hooks';
 import { SingleLayout } from '@/layouts';
 import { useParams } from 'react-router';
-import { CategoryCard } from '../ui';
+import { CategoryCard, SubCategoryCard } from '../ui';
 import { ICategory } from '@/core';
-import { Avatar, Box, Card, HStack, Icon, Stack, Text } from '@chakra-ui/react';
-import Case from 'case';
-// import * as mdIcons from 'react-icons/md';
+import { Stack, Text } from '@chakra-ui/react';
 
 export const SingleCategory: React.FC = () => {
   const { category: id } = useParams();
@@ -34,28 +32,9 @@ export const SingleCategory: React.FC = () => {
 
         <Stack px={6}>
           {subCategories?.data?.length &&
-            subCategories.data.map(({ id, name, icon, description }) => {
-              //   const TheIcon = mdIcons[icon.trim() as keyof typeof mdIcons];
-              const TheIcon = () => <Box scale={0.5}>{icon}</Box>;
-
-              return (
-                <Card.Root key={id}>
-                  <Card.Header>
-                    <HStack>
-                      <Avatar.Root>
-                        <Icon size="xl">
-                          <TheIcon />
-                        </Icon>
-                      </Avatar.Root>
-                      <Card.Title>{Case.title(name)}</Card.Title>
-                    </HStack>
-                  </Card.Header>
-                  <Card.Body>
-                    <Card.Description>{description}</Card.Description>
-                  </Card.Body>
-                </Card.Root>
-              );
-            })}
+            subCategories.data.map((d) => (
+              <SubCategoryCard key={d.id} {...d} />
+            ))}
         </Stack>
 
         <pre>{JSON.stringify(category.data, null, 2)}</pre>

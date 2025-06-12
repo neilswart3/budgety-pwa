@@ -1,32 +1,14 @@
 import { ICategory } from '@/core';
 import { useSubCategoriesSearch } from '@/hooks';
-import { Box, HStack } from '@chakra-ui/react';
+import { HStack } from '@chakra-ui/react';
 import Case from 'case';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import tinyColor from 'tinycolor2';
 import { CategoryTag } from './fragments';
 import { CategoryCardTemplate } from './Template';
 import { CategoryCardLoading } from './Loading';
-
-import IconWorker from '@/workers/iconWorker?worker';
-
-const MdIcon: React.FC<{ icon: string }> = ({ icon }) => {
-  const [rawIcon, setRawIcon] = useState<string>();
-
-  useEffect(() => {
-    const iconWorker = new IconWorker();
-
-    iconWorker.onmessage = ({ data }) => setRawIcon(data);
-    iconWorker.postMessage(icon);
-
-    return () => iconWorker.terminate();
-  }, [icon]);
-
-  return (
-    <>{rawIcon && <Box dangerouslySetInnerHTML={{ __html: rawIcon }} />}</>
-  );
-};
+import { MdIcon } from '../MdIcon';
 
 interface Props extends ICategory {
   link?: boolean;
@@ -44,12 +26,6 @@ export const Component: React.FC<Props> & { Loading: React.FC } = ({
     () => tinyColor(color).toName() || 'grey',
     [color]
   );
-  //   const TheIcon = useMemo(
-  //     () => mdIcons[icon.trim() as keyof typeof mdIcons] || mdIcons.MdCategory,
-  //     [icon]
-  //   );
-
-  //   console.log('mdIcons:', mdIcons);
 
   const { data, isPending } = useSubCategoriesSearch({ id: subCategories });
 
@@ -58,7 +34,6 @@ export const Component: React.FC<Props> & { Loading: React.FC } = ({
       ring
       colorPalette={colorPalette}
       icon={<MdIcon icon={icon} />}
-      //   icon={<Box scale={0.5}>{icon}</Box>}
       label={Case.title(name)}
       link={link && id}
       tags={
