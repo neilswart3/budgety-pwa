@@ -2,16 +2,31 @@ import { ICategory } from '@/core';
 import { useSubCategoriesSearch } from '@/hooks';
 import { Box, HStack } from '@chakra-ui/react';
 import Case from 'case';
-import { useMemo } from 'react';
-// import * as mdIcons from 'react-icons/md';
+import { useEffect, useMemo, useState } from 'react';
 
 import tinyColor from 'tinycolor2';
 import { CategoryTag } from './fragments';
 import { CategoryCardTemplate } from './Template';
 import { CategoryCardLoading } from './Loading';
 
-// const mdIcons = await import('react-icons/md');
-// const mdIcons = import.meta.glob('react-icons/md');
+import IconWorker from '@/workers/iconWorker?worker';
+
+const MdIcon: React.FC<{ icon: string }> = ({ icon }) => {
+  const [rawIcon, setRawIcon] = useState<string>();
+
+  useEffect(() => {
+    const iconWorker = new IconWorker();
+
+    iconWorker.onmessage = ({ data }) => setRawIcon(data);
+    iconWorker.postMessage(icon);
+
+    return () => iconWorker.terminate();
+  }, [icon]);
+
+  return (
+    <>{rawIcon && <Box dangerouslySetInnerHTML={{ __html: rawIcon }} />}</>
+  );
+};
 
 interface Props extends ICategory {
   link?: boolean;
@@ -36,20 +51,19 @@ export const Component: React.FC<Props> & { Loading: React.FC } = ({
 
   //   console.log('mdIcons:', mdIcons);
 
-  const { data, isFetching } = useSubCategoriesSearch({ id: subCategories });
+  const { data, isPending } = useSubCategoriesSearch({ id: subCategories });
 
   return (
     <CategoryCardTemplate
       ring
       colorPalette={colorPalette}
-      //   icon={<TheIcon />}
-      icon={<Box scale={0.5}>{icon}</Box>}
+      icon={<MdIcon icon={icon} />}
+      //   icon={<Box scale={0.5}>{icon}</Box>}
       label={Case.title(name)}
       link={link && id}
       tags={
         <HStack flexWrap="wrap">
-          {isFetching &&
-            !data?.length &&
+          {isPending &&
             Array.from({ length: 3 }).map((_, i) => (
               <CategoryTag.Loading key={`categoryTag__loading--${id}-${i}`} />
             ))}
