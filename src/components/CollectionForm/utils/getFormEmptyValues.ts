@@ -21,9 +21,12 @@ export const getFormEmptyValues = ({
   Object.entries(inputTypes).reduce((acc, [name, type]) => {
     let value;
     switch (true) {
-      case /select/i.test(type as string):
+      case /multi/i.test(type as string):
         //   value = options ? options[name as keyof typeof options] : undefined;
         value = [];
+        break;
+      case /select/i.test(type as string):
+        value = '';
         break;
       case /number/i.test(type as string):
         value = 0;

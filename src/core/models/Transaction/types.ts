@@ -13,7 +13,7 @@ interface IBaseTransactionPayload {
   amount: number;
   date: string;
   salaryMonth: string;
-  categories: string[];
+  category: string;
   subCategories: string[];
   accounts: string[];
   occasion: string;

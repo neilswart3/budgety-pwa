@@ -68,10 +68,10 @@ export class CreateCollectionQueries {
         break;
       case queryArg: {
         const otherKeys = Object.entries((args.at(0) as object) || {}).reduce(
-          (acc: string[], [key, values]) => [
-            ...acc,
-            ...values.map((v: string) => `${key}:${v}`),
-          ],
+          (acc: string[], [key, values]) =>
+            !values
+              ? acc
+              : [...acc, ...values.map((v: string) => `${key}:${v}`)],
           []
         );
 

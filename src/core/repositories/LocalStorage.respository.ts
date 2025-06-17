@@ -35,13 +35,13 @@ export class LocalStorageRepository<Data extends CollectionItem> {
       const newEntries =
         Object.entries(query).reduce((acc: Data[], [key, values]) => {
           const newValues = values.reduce((vAcc: Data[], vCur: string) => {
-            const item = entries.find(
+            const item = entries.filter(
               (item) => item[key as keyof typeof item] === vCur
             );
 
             if (!item) return vAcc;
 
-            return [...vAcc, item];
+            return [...vAcc, ...item];
           }, []);
 
           return [...acc, ...newValues];

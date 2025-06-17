@@ -29,13 +29,19 @@ type CollectionFormSelectOptionsMap<T extends object = object> = {
   [key in keyof T]: Options[];
 };
 
+type Values = ICollectionPayload;
+
 interface CollectionFormProps<T extends object = object> {
   route: string;
   inputTypes: InputTypes<T>;
   inputValidation: InputValidations<T>;
-  onSubmit: (values: ICollectionPayload) => Promise<void>;
+  onSubmit: (values: Values) => Promise<void>;
+  onChange?: (payload: {
+    name: string;
+    value: string | string[] | number;
+  }) => void;
   options?: CollectionFormSelectOptionsMap<T>;
-  initValues?: object;
+  initValues?: Values;
 }
 
 export const CollectionForm: React.FC<CollectionFormProps> = ({
@@ -43,6 +49,7 @@ export const CollectionForm: React.FC<CollectionFormProps> = ({
   inputTypes,
   inputValidation,
   onSubmit,
+  onChange,
   options = {},
   initValues: passedInitValues = undefined,
 }) => {
@@ -55,15 +62,20 @@ export const CollectionForm: React.FC<CollectionFormProps> = ({
     [inputTypes, options, passedInitValues]
   );
 
-  const [values, setValues] = useState<object | undefined>(initValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [values, setValues] = useState<Values | undefined>(
+    initValues as Values | undefined
+  );
 
   const handleChange = ({
-    target: { name, value: val },
+    target: { name, value },
   }: ChangeEvent<
     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
   >) => {
-    setValues((prev) => ({ ...prev, [name]: val }));
+    if (onChange) onChange({ name, value });
+    setValues((prev: Values | undefined) =>
+      !prev ? prev : { ...prev, [name]: value }
+    );
   };
 
   const handleSubmit = useCallback(
