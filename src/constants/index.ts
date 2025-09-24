@@ -5,4 +5,5 @@ export enum CollectionKey {
   OCCASIONS = 'Occasions',
   SAVINGS = 'Savings',
   TRANSACTIONS = 'Transactions',
+  THE_DEMO = 'TheDemo',
 }

@@ -6,7 +6,10 @@ import { Occasion } from './Occasion';
 import { IOccasion, IOccasionPayload } from './Occasion/types';
 import { Saving } from './Saving';
 import { ISaving, ISavingPayload } from './Saving/types';
-import { ISubCategory } from './SubCategory/types';
+import { SubCategory } from './SubCategory';
+import { ISubCategory, ISubCategoryPayload } from './SubCategory/types';
+import { TheDemo } from './TheDemo';
+import { ITheDemo, ITheDemoPayload } from './TheDemo/types';
 import { Transaction } from './Transaction';
 import { ITransaction, ITransactionPayload } from './Transaction/types';
 
@@ -16,18 +19,28 @@ export type CollectionItems =
   | ISubCategory
   | IOccasion
   | ISaving
-  | ITransaction;
+  | ITransaction
+  | ITheDemo;
 
 export type CollectionModelType =
-  | (new (payload: IAccountPayload) => Account)
-  | (new (payload: ICategoryPayload) => Category)
-  | (new (payload: IOccasionPayload) => Occasion)
-  | (new (payload: ISavingPayload) => Saving)
-  | (new (payload: ITransactionPayload) => Transaction);
+  | Account
+  | Category
+  | Occasion
+  | Saving
+  | SubCategory
+  | Transaction
+  | TheDemo;
+//   | (new (payload: IAccountPayload) => Account)
+//   | (new (payload: ICategoryPayload) => Category)
+//   | (new (payload: IOccasionPayload) => Occasion)
+//   | (new (payload: ISavingPayload) => Saving)
+//   | (new (payload: ITransactionPayload) => Transaction);
 
 export type CollectionModelPayloadTypes =
   | IAccountPayload
   | ICategoryPayload
   | IOccasionPayload
   | ISavingPayload
-  | ITransactionPayload;
+  | ISubCategoryPayload
+  | ITransactionPayload
+  | ITheDemoPayload;

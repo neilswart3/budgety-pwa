@@ -1,7 +1,6 @@
 import { CollectionKey } from '@/constants';
 import {
   MutationFunction,
-  QueryClient,
   QueryFunction,
   useMutation,
   useQuery,
@@ -13,6 +12,7 @@ import {
   CreateCollectionQueriesResult,
 } from './types';
 import { CollectionItem } from '@/core/models/CollectionItem';
+import { queryClient } from '@/core';
 
 export class CreateCollectionQueries {
   private static getMethodType = (name: CollectionMethodName) => {
@@ -131,8 +131,13 @@ export class CreateCollectionQueries {
             return useMutation<void>({
               mutationFn: fn as MutationFunction<void>,
               onSuccess: () => {
-                const queryClient = new QueryClient();
-                queryClient.invalidateQueries({ queryKey: [controller.key] });
+                queryClient.invalidateQueries({
+                  queryKey: [controller.key],
+                });
+                // queryClient.setQueryData(['Notifications'], (prev) => {
+                //   return { ...prev,
+                //    };
+                // });
               },
             });
           },

@@ -10,6 +10,8 @@ import {
   SavingController,
   SubCategory,
   SubCategoryController,
+  TheDemo,
+  TheDemoController,
   Transaction,
   TransactionController,
 } from '@/core';
@@ -63,6 +65,11 @@ export const {
   useTransactionsList,
   useTransactionsSearch,
   useTransactionsUpdate,
+
+  useTheDemoCreate,
+  useTheDemoList,
+  useTheDemoUpdate,
+  useTheDemoDelete,
 } = {
   ...createQueries<CollectionKey.ACCOUNTS, Account>(AccountController),
   ...createQueries<CollectionKey.CATEGORIES, Category>(CategoryController),
@@ -74,4 +81,6 @@ export const {
   ...createQueries<CollectionKey.TRANSACTIONS, Transaction>(
     TransactionController
   ),
+
+  ...createQueries<CollectionKey.THE_DEMO, TheDemo>(TheDemoController),
 };

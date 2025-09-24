@@ -16,4 +16,7 @@ export * from './Transaction/types';
 export * from './Saving';
 export * from './Saving/types';
 
+export * from './TheDemo';
+export * from './TheDemo/types';
+
 export * from './types';
