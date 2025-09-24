@@ -1,11 +1,11 @@
-import { CollectionKey } from '@/constants';
+// import { CollectionKey } from '@/constants';
 import { ControllerConstructor } from '../CreateCollectionQueries/types';
-import { CollectionItem } from '@/core/models/CollectionItem';
+// import { CollectionItem } from '@/core/models/CollectionItem';
 import { QueryClient } from '@tanstack/react-query';
 
 export class CreateCollectionFormOptionsHooks {
-  static create = async <T extends CollectionKey, R extends CollectionItem>(
-    ControllerClass: ControllerConstructor
+  static create = async (
+    /* <T extends CollectionKey, R extends CollectionItem> */ ControllerClass: ControllerConstructor
   ) => {
     try {
       const controller = new ControllerClass();

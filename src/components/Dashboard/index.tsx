@@ -3,8 +3,8 @@ import { useTheDemoCreate, useTheDemoDelete, useTheDemoList } from '@/hooks';
 // import { CreateCollectionFormOptionsHooks } from '@/utils/CreateCollectionFormOptionsHooks';
 import { Button, Stack } from '@chakra-ui/react';
 import { CollectionForm } from '../CollectionForm';
-import { useQueryClient } from '@tanstack/react-query';
-import { CollectionKey } from '@/constants';
+// import { useQueryClient } from '@tanstack/react-query';
+// import { CollectionKey } from '@/constants';
 
 export const Dashboard: React.FC = () => {
   //   useEffect(() => {
