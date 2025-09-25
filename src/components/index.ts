@@ -11,3 +11,4 @@ export * from './MenuDrawer';
 export * from './CollectionForm';
 export * from './Profile';
 export * from './Settings';
+export * from './Breadcrumbs';

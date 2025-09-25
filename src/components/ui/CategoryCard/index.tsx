@@ -21,6 +21,7 @@ export const Component: React.FC<Props> & { Loading: React.FC } = ({
   name,
   subCategories,
   link,
+  description,
 }) => {
   const colorPalette = useMemo(
     () => tinyColor(color).toName() || 'grey',
@@ -36,6 +37,7 @@ export const Component: React.FC<Props> & { Loading: React.FC } = ({
       icon={<MdIcon icon={icon} />}
       label={Case.title(name)}
       link={link && id}
+      description={description}
       tags={
         <HStack flexWrap="wrap">
           {isPending &&

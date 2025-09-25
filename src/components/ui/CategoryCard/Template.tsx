@@ -1,17 +1,17 @@
+import { ICategory } from '@/core';
 import {
   Avatar,
   Card,
   defineStyle,
   HStack,
   Icon,
-  IconButton,
   Stack,
 } from '@chakra-ui/react';
 import { ReactElement } from 'react';
 import { MdChevronRight } from 'react-icons/md';
 import { Link } from 'react-router';
 
-interface Props {
+interface Props extends Pick<ICategory, 'description'> {
   icon: ReactElement;
   label: ReactElement | string;
   tags: ReactElement;
@@ -29,45 +29,49 @@ export const CategoryCardTemplate: React.FC<Props> = ({
   colorPalette = 'grey',
   avatarBg,
   link,
-}) => (
-  <Card.Root>
-    <Card.Header>
-      <HStack gap={6} alignItems="center">
-        <Avatar.Root
-          size="xl"
-          {...(avatarBg ? { bg: avatarBg } : {})}
-          {...(ring
-            ? {
-                colorPalette,
-                css: defineStyle({
-                  outlineWidth: 3,
-                  outlineColor: `${colorPalette}.500`,
-                  outlineOffset: 2,
-                  outlineStyle: 'solid',
-                }),
-              }
-            : {})}
-        >
-          <Icon size="2xl">{icon}</Icon>
-        </Avatar.Root>
-        <Stack flex={1}>
-          <Card.Title>{label}</Card.Title>
+  description,
+}) => {
+  return (
+    <Card.Root>
+      <Card.Header
+        {...(link ? { as: Link, to: link } : {})}
+        p={6}
+        bg="bg.muted"
+      >
+        <HStack gap={6} alignItems="center">
+          <Avatar.Root
+            size="xl"
+            {...(avatarBg ? { bg: avatarBg } : {})}
+            {...(ring
+              ? {
+                  colorPalette,
+                  css: defineStyle({
+                    outlineWidth: 3,
+                    outlineColor: `${colorPalette}.500`,
+                    outlineOffset: 2,
+                    outlineStyle: 'solid',
+                  }),
+                }
+              : {})}
+          >
+            <Icon size="2xl">{icon}</Icon>
+          </Avatar.Root>
+          <Stack flex={1}>
+            <Card.Title>{label}</Card.Title>
+          </Stack>
+          {!!link && (
+            <HStack>
+              <MdChevronRight size={28} />
+            </HStack>
+          )}
+        </HStack>
+      </Card.Header>
+      <Card.Body>
+        <Stack gap={4}>
+          <Stack>{description}</Stack>
+          <HStack flexWrap="wrap">{tags}</HStack>
         </Stack>
-        {!!link && (
-          <HStack>
-            <IconButton
-              {...{ as: Link, to: link }}
-              rounded="full"
-              variant="ghost"
-            >
-              <MdChevronRight />
-            </IconButton>
-          </HStack>
-        )}
-      </HStack>
-    </Card.Header>
-    <Card.Body>
-      <HStack flexWrap="wrap">{tags}</HStack>
-    </Card.Body>
-  </Card.Root>
-);
+      </Card.Body>
+    </Card.Root>
+  );
+};

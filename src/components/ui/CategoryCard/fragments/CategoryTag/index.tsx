@@ -2,12 +2,9 @@ import { CategoryTagTemplate } from './Template';
 import Case from 'case';
 import { CategoryTagLoading } from './Loading';
 import { MdIcon } from '@/components/ui/MdIcon';
+import { ICategory } from '@/core';
 
-interface Props {
-  id: string;
-  name: string;
-  icon: string;
-}
+type Props = Pick<ICategory, 'id' | 'name' | 'icon'>;
 
 const Component: React.FC<Props> & { Loading: React.FC } = ({ name, icon }) => (
   <CategoryTagTemplate icon={<MdIcon icon={icon} />} label={Case.title(name)} />

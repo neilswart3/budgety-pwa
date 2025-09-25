@@ -56,7 +56,25 @@ const subscriptions = new SubCategory({
   description: 'Streaming, phones, internet etc',
   category: houseHold.id,
 });
-houseHold.subCategories = [utilities.id, insurance.id, subscriptions.id];
+const rent = new SubCategory({
+  name: 'Rent',
+  icon: 'MdHomeWork',
+  description: 'Monthly rent for the house/apartment',
+  category: houseHold.id,
+});
+const tax = new SubCategory({
+  name: 'Tax',
+  icon: 'MdGavel',
+  description: 'Any tax related payments',
+  category: houseHold.id,
+});
+houseHold.subCategories = [
+  utilities.id,
+  insurance.id,
+  subscriptions.id,
+  rent.id,
+  tax.id,
+];
 
 const holiday = new Category({
   name: 'Holiday',
@@ -132,7 +150,36 @@ const hangout = new SubCategory({
 });
 lifestyle.subCategories = [sport.id, generalActivities.id, hangout.id];
 
-export const categories: Category[] = [food, houseHold, holiday, lifestyle];
+const transport = new Category({
+  name: 'Transport',
+  icon: 'MdCommute',
+  color: '#ff9900',
+  description: 'All things transport related',
+});
+
+const car = new SubCategory({
+  name: 'Car',
+  icon: 'MdDirectionsCar',
+  description: 'Car related expenses, car wash, charge, fines, etc',
+  category: transport.id,
+});
+
+const publicTransport = new SubCategory({
+  name: 'Public Transport',
+  icon: 'MdTrain',
+  description: 'Bus, tram, train, etc',
+  category: transport.id,
+});
+
+transport.subCategories = [car.id, publicTransport.id];
+
+export const categories: Category[] = [
+  food,
+  houseHold,
+  holiday,
+  lifestyle,
+  transport,
+];
 export const subCategories: SubCategory[] = [
   homeFood,
   extraFood,
@@ -149,4 +196,8 @@ export const subCategories: SubCategory[] = [
   sport,
   generalActivities,
   hangout,
+  tax,
+  rent,
+  car,
+  publicTransport,
 ];
